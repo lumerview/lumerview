@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Between the Notes — Conversations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Archivo:wght@100;200;300;400&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0a0a0a;
+    --bone: #f5f0e8;
+    --neon: #ff006e;
+    --cyan: #00f5ff;
+    --lime: #39ff14;
+    --gold: #ffd60a;
+    --purple: #b537f2;
+    --rust: #ff4757;
+    --slate: #2c2c38;
+    --charcoal: #1a1a22;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--bone);
+    font-family: 'Archivo', sans-serif;
+    font-weight: 200;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ─── CURSOR ─── */
+  .cursor {
+    position: fixed; width: 8px; height: 8px;
+    background: var(--gold); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: width .3s, height .3s, background .3s;
+  }
+  .cursor-ring {
+    position: fixed; width: 32px; height: 32px;
+    border: 1px solid rgba(184,151,74,.5); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: width .3s, height .3s;
+  }
+
+  /* Grain */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9000; opacity: .6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 2.5rem;
+    background: rgba(10,10,10,.95); backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--neon);
+  }
+  .nav-logo {
+    font-family: 'Archivo', sans-serif; font-weight: 400;
+    font-size: 1rem; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--bone);
+    text-decoration: none; position: relative;
+    background: linear-gradient(90deg, var(--bone) 0%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; position: relative; }
+  .nav-links a {
+    font-size: .65rem; letter-spacing: .3em; text-transform: uppercase;
+    color: rgba(245,240,232,.6); text-decoration: none; transition: all .2s;
+    font-weight: 500;
+  }
+  .nav-links a:hover, .nav-links a.active { 
+    color: var(--neon);
+    text-shadow: 0 0 8px var(--neon);
+  }
+
+  /* ─── PAGE HEADER ─── */
+  .page-header {
+    min-height: 65vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 2.5rem 5rem;
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, rgba(255,0,110,.06) 0%, rgba(0,245,255,.04) 100%);
+  }
+  .page-header-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 120% 80% at 15% 70%, rgba(255,0,110,.12) 0%, transparent 50%),
+      radial-gradient(ellipse 80% 100% at 85% 15%, rgba(0,245,255,.08) 0%, transparent 55%);
+  }
+  .page-header-grid {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,0,110,.08) 40px),
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0,245,255,.05) 40px);
+    opacity: .6;
+  }
+  .page-header-inner { position: relative; max-width: 1200px; }
+  .page-header-label {
+    font-size: .7rem; letter-spacing: .4em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 1rem;
+    opacity: 0; animation: fade-up .8s ease .3s forwards;
+    font-weight: 600; text-shadow: 0 0 10px rgba(0,245,255,.4);
+  }
+  .page-header h1 {
+    font-family: 'Archivo', sans-serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 900; line-height: .95; letter-spacing: -.03em;
+    opacity: 0; animation: fade-up 1s ease .5s forwards;
+    background: linear-gradient(90deg, var(--bone) 0%, var(--neon) 50%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .page-header h1 em { font-style: italic; text-shadow: 0 0 20px rgba(255,0,110,.3); }
+  .page-header-sub {
+    margin-top: 2rem;
+    font-size: 1.05rem; line-height: 1.7; font-weight: 500;
+    color: rgba(245,240,232,.7); max-width: 600px;
+    opacity: 0; animation: fade-up 1s ease .75s forwards;
+  }
+  /* Floating abstract shapes in header */
+  .hf { position: absolute; opacity: 0; animation: hfloat 12s ease-in-out infinite; animation-delay: var(--d); pointer-events: none; }
+  @keyframes hfloat {
+    0%   { opacity: 0; transform: translateY(0) rotate(var(--r,0deg)); }
+    20%  { opacity: 1; }
+    80%  { opacity: .4; }
+    100% { opacity: 0; transform: translateY(-60px) rotate(calc(var(--r,0deg) + 6deg)); }
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── TAPE ELEMENT ─── */
+  .tape-strip {
+    display: inline-block;
+    background: repeating-linear-gradient(
+      90deg,
+      #1a1a1a 0px,
+      #1a1a1a 3px,
+      #2a2a2a 3px,
+      #2a2a2a 6px
+    );
+    padding: .5rem .8rem;
+    margin: 0 .5rem;
+    border-radius: 2px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.8), 0 2px 8px rgba(255,0,110,.2);
+    font-family: 'Courier New', monospace;
+    font-size: .7rem;
+    color: var(--lime);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  /* ─── FILTER BAR ─── */
+  .filter-bar {
+    padding: 2rem 2.5rem;
+    border-top: 3px solid var(--neon);
+    border-bottom: 2px dashed var(--cyan);
+    background: linear-gradient(to right, rgba(255,0,110,.03), rgba(0,245,255,.02));
+    position: sticky; top: 0; z-index: 50;
+  }
+  .filter-bar-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .filter-label {
+    font-size: .7rem; letter-spacing: .4em; text-transform: uppercase;
+    color: var(--cyan); margin-right: .5rem; font-weight: 700;
+    text-shadow: 0 0 8px rgba(0,245,255,.3);
+  }
+  .filter-btn {
+    padding: .6rem 1.3rem;
+    border: 2px solid var(--cyan);
+    background: rgba(0,245,255,.05);
+    color: var(--bone);
+    font-family: 'Archivo', sans-serif; font-size: .65rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    cursor: none; transition: all .25s;
+    font-weight: 600;
+  }
+  .filter-btn:hover {
+    background: rgba(0,245,255,.15);
+    box-shadow: 0 0 12px rgba(0,245,255,.4), inset 0 0 12px rgba(0,245,255,.1);
+  }
+  .filter-btn.active {
+    background: var(--neon);
+    border-color: var(--neon);
+    color: var(--ink);
+    box-shadow: 0 0 20px var(--neon), inset 0 0 20px rgba(255,0,110,.3);
+  }
+
+  /* ─── FEATURED INTERVIEW ─── */
+  .featured {
+    padding: 6rem 2.5rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .featured-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    padding-bottom: 6rem;
+    border-bottom: 2px dashed var(--neon);
+  }
+  .featured-visual {
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+    border: 3px solid var(--neon);
+    position: relative; overflow: hidden;
+    box-shadow: 0 0 30px rgba(255,0,110,.3), inset 0 0 30px rgba(255,0,110,.05);
+  }
+  .featured-visual::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 20px;
+    background: repeating-linear-gradient(90deg, #1a1a1a 0, #1a1a1a 4px, #2a2a2a 4px, #2a2a2a 8px);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.8);
+    z-index: 2;
+  }
+  .featured-visual::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 20px;
+    background: repeating-linear-gradient(90deg, #1a1a1a 0, #1a1a1a 4px, #2a2a2a 4px, #2a2a2a 8px);
+    box-shadow: inset 0 -2px 4px rgba(0,0,0,.8);
+    z-index: 2;
+  }
+  .featured-visual-art {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .featured-tag {
+    position: absolute; top: 1.5rem; left: 1.5rem;
+    font-size: .55rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--ink); background: var(--neon);
+    padding: .4rem .9rem;
+    font-weight: 700;
+    z-index: 3;
+    box-shadow: 0 0 12px var(--neon);
+  }
+  .featured-duration {
+    position: absolute; bottom: 1.5rem; right: 1.5rem;
+    font-size: .65rem; letter-spacing: .2em; color: var(--cyan);
+    font-weight: 600; z-index: 3;
+  }
+  .play-btn {
+    position: absolute; bottom: 1.5rem; left: 1.5rem;
+    width: 52px; height: 52px; border-radius: 0;
+    border: 2px solid var(--neon);
+    display: flex; align-items: center; justify-content: center;
+    cursor: none; transition: all .3s; background: rgba(255,0,110,.1);
+    z-index: 3;
+  }
+  .play-btn:hover { background: var(--neon); box-shadow: 0 0 20px var(--neon); }
+  .play-btn:hover .play-icon { fill: var(--ink); }
+  .play-icon { fill: var(--neon); margin-left: 3px; transition: fill .3s; }
+
+  .featured-meta { display: flex; flex-direction: column; gap: 0; }
+  .featured-type {
+    font-size: .65rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 1.5rem; font-weight: 700;
+    text-shadow: 0 0 8px rgba(0,245,255,.3);
+  }
+  .featured-name {
+    font-family: 'Archivo', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 900; line-height: 1.05; margin-bottom: .6rem;
+    color: var(--bone);
+  }
+  .featured-title {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.25rem; font-weight: 600;
+    color: var(--neon); margin-bottom: 2rem;
+    text-shadow: 0 0 12px rgba(255,0,110,.2);
+  }
+  .gold-rule { 
+    width: 60px; height: 3px; 
+    background: linear-gradient(90deg, var(--neon) 0%, var(--cyan) 100%);
+    margin-bottom: 2rem;
+    box-shadow: 0 0 15px rgba(255,0,110,.4), 0 0 25px rgba(0,245,255,.2);
+  }
+  .featured-excerpt {
+    font-size: .95rem; line-height: 1.9;
+    color: rgba(245,240,232,.7); margin-bottom: 2.5rem; font-weight: 500;
+  }
+  .featured-excerpt strong { color: var(--neon); font-weight: 700; }
+  .featured-info {
+    display: flex; gap: 2.5rem; margin-bottom: 2.5rem;
+  }
+  .info-item { display: flex; flex-direction: column; gap: .3rem; }
+  .info-label {
+    font-size: .6rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--cyan); font-weight: 700;
+  }
+  .info-val {
+    font-size: .85rem; color: rgba(245,240,232,.8);
+    letter-spacing: .05em; font-weight: 500;
+  }
+  .read-link {
+    display: inline-flex; align-items: center; gap: .8rem;
+    font-size: .7rem; letter-spacing: .25em; text-transform: uppercase;
+    color: var(--lime); text-decoration: none;
+    border-bottom: 2px solid var(--lime);
+    padding-bottom: .3rem; transition: all .3s;
+    font-weight: 700;
+  }
+  .read-link:hover { 
+    gap: 1.2rem; 
+    text-shadow: 0 0 12px rgba(57,255,20,.4);
+  }
+
+  /* ─── SECTION HEADING ─── */
+  .section-head {
+    max-width: 1200px; margin: 0 auto;
+    padding: 4rem 2.5rem 2.5rem;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px dashed var(--cyan);
+  }
+  .section-head h2 {
+    font-family: 'Archivo', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 900; line-height: 1;
+    color: var(--bone);
+  }
+  .section-head h2 em { 
+    font-style: italic; 
+    color: var(--neon);
+    text-shadow: 0 0 15px rgba(255,0,110,.3);
+  }
+  .section-head-count {
+    font-size: .7rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--cyan); font-weight: 700;
+  }
+
+  /* ─── CONTENT GRID ─── */
+  .content-grid {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 2.5rem 8rem;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+  }
+
+  /* ─── CONTENT CARD ─── */
+  .card {
+    display: flex; flex-direction: column;
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
+    transition: all .3s;
+    position: relative; overflow: hidden;
+    border: 2px solid rgba(0,245,255,.3);
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 8px;
+    background: repeating-linear-gradient(90deg, transparent 0, transparent 3px, var(--neon) 3px, var(--neon) 6px);
+    z-index: 5;
+  }
+  .card:hover { 
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%);
+    border-color: var(--neon);
+    box-shadow: 0 0 25px rgba(255,0,110,.3), inset 0 0 15px rgba(255,0,110,.05);
+  }
+  .card-visual {
+    aspect-ratio: 16/9;
+    background: linear-gradient(45deg, #0a0a0a, #15152e);
+    position: relative; overflow: hidden;
+  }
+  .card-visual-art {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-badge {
+    position: absolute; top: 1rem; left: 1rem;
+    font-size: .5rem; letter-spacing: .3em; text-transform: uppercase;
+    padding: .35rem .8rem;
+    font-weight: 700;
+    z-index: 3;
+  }
+  .badge-interview { background: var(--cyan); color: var(--ink); border: none; box-shadow: 0 0 12px var(--cyan); }
+  .badge-podcast   { background: var(--neon); color: var(--ink); border: none; box-shadow: 0 0 12px var(--neon); }
+  .badge-written   { background: var(--lime); color: var(--ink); border: none; box-shadow: 0 0 12px var(--lime); }
+  .badge-video     { background: var(--purple); color: var(--bone); border: none; box-shadow: 0 0 12px var(--purple); }
+  .card-play {
+    position: absolute; bottom: .9rem; right: .9rem;
+    width: 40px; height: 40px; border-radius: 0;
+    border: 2px solid var(--neon);
+    background: rgba(255,0,110,.08);
+    display: flex; align-items: center; justify-content: center;
+    cursor: none; transition: all .3s;
+    z-index: 3;
+  }
+  .card:hover .card-play { 
+    background: var(--neon); 
+    box-shadow: 0 0 15px var(--neon);
+  }
+  .card:hover .card-play-icon { fill: var(--ink); }
+  .card-play-icon { fill: var(--neon); margin-left: 2px; transition: fill .3s; }
+
+  .card-body { padding: 1.8rem 1.8rem 2rem; flex: 1; display: flex; flex-direction: column; }
+  .card-meta {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .card-date {
+    font-size: .58rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--cyan); font-weight: 600;
+  }
+  .card-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--neon); }
+  .card-duration { font-size: .58rem; color: rgba(245,240,232,.5); letter-spacing: .1em; }
+  .card-name {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.35rem; font-weight: 700; line-height: 1.15;
+    margin-bottom: .35rem; color: var(--bone);
+  }
+  .card-role {
+    font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--neon); margin-bottom: 1rem; font-weight: 700;
+  }
+  .card-excerpt {
+    font-size: .82rem; line-height: 1.85;
+    color: rgba(245,240,232,.6); flex: 1; margin-bottom: 1.5rem; font-weight: 500;
+  }
+  .card-origin {
+    font-size: .6rem; letter-spacing: .15em;
+    color: var(--cyan); text-transform: uppercase;
+    border-top: 1px solid rgba(0,245,255,.2);
+    padding-top: 1rem; font-weight: 600;
+  }
+
+  /* ─── LARGE ROW CARD (podcast episodes) ─── */
+  .episode-list {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 2.5rem 8rem;
+  }
+  .episode-item {
+    display: grid;
+    grid-template-columns: 5rem 1fr auto;
+    gap: 2rem; align-items: center;
+    padding: 2rem; margin-bottom: 1rem;
+    background: linear-gradient(135deg, rgba(255,0,110,.04) 0%, rgba(0,245,255,.02) 100%);
+    border: 2px solid var(--cyan);
+    transition: all .3s;
+    cursor: none;
+    position: relative;
+  }
+  .episode-item::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 6px;
+    background: repeating-linear-gradient(90deg, var(--neon) 0, var(--neon) 4px, transparent 4px, transparent 8px);
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .episode-item:hover::before { opacity: 1; }
+  .episode-item:hover { 
+    border-color: var(--neon);
+    box-shadow: 0 0 20px rgba(255,0,110,.25), inset 0 0 20px rgba(255,0,110,.03);
+  }
+  .episode-num {
+    font-family: 'Archivo', sans-serif;
+    font-size: 2.5rem; font-weight: 900;
+    color: var(--neon); line-height: 1; text-align: right;
+    text-shadow: 0 0 15px rgba(255,0,110,.3);
+  }
+  .episode-body {}
+  .episode-series {
+    font-size: .6rem; letter-spacing: .35em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: .5rem; font-weight: 700;
+  }
+  .episode-title {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.3rem; font-weight: 700; margin-bottom: .3rem; color: var(--bone);
+  }
+  .episode-desc {
+    font-size: .85rem; color: rgba(245,240,232,.6); line-height: 1.7; font-weight: 500;
+  }
+  .episode-right {
+    display: flex; flex-direction: column; align-items: flex-end; gap: .8rem;
+    flex-shrink: 0;
+  }
+  .episode-duration {
+    font-size: .65rem; letter-spacing: .15em;
+    color: var(--cyan); font-weight: 600;
+  }
+  .ep-play {
+    width: 44px; height: 44px; border-radius: 0;
+    border: 2px solid var(--neon);
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,0,110,.08); transition: all .3s;
+  }
+  .episode-item:hover .ep-play { background: var(--neon); box-shadow: 0 0 15px var(--neon); }
+  .episode-item:hover .ep-play-icon { fill: var(--ink); }
+  .ep-play-icon { fill: var(--neon); margin-left: 2px; transition: fill .3s; }
+
+  /* ─── COMING SOON STRIP ─── */
+  .coming-soon {
+    background: var(--charcoal);
+    border-top: 1px solid rgba(245,240,232,.06);
+    border-bottom: 1px solid rgba(245,240,232,.06);
+    padding: 6rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .coming-inner {
+    max-width: 1200px; margin: 0 auto;
+  }
+  .coming-label {
+    font-size: .6rem; letter-spacing: .5em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 3rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .coming-label::after { content: ''; flex: 1; height: 1px; background: rgba(184,151,74,.2); }
+  .coming-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+  }
+  .coming-item {
+    padding: 2.5rem 2rem;
+    background: rgba(13,13,13,.35);
+    border: 1px solid rgba(245,240,232,.04);
+    display: flex; flex-direction: column; gap: 1rem;
+    transition: border-color .3s;
+  }
+  .coming-item:hover { border-color: rgba(184,151,74,.2); }
+  .coming-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(184,151,74,.25);
+    animation: pulse-dot 3s ease-in-out infinite;
+    animation-delay: var(--dd);
+  }
+  @keyframes pulse-dot { 0%,100%{opacity:.2;} 50%{opacity:.8;} }
+  .coming-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 400; color: rgba(245,240,232,.55);
+  }
+  .coming-role {
+    font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+    color: rgba(184,151,74,.5);
+  }
+  .coming-eta {
+    font-size: .6rem; letter-spacing: .15em;
+    color: rgba(245,240,232,.2); margin-top: auto; text-transform: uppercase;
+  }
+
+  /* ─── SUBSCRIBE / NOTIFY ─── */
+  .notify {
+    padding: 10rem 3rem;
+    max-width: 700px; margin: 0 auto;
+    text-align: center;
+  }
+  .notify h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 300;
+    line-height: 1.1; margin-bottom: 1.5rem;
+  }
+  .notify h2 em { font-style: italic; color: var(--gold); }
+  .notify p {
+    font-size: .95rem; line-height: 1.9;
+    color: rgba(245,240,232,.45); margin-bottom: 3rem;
+  }
+  .notify-form {
+    display: flex; gap: 0; max-width: 480px; margin: 0 auto 1.5rem;
+  }
+  .notify-input {
+    flex: 1;
+    background: var(--charcoal);
+    border: 1px solid rgba(245,240,232,.12);
+    border-right: none;
+    padding: 1rem 1.5rem;
+    color: var(--bone);
+    font-family: 'Archivo', sans-serif;
+    font-size: .85rem; font-weight: 200;
+    outline: none;
+    transition: border-color .3s;
+  }
+  .notify-input::placeholder { color: rgba(245,240,232,.25); }
+  .notify-input:focus { border-color: rgba(184,151,74,.4); }
+  .notify-btn {
+    padding: 1rem 2rem;
+    background: var(--gold); color: var(--ink);
+    border: none; cursor: none;
+    font-family: 'Archivo', sans-serif;
+    font-size: .65rem; font-weight: 300;
+    letter-spacing: .25em; text-transform: uppercase;
+    transition: background .3s;
+  }
+  .notify-btn:hover { background: var(--gold-light); }
+  .notify-note {
+    font-size: .65rem; color: rgba(245,240,232,.2); letter-spacing: .1em;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 5rem 3rem 3rem;
+    background: #060608;
+    border-top: 1px solid rgba(245,240,232,.06);
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem; margin-bottom: 4rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300;
+    letter-spacing: .1em; color: var(--bone);
+    margin-bottom: 1.2rem; font-style: italic;
+  }
+  .footer-tagline {
+    font-size: .8rem; line-height: 1.8;
+    color: rgba(245,240,232,.3); max-width: 280px;
+  }
+  .footer-col h4 {
+    font-size: .6rem; letter-spacing: .4em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: .8rem; }
+  .footer-col ul a {
+    font-size: .85rem; color: rgba(245,240,232,.35);
+    text-decoration: none; transition: color .3s; letter-spacing: .05em;
+  }
+  .footer-col ul a:hover { color: var(--gold); }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(245,240,232,.05);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy { font-size: .65rem; color: rgba(245,240,232,.2); letter-spacing: .15em; }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: .1s; }
+  .reveal-delay-2 { transition-delay: .2s; }
+  .reveal-delay-3 { transition-delay: .3s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem; }
+    .nav-links { display: none; }
+    .page-header { padding: 0 1.5rem 4rem; min-height: 50vh; }
+    .filter-bar { padding: 1.5rem; }
+    .featured { padding: 4rem 1.5rem; }
+    .featured-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .content-grid { grid-template-columns: 1fr; padding: 0 1.5rem 5rem; }
+    .section-head { padding: 3rem 1.5rem 2rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .episode-list { padding: 0 1.5rem 5rem; }
+    .episode-item { grid-template-columns: 3rem 1fr; }
+    .episode-right { display: none; }
+    .coming-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Between&nbsp;the&nbsp;Notes</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="listen.html" class="active">Conversations</a></li>
+    <li><a href="index.html#press">Press</a></li>
+    <li><a href="index.html#participate">Participate</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-grid"></div>
+
+  <!-- floating abstract shapes -->
+  <div class="hf" style="right:12%;top:35%;--d:0s;--r:-8deg">
+    <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" stroke="#b8974a" stroke-width=".8" fill="none" opacity=".4"/></svg>
+  </div>
+  <div class="hf" style="right:25%;top:55%;--d:2s;--r:12deg">
+    <svg width="32" height="6" viewBox="0 0 32 6"><line x1="0" y1="3" x2="32" y2="3" stroke="#b8974a" stroke-width=".7" opacity=".3"/></svg>
+  </div>
+  <div class="hf" style="right:6%;top:65%;--d:1s;--r:-4deg">
+    <svg width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" stroke="#b8974a" stroke-width=".7" fill="none" opacity=".35"/></svg>
+  </div>
+  <div class="hf" style="right:40%;top:20%;--d:3s;--r:5deg">
+    <svg width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="0" x2="10" y2="20" stroke="#b8974a" stroke-width=".7" opacity=".3"/><line x1="0" y1="10" x2="20" y2="10" stroke="#b8974a" stroke-width=".7" opacity=".3"/></svg>
+  </div>
+
+  <div class="page-header-inner">
+    <div class="page-header-label">Conversations · Before the Film</div>
+    <h1>The<br><em>Interviews</em></h1>
+    <p class="page-header-sub">
+      While the documentary takes shape, the conversations begin. Interviews, podcasts, and written portraits — released in the months before the film. A living record of what artists think, feel, and refuse to say.
+    </p>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-bar-inner">
+    <span class="filter-label">Filter</span>
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="interview">Interview</button>
+    <button class="filter-btn" data-filter="podcast">Podcast</button>
+    <button class="filter-btn" data-filter="written">Written</button>
+    <button class="filter-btn" data-filter="video">Video</button>
+  </div>
+</div>
+
+<!-- FEATURED INTERVIEW -->
+<section class="featured">
+  <div class="featured-inner reveal">
+    <div class="featured-visual">
+      <div class="featured-visual-art">
+        <svg viewBox="0 0 340 420" width="340" height="420" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="fg1" cx="45%" cy="40%" r="55%">
+              <stop offset="0%" stop-color="#8b3a2a" stop-opacity=".35"/>
+              <stop offset="100%" stop-color="#8b3a2a" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="170" cy="210" rx="140" ry="170" fill="url(#fg1)"/>
+          <!-- abstract portrait: geometric planes suggesting a face / figure -->
+          <polygon points="170,40 220,120 170,160 120,120" stroke="#b8974a" stroke-width="1" fill="rgba(184,151,74,.06)" opacity=".7"/>
+          <line x1="170" y1="40" x2="170" y2="380" stroke="#b8974a" stroke-width=".6" opacity=".2"/>
+          <ellipse cx="170" cy="95" rx="30" ry="38" stroke="#b8974a" stroke-width="1.2" fill="rgba(184,151,74,.05)" opacity=".6"/>
+          <path d="M120 160 C100 210, 95 280, 110 340" stroke="#b8974a" stroke-width="1.5" fill="none" opacity=".5"/>
+          <path d="M220 160 C240 210, 245 280, 230 340" stroke="#b8974a" stroke-width="1.5" fill="none" opacity=".5"/>
+          <path d="M110 340 Q170 380 230 340" stroke="#b8974a" stroke-width="1" fill="none" opacity=".4"/>
+          <!-- cross marks -->
+          <line x1="68" y1="200" x2="78" y2="210" stroke="#b8974a" stroke-width=".7" opacity=".4"/>
+          <line x1="78" y1="200" x2="68" y2="210" stroke="#b8974a" stroke-width=".7" opacity=".4"/>
+          <circle cx="272" cy="165" r="5" stroke="#b8974a" stroke-width=".7" fill="none" opacity=".35"/>
+          <!-- horizon lines -->
+          <line x1="30" y1="390" x2="310" y2="390" stroke="#f5f0e8" stroke-width=".4" opacity=".08"/>
+          <line x1="60" y1="400" x2="280" y2="400" stroke="#f5f0e8" stroke-width=".3" opacity=".05"/>
+        </svg>
+      </div>
+      <div class="featured-tag">Featured · Interview</div>
+      <div class="featured-duration">62 min</div>
+      <div class="play-btn">
+        <svg class="play-icon" width="14" height="14" viewBox="0 0 14 14"><polygon points="3,1 13,7 3,13"/></svg>
+      </div>
+    </div>
+
+    <div class="featured-meta">
+      <div class="featured-type">Opening Conversation</div>
+      <div class="featured-name">Yuki Tanaka</div>
+      <div class="featured-title">On silence as a creative act</div>
+      <div class="gold-rule"></div>
+      <p class="featured-excerpt">
+        Yuki Tanaka has spent two decades refusing to separate what she paints from what she composes. In this opening conversation — recorded in her studio in Tokyo over three evenings — she speaks about the moment she realised that <strong>a blank canvas and a rest in a score are the same gesture</strong>. We also talk about failure, translation, and why she has never shown her earliest work to anyone.
+      </p>
+      <div class="featured-info">
+        <div class="info-item">
+          <span class="info-label">Location</span>
+          <span class="info-val">Tokyo, Japan</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Recorded</span>
+          <span class="info-val">March 2026</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Format</span>
+          <span class="info-val">Audio · Transcript</span>
+        </div>
+      </div>
+      <a href="#" class="read-link">Listen &amp; Read Transcript →</a>
+    </div>
+  </div>
+</section>
+
+<!-- INTERVIEW CARDS -->
+<div class="section-head reveal">
+  <h2>Recent <em>Conversations</em></h2>
+  <span class="section-head-count">8 published</span>
+</div>
+
+<div class="content-grid">
+
+  <div class="card reveal" data-type="interview">
+    <div class="card-visual">
+      <div class="card-visual-art">
+        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="cg1" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#2c2c38" stop-opacity="1"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <rect width="220" height="124" fill="url(#cg1)"/>
+          <ellipse cx="110" cy="60" rx="60" ry="40" stroke="#b8974a" stroke-width=".7" fill="none" opacity=".3"/>
+          <circle cx="110" cy="38" r="18" stroke="#b8974a" stroke-width="1" fill="rgba(184,151,74,.08)" opacity=".6"/>
+          <line x1="110" y1="56" x2="110" y2="110" stroke="#b8974a" stroke-width=".8" opacity=".35"/>
+          <path d="M85 90 Q110 110 135 90" stroke="#b8974a" stroke-width=".7" fill="none" opacity=".3"/>
+        </svg>
+      </div>
+      <div class="card-badge badge-interview">Interview</div>
+      <div class="card-play">
+        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="card-date">April 2026</span>
+        <span class="card-dot"></span>
+        <span class="card-duration">48 min</span>
+      </div>
+      <div class="card-name">Amara Diallo</div>
+      <div class="card-role">Musician · Poet</div>
+      <p class="card-excerpt">On growing up between Dakar and Paris, and why she insists that every song she writes is also a letter — to someone, from somewhere.</p>
+      <div class="card-origin">Dakar, Senegal</div>
+    </div>
+  </div>
+
+  <div class="card reveal reveal-delay-1" data-type="podcast">
+    <div class="card-visual">
+      <div class="card-visual-art">
+        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="cg2" cx="30%" cy="60%" r="60%"><stop offset="0%" stop-color="#3a1a10" stop-opacity=".8"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <rect width="220" height="124" fill="url(#cg2)"/>
+          <!-- waveform suggestion -->
+          <rect x="40" y="52" width="5" height="20" fill="#b8974a" opacity=".3" rx="2"/>
+          <rect x="52" y="44" width="5" height="36" fill="#b8974a" opacity=".4" rx="2"/>
+          <rect x="64" y="38" width="5" height="48" fill="#b8974a" opacity=".5" rx="2"/>
+          <rect x="76" y="48" width="5" height="28" fill="#b8974a" opacity=".35" rx="2"/>
+          <rect x="88" y="42" width="5" height="40" fill="#b8974a" opacity=".45" rx="2"/>
+          <rect x="100" y="50" width="5" height="24" fill="#b8974a" opacity=".3" rx="2"/>
+          <rect x="112" y="36" width="5" height="52" fill="#b8974a" opacity=".55" rx="2"/>
+          <rect x="124" y="46" width="5" height="32" fill="#b8974a" opacity=".4" rx="2"/>
+          <rect x="136" y="40" width="5" height="44" fill="#b8974a" opacity=".45" rx="2"/>
+          <rect x="148" y="54" width="5" height="16" fill="#b8974a" opacity=".25" rx="2"/>
+          <rect x="160" y="44" width="5" height="36" fill="#b8974a" opacity=".35" rx="2"/>
+          <rect x="172" y="50" width="5" height="24" fill="#b8974a" opacity=".3" rx="2"/>
+        </svg>
+      </div>
+      <div class="card-badge badge-podcast">Podcast</div>
+      <div class="card-play">
+        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="card-date">March 2026</span>
+        <span class="card-dot"></span>
+        <span class="card-duration">35 min</span>
+      </div>
+      <div class="card-name">Episode 3: The Unfinished</div>
+      <div class="card-role">Between the Notes Podcast</div>
+      <p class="card-excerpt">What happens to the work that never gets shown? Nils Bergström and Sofia Reyes discuss the ethics and terror of leaving things incomplete.</p>
+      <div class="card-origin">Stockholm · Buenos Aires</div>
+    </div>
+  </div>
+
+  <div class="card reveal reveal-delay-2" data-type="written">
+    <div class="card-visual">
+      <div class="card-visual-art">
+        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="cg3" cx="70%" cy="30%" r="55%"><stop offset="0%" stop-color="#1e2030" stop-opacity="1"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <rect width="220" height="124" fill="url(#cg3)"/>
+          <!-- text lines suggestion -->
+          <line x1="35" y1="35" x2="185" y2="35" stroke="#b8974a" stroke-width=".5" opacity=".25"/>
+          <line x1="35" y1="46" x2="160" y2="46" stroke="#b8974a" stroke-width=".5" opacity=".2"/>
+          <line x1="35" y1="57" x2="175" y2="57" stroke="#b8974a" stroke-width=".5" opacity=".22"/>
+          <line x1="35" y1="68" x2="145" y2="68" stroke="#b8974a" stroke-width=".5" opacity=".18"/>
+          <line x1="35" y1="79" x2="170" y2="79" stroke="#b8974a" stroke-width=".5" opacity=".2"/>
+          <line x1="35" y1="90" x2="155" y2="90" stroke="#b8974a" stroke-width=".5" opacity=".15"/>
+          <circle cx="185" cy="46" r="3" fill="#b8974a" opacity=".4"/>
+        </svg>
+      </div>
+      <div class="card-badge badge-written">Written</div>
+    </div>
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="card-date">February 2026</span>
+        <span class="card-dot"></span>
+        <span class="card-duration">14 min read</span>
+      </div>
+      <div class="card-name">Fatima Al-Rashid</div>
+      <div class="card-role">Sculptor · Installation Artist</div>
+      <p class="card-excerpt">A written portrait of Fatima's practice — how she works with space as a material, and what it means to make work that can only exist once.</p>
+      <div class="card-origin">Beirut, Lebanon</div>
+    </div>
+  </div>
+
+  <div class="card reveal" data-type="video">
+    <div class="card-visual">
+      <div class="card-visual-art">
+        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="cg4" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#2a1840" stop-opacity=".7"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <rect width="220" height="124" fill="url(#cg4)"/>
+          <polygon points="110,30 160,62 110,94 60,62" stroke="#b896d4" stroke-width=".8" fill="rgba(140,80,180,.08)" opacity=".5"/>
+          <circle cx="110" cy="62" r="20" stroke="#b896d4" stroke-width="1" fill="none" opacity=".4"/>
+          <line x1="110" y1="42" x2="110" y2="82" stroke="#b896d4" stroke-width=".6" opacity=".3"/>
+          <line x1="90" y1="62" x2="130" y2="62" stroke="#b896d4" stroke-width=".6" opacity=".3"/>
+        </svg>
+      </div>
+      <div class="card-badge badge-video">Video</div>
+      <div class="card-play">
+        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="card-date">January 2026</span>
+        <span class="card-dot"></span>
+        <span class="card-duration">22 min</span>
+      </div>
+      <div class="card-name">Marco Ricci</div>
+      <div class="card-role">Painter · Engraver</div>
+      <p class="card-excerpt">Filmed inside his workshop in Palermo. Marco talks about craft as resistance, and why he still uses tools his grandfather made by hand.</p>
+      <div class="card-origin">Palermo, Italy</div>
+    </div>
+  </div>
+
+  <div class="card reveal reveal-delay-1" data-type="podcast">
+    <div class="card-visual">
+      <div class="card-visual-art">
+        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="cg5" cx="60%" cy="40%" r="55%"><stop offset="0%" stop-color="#1a2418" stop-opacity="1"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <rect width="220" height="124" fill="url(#cg5)"/>
+          <rect x="38" y="48" width="4" height="28" fill="#b8974a" opacity=".28" rx="2"/>
+          <rect x="49" y="40" width="4" height="44" fill="#b8974a" opacity=".38" rx="2"/>
+          <rect x="60" y="44" width="4" height="36" fill="#b8974a" opacity=".42" rx="2"/>
+          <rect x="71" y="34" width="4" height="56" fill="#b8974a" opacity=".5" rx="2"/>
+          <rect x="82" y="46" width="4" height="32" fill="#b8974a" opacity=".32" rx="2"/>
+          <rect x="93" y="38" width="4" height="48" fill="#b8974a" opacity=".44" rx="2"/>
+          <rect x="104" y="52" width="4" height="20" fill="#b8974a" opacity=".26" rx="2"/>
+          <rect x="115" y="30" width="4" height="64" fill="#b8974a" opacity=".52" rx="2"/>
+          <rect x="126" y="44" width="4" height="36" fill="#b8974a" opacity=".38" rx="2"/>
+          <rect x="137" y="50" width="4" height="24" fill="#b8974a" opacity=".3" rx="2"/>
+          <rect x="148" y="40" width="4" height="44" fill="#b8974a" opacity=".4" rx="2"/>
+          <rect x="159" y="46" width="4" height="32" fill="#b8974a" opacity=".34" rx="2"/>
+          <rect x="170" y="54" width="4" height="16" fill="#b8974a" opacity=".24" rx="2"/>
+        </svg>
+      </div>
+      <div class="card-badge badge-podcast">Podcast</div>
+      <div class="card-play">
+        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="card-date">December 2025</span>
+        <span class="card-dot"></span>
+        <span class="card-duration">41 min</span>
+      </div>
+      <div class="card-name">Episode 2: Borders</div>
+      <div class="card-role">Between the Notes Podcast</div>
+      <p class="card-excerpt">What does it mean to make art from a place that the art world does not yet know how to see? A conversation across three time zones.</p>
+      <div class="card-origin">Lagos · Cairo · Athens</div>
+    </div>
+  </div>
+
+  <div class="card reveal reveal-delay-2" data-type="interview">
+    <div class="card-visual">
+      <div class="card-visual-art">
+        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="cg6" cx="40%" cy="65%" r="55%"><stop offset="0%" stop-color="#251810" stop-opacity=".9"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <rect width="220" height="124" fill="url(#cg6)"/>
+          <path d="M40 80 Q80 40 110 62 Q140 84 180 44" stroke="#b8974a" stroke-width="1.2" fill="none" opacity=".5"/>
+          <circle cx="110" cy="62" r="6" fill="#b8974a" opacity=".35"/>
+          <line x1="30" y1="100" x2="190" y2="100" stroke="#b8974a" stroke-width=".4" opacity=".2"/>
+          <circle cx="40" cy="80" r="3" stroke="#b8974a" stroke-width=".7" fill="none" opacity=".4"/>
+          <circle cx="180" cy="44" r="3" stroke="#b8974a" stroke-width=".7" fill="none" opacity=".4"/>
+        </svg>
+      </div>
+      <div class="card-badge badge-interview">Interview</div>
+      <div class="card-play">
+        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="card-date">November 2025</span>
+        <span class="card-dot"></span>
+        <span class="card-duration">55 min</span>
+      </div>
+      <div class="card-name">Camille Moreau</div>
+      <div class="card-role">Choreographer · Visual Artist</div>
+      <p class="card-excerpt">Camille moves between dance and installation without apology. Here she explains why she stopped explaining herself — and what happened next.</p>
+      <div class="card-origin">Lyon, France</div>
+    </div>
+  </div>
+
+  <div class="card reveal" data-type="written">
+    <div class="card-visual">
+      <div class="card-visual-art">
+        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="cg7" cx="55%" cy="45%" r="50%"><stop offset="0%" stop-color="#1c2030" stop-opacity="1"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <rect width="220" height="124" fill="url(#cg7)"/>
+          <line x1="40" y1="30" x2="180" y2="30" stroke="#f5f0e8" stroke-width=".4" opacity=".15"/>
+          <line x1="40" y1="42" x2="155" y2="42" stroke="#f5f0e8" stroke-width=".4" opacity=".12"/>
+          <line x1="40" y1="54" x2="165" y2="54" stroke="#f5f0e8" stroke-width=".4" opacity=".13"/>
+          <line x1="40" y1="66" x2="140" y2="66" stroke="#f5f0e8" stroke-width=".4" opacity=".1"/>
+          <line x1="40" y1="78" x2="170" y2="78" stroke="#f5f0e8" stroke-width=".4" opacity=".12"/>
+          <line x1="40" y1="90" x2="150" y2="90" stroke="#f5f0e8" stroke-width=".4" opacity=".1"/>
+          <line x1="40" y1="102" x2="160" y2="102" stroke="#f5f0e8" stroke-width=".4" opacity=".08"/>
+          <rect x="175" y="26" width="10" height="10" stroke="#b8974a" stroke-width=".6" fill="none" opacity=".3"/>
+        </svg>
+      </div>
+      <div class="card-badge badge-written">Written</div>
+    </div>
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="card-date">October 2025</span>
+        <span class="card-dot"></span>
+        <span class="card-duration">9 min read</span>
+      </div>
+      <div class="card-name">Chen Wei</div>
+      <div class="card-role">Photographer · Archivist</div>
+      <p class="card-excerpt">An essay on Chen Wei's ongoing project of photographing disappearing trades — and what it means to document something at the exact moment it ends.</p>
+      <div class="card-origin">Shanghai, China</div>
+    </div>
+  </div>
+
+  <div class="card reveal reveal-delay-1" data-type="interview">
+    <div class="card-visual">
+      <div class="card-visual-art">
+        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="cg8" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#1e1a28" stop-opacity="1"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <rect width="220" height="124" fill="url(#cg8)"/>
+          <path d="M60 90 C80 50, 100 30, 110 62 C120 94, 140 50, 160 35" stroke="#b8974a" stroke-width="1.2" fill="none" opacity=".5"/>
+          <path d="M60 90 C80 70, 100 55, 110 75 C120 95, 140 75, 160 60" stroke="#b8974a" stroke-width=".6" fill="none" opacity=".25"/>
+          <line x1="32" y1="100" x2="188" y2="100" stroke="#b8974a" stroke-width=".4" opacity=".18"/>
+        </svg>
+      </div>
+      <div class="card-badge badge-interview">Interview</div>
+      <div class="card-play">
+        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="card-date">September 2025</span>
+        <span class="card-dot"></span>
+        <span class="card-duration">38 min</span>
+      </div>
+      <div class="card-name">Alejandro Voss</div>
+      <div class="card-role">Composer · Sound Artist</div>
+      <p class="card-excerpt">Born in Berlin to Argentine parents, Alejandro's work sits between continents. He talks about being too European for Latin America and too South American for Europe — and why that gave him everything.</p>
+      <div class="card-origin">Berlin, Germany</div>
+    </div>
+  </div>
+
+  <div class="card reveal reveal-delay-2" data-type="podcast">
+    <div class="card-visual">
+      <div class="card-visual-art">
+        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="cg9" cx="35%" cy="55%" r="55%"><stop offset="0%" stop-color="#1a1f18" stop-opacity="1"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <rect width="220" height="124" fill="url(#cg9)"/>
+          <rect x="42" y="46" width="4" height="32" fill="#b8974a" opacity=".3" rx="2"/>
+          <rect x="53" y="38" width="4" height="48" fill="#b8974a" opacity=".4" rx="2"/>
+          <rect x="64" y="50" width="4" height="24" fill="#b8974a" opacity=".28" rx="2"/>
+          <rect x="75" y="32" width="4" height="60" fill="#b8974a" opacity=".52" rx="2"/>
+          <rect x="86" y="44" width="4" height="36" fill="#b8974a" opacity=".36" rx="2"/>
+          <rect x="97" y="40" width="4" height="44" fill="#b8974a" opacity=".42" rx="2"/>
+          <rect x="108" y="54" width="4" height="16" fill="#b8974a" opacity=".24" rx="2"/>
+          <rect x="119" y="36" width="4" height="52" fill="#b8974a" opacity=".48" rx="2"/>
+          <rect x="130" y="48" width="4" height="28" fill="#b8974a" opacity=".34" rx="2"/>
+          <rect x="141" y="42" width="4" height="40" fill="#b8974a" opacity=".4" rx="2"/>
+          <rect x="152" y="50" width="4" height="24" fill="#b8974a" opacity=".28" rx="2"/>
+          <rect x="163" y="44" width="4" height="36" fill="#b8974a" opacity=".35" rx="2"/>
+          <rect x="174" y="56" width="4" height="12" fill="#b8974a" opacity=".22" rx="2"/>
+        </svg>
+      </div>
+      <div class="card-badge badge-podcast">Podcast</div>
+      <div class="card-play">
+        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="card-date">August 2025</span>
+        <span class="card-dot"></span>
+        <span class="card-duration">29 min</span>
+      </div>
+      <div class="card-name">Episode 1: Why We Begin</div>
+      <div class="card-role">Between the Notes Podcast</div>
+      <p class="card-excerpt">The first episode. Three artists from three continents answer one question: why did you start? The answers are nothing we expected.</p>
+      <div class="card-origin">Tokyo · Dakar · Stockholm</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PODCAST EPISODE LIST -->
+<div class="section-head reveal">
+  <h2>All <em>Episodes</em></h2>
+  <span class="section-head-count">3 episodes · Series ongoing</span>
+</div>
+
+<div class="episode-list">
+  <div class="episode-item reveal">
+    <div class="episode-num">03</div>
+    <div class="episode-body">
+      <div class="episode-series">Between the Notes Podcast</div>
+      <div class="episode-title">The Unfinished — Nils Bergström &amp; Sofia Reyes</div>
+      <p class="episode-desc">On incompleteness, abandoned work, and the strange peace that comes from letting something go.</p>
+    </div>
+    <div class="episode-right">
+      <span class="episode-duration">35 min · March 2026</span>
+      <div class="ep-play">
+        <svg class="ep-play-icon" width="12" height="12" viewBox="0 0 12 12"><polygon points="2,1 11,6 2,11"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="episode-item reveal">
+    <div class="episode-num">02</div>
+    <div class="episode-body">
+      <div class="episode-series">Between the Notes Podcast</div>
+      <div class="episode-title">Borders — Lagos, Cairo, Athens</div>
+      <p class="episode-desc">What does geography do to creativity? A conversation in three time zones about place, belonging, and the art world's blind spots.</p>
+    </div>
+    <div class="episode-right">
+      <span class="episode-duration">41 min · December 2025</span>
+      <div class="ep-play">
+        <svg class="ep-play-icon" width="12" height="12" viewBox="0 0 12 12"><polygon points="2,1 11,6 2,11"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="episode-item reveal">
+    <div class="episode-num">01</div>
+    <div class="episode-body">
+      <div class="episode-series">Between the Notes Podcast</div>
+      <div class="episode-title">Why We Begin — Tokyo, Dakar, Stockholm</div>
+      <p class="episode-desc">The pilot episode. Three artists from three continents, one question: why did you start? Their answers opened everything that came after.</p>
+    </div>
+    <div class="episode-right">
+      <span class="episode-duration">29 min · August 2025</span>
+      <div class="ep-play">
+        <svg class="ep-play-icon" width="12" height="12" viewBox="0 0 12 12"><polygon points="2,1 11,6 2,11"/></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMING SOON -->
+<section class="coming-soon">
+  <div class="coming-inner">
+    <div class="coming-label reveal">Coming Before the Film</div>
+    <div class="coming-grid">
+      <div class="coming-item reveal" style="--dd:0s">
+        <div class="coming-dot" style="--dd:0s"></div>
+        <div class="coming-name">Dimitri Papadakis</div>
+        <div class="coming-role">Filmmaker · Painter</div>
+        <div class="coming-eta">June 2026 · Interview</div>
+      </div>
+      <div class="coming-item reveal reveal-delay-1" style="--dd:.4s">
+        <div class="coming-dot" style="--dd:.5s"></div>
+        <div class="coming-name">Episode 04</div>
+        <div class="coming-role">The Podcast · Theme TBA</div>
+        <div class="coming-eta">June 2026 · Podcast</div>
+      </div>
+      <div class="coming-item reveal reveal-delay-2" style="--dd:.8s">
+        <div class="coming-dot" style="--dd:1s"></div>
+        <div class="coming-name">Noa Ben-David</div>
+        <div class="coming-role">Ceramicist · Writer</div>
+        <div class="coming-eta">July 2026 · Written Portrait</div>
+      </div>
+      <div class="coming-item reveal reveal-delay-3" style="--dd:1.2s">
+        <div class="coming-dot" style="--dd:1.5s"></div>
+        <div class="coming-name">Studio Visits</div>
+        <div class="coming-role">Video Series · 6 Artists</div>
+        <div class="coming-eta">August 2026 · Video</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBSCRIBE -->
+<section class="notify reveal">
+  <div class="section-label" style="text-align:center; margin-bottom:1rem;">Stay Close</div>
+  <h2>Each conversation,<br><em>in your inbox</em></h2>
+  <p>New interviews, podcast episodes, and written portraits land here first — weeks before they go anywhere else. No noise. Only the work.</p>
+  <div class="notify-form">
+    <input class="notify-input" type="email" placeholder="your@email.com">
+    <button class="notify-btn">Notify me</button>
+  </div>
+  <p class="notify-note">Infrequent. Unsubscribe any time. No third parties.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Between the Notes</div>
+      <p class="footer-tagline">A documentary film and book exploring art, music, and the creative process — told by the artists who live it.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About the Project</a></li>
+        <li><a href="listen.html">Conversations</a></li>
+        <li><a href="index.html#press">Press</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="mailto:participate@betweenthenotes.art">Participate</a></li>
+        <li><a href="mailto:press@betweenthenotes.art">Media Inquiries</a></li>
+        <li><a href="mailto:hello@betweenthenotes.art">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Between the Notes. All rights reserved.</span>
+    <span class="footer-copy">Europe &amp; United States · Est. 2025</span>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+  const tick = () => {
+    if(cursor){ cursor.style.left=mx+'px'; cursor.style.top=my+'px'; }
+    rx += (mx-rx)*.12; ry += (my-ry)*.12;
+    if(ring){ ring.style.left=rx+'px'; ring.style.top=ry+'px'; }
+    requestAnimationFrame(tick);
+  };
+  tick();
+  document.querySelectorAll('a,button,.card,.episode-item,.coming-item').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      if(cursor){cursor.style.width='14px';cursor.style.height='14px';cursor.style.background='#d4b47a';}
+      if(ring){ring.style.width='48px';ring.style.height='48px';}
+    });
+    el.addEventListener('mouseleave', () => {
+      if(cursor){cursor.style.width='8px';cursor.style.height='8px';cursor.style.background='#b8974a';}
+      if(ring){ring.style.width='32px';ring.style.height='32px';}
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
+
+  // Filter
+  const btns  = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.card[data-type]');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(c => {
+        const show = f === 'all' || c.dataset.type === f;
+        c.style.display = show ? 'flex' : 'none';
+      });
+    });
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const el = document.querySelector(a.getAttribute('href'));
+      if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); }
+    });
+  });
+</script>
+</body>
+</html>
