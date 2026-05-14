@@ -511,104 +511,136 @@
 
   /* ─── COMING SOON STRIP ─── */
   .coming-soon {
-    background: var(--charcoal);
-    border-top: 1px solid rgba(245,240,232,.06);
-    border-bottom: 1px solid rgba(245,240,232,.06);
-    padding: 6rem 3rem;
+    background: linear-gradient(to right, rgba(255,0,110,.05), rgba(0,245,255,.03));
+    border-top: 3px solid var(--neon);
+    border-bottom: 2px dashed var(--cyan);
+    padding: 6rem 2.5rem;
     position: relative; overflow: hidden;
+  }
+  .coming-soon::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 12px;
+    background: repeating-linear-gradient(90deg, var(--neon) 0, var(--neon) 3px, transparent 3px, transparent 6px);
+    opacity: .6;
   }
   .coming-inner {
     max-width: 1200px; margin: 0 auto;
   }
   .coming-label {
-    font-size: .6rem; letter-spacing: .5em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 3rem;
+    font-size: .7rem; letter-spacing: .4em; text-transform: uppercase;
+    color: var(--lime); margin-bottom: 3rem;
     display: flex; align-items: center; gap: 1rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(57,255,20,.3);
   }
-  .coming-label::after { content: ''; flex: 1; height: 1px; background: rgba(184,151,74,.2); }
+  .coming-label::after { content: ''; flex: 1; height: 2px; background: linear-gradient(90deg, var(--lime) 0%, transparent 100%); }
   .coming-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5px;
   }
   .coming-item {
     padding: 2.5rem 2rem;
-    background: rgba(13,13,13,.35);
-    border: 1px solid rgba(245,240,232,.04);
+    background: linear-gradient(135deg, rgba(0,245,255,.08) 0%, rgba(255,0,110,.05) 100%);
+    border: 2px solid var(--cyan);
     display: flex; flex-direction: column; gap: 1rem;
-    transition: border-color .3s;
+    transition: all .3s;
   }
-  .coming-item:hover { border-color: rgba(184,151,74,.2); }
+  .coming-item::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(90deg, var(--neon) 0, var(--neon) 2px, var(--cyan) 2px, var(--cyan) 4px);
+  }
+  .coming-item:hover { 
+    border-color: var(--neon);
+    background: linear-gradient(135deg, rgba(255,0,110,.12) 0%, rgba(0,245,255,.08) 100%);
+    box-shadow: 0 0 20px rgba(255,0,110,.2), inset 0 0 15px rgba(255,0,110,.05);
+  }
   .coming-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: rgba(184,151,74,.25);
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--neon);
     animation: pulse-dot 3s ease-in-out infinite;
     animation-delay: var(--dd);
+    box-shadow: 0 0 12px var(--neon);
   }
-  @keyframes pulse-dot { 0%,100%{opacity:.2;} 50%{opacity:.8;} }
+  @keyframes pulse-dot { 0%,100%{opacity:.4; box-shadow: 0 0 8px var(--neon);} 50%{opacity:1; box-shadow: 0 0 20px var(--neon);} }
   .coming-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem; font-weight: 400; color: rgba(245,240,232,.55);
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.2rem; font-weight: 700; color: var(--bone);
   }
   .coming-role {
     font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
-    color: rgba(184,151,74,.5);
+    color: var(--cyan); font-weight: 600;
   }
   .coming-eta {
     font-size: .6rem; letter-spacing: .15em;
-    color: rgba(245,240,232,.2); margin-top: auto; text-transform: uppercase;
+    color: var(--lime); margin-top: auto; text-transform: uppercase; font-weight: 700;
   }
 
   /* ─── SUBSCRIBE / NOTIFY ─── */
   .notify {
-    padding: 10rem 3rem;
+    padding: 10rem 2.5rem;
     max-width: 700px; margin: 0 auto;
     text-align: center;
   }
   .notify h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 300;
+    font-family: 'Archivo', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 900;
     line-height: 1.1; margin-bottom: 1.5rem;
+    color: var(--bone);
   }
-  .notify h2 em { font-style: italic; color: var(--gold); }
+  .notify h2 em { 
+    font-style: italic; 
+    color: var(--neon);
+    text-shadow: 0 0 15px rgba(255,0,110,.3);
+  }
   .notify p {
     font-size: .95rem; line-height: 1.9;
-    color: rgba(245,240,232,.45); margin-bottom: 3rem;
+    color: rgba(245,240,232,.65); margin-bottom: 3rem; font-weight: 500;
   }
   .notify-form {
     display: flex; gap: 0; max-width: 480px; margin: 0 auto 1.5rem;
   }
   .notify-input {
     flex: 1;
-    background: var(--charcoal);
-    border: 1px solid rgba(245,240,232,.12);
+    background: rgba(10,10,10,.8);
+    border: 2px solid var(--cyan);
     border-right: none;
     padding: 1rem 1.5rem;
     color: var(--bone);
     font-family: 'Archivo', sans-serif;
-    font-size: .85rem; font-weight: 200;
+    font-size: .85rem; font-weight: 500;
     outline: none;
-    transition: border-color .3s;
+    transition: all .3s;
   }
-  .notify-input::placeholder { color: rgba(245,240,232,.25); }
-  .notify-input:focus { border-color: rgba(184,151,74,.4); }
+  .notify-input::placeholder { color: rgba(245,240,232,.3); }
+  .notify-input:focus { 
+    border-color: var(--neon);
+    box-shadow: inset 0 0 12px rgba(255,0,110,.15);
+  }
   .notify-btn {
-    padding: 1rem 2rem;
-    background: var(--gold); color: var(--ink);
-    border: none; cursor: none;
+    padding: 1rem 2.5rem;
+    background: var(--neon); color: var(--ink);
+    border: 2px solid var(--neon); cursor: none;
     font-family: 'Archivo', sans-serif;
-    font-size: .65rem; font-weight: 300;
+    font-size: .7rem; font-weight: 700;
     letter-spacing: .25em; text-transform: uppercase;
-    transition: background .3s;
+    transition: all .3s;
   }
-  .notify-btn:hover { background: var(--gold-light); }
+  .notify-btn:hover { 
+    background: transparent;
+    color: var(--neon);
+    box-shadow: 0 0 20px var(--neon);
+  }
   .notify-note {
-    font-size: .65rem; color: rgba(245,240,232,.2); letter-spacing: .1em;
+    font-size: .65rem; color: rgba(245,240,232,.3); letter-spacing: .1em; font-weight: 500;
   }
 
   /* ─── FOOTER ─── */
   footer {
-    padding: 5rem 3rem 3rem;
-    background: #060608;
-    border-top: 1px solid rgba(245,240,232,.06);
+    padding: 5rem 2.5rem 3rem;
+    background: linear-gradient(to bottom, rgba(10,10,10,.95), rgba(10,10,10,.98));
+    border-top: 3px solid var(--neon);
   }
   .footer-inner {
     max-width: 1200px; margin: 0 auto;
@@ -616,33 +648,37 @@
     gap: 4rem; margin-bottom: 4rem;
   }
   .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem; font-weight: 300;
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.8rem; font-weight: 900;
     letter-spacing: .1em; color: var(--bone);
-    margin-bottom: 1.2rem; font-style: italic;
+    margin-bottom: 1.2rem;
+    background: linear-gradient(90deg, var(--bone) 0%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   .footer-tagline {
     font-size: .8rem; line-height: 1.8;
-    color: rgba(245,240,232,.3); max-width: 280px;
+    color: rgba(245,240,232,.4); max-width: 280px; font-weight: 500;
   }
   .footer-col h4 {
-    font-size: .6rem; letter-spacing: .4em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 1.5rem;
+    font-size: .65rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--neon); margin-bottom: 1.5rem; font-weight: 700;
   }
   .footer-col ul { list-style: none; }
   .footer-col ul li { margin-bottom: .8rem; }
   .footer-col ul a {
-    font-size: .85rem; color: rgba(245,240,232,.35);
-    text-decoration: none; transition: color .3s; letter-spacing: .05em;
+    font-size: .85rem; color: rgba(245,240,232,.4);
+    text-decoration: none; transition: all .3s; letter-spacing: .05em; font-weight: 500;
   }
-  .footer-col ul a:hover { color: var(--gold); }
+  .footer-col ul a:hover { color: var(--cyan); text-shadow: 0 0 8px rgba(0,245,255,.3); }
   .footer-bottom {
     max-width: 1200px; margin: 0 auto;
     padding-top: 2rem;
-    border-top: 1px solid rgba(245,240,232,.05);
+    border-top: 2px dashed var(--cyan);
     display: flex; justify-content: space-between; align-items: center;
   }
-  .footer-copy { font-size: .65rem; color: rgba(245,240,232,.2); letter-spacing: .15em; }
+  .footer-copy { font-size: .65rem; color: rgba(245,240,232,.3); letter-spacing: .15em; font-weight: 500; }
 
   /* ─── SCROLL REVEAL ─── */
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
@@ -652,23 +688,307 @@
   .reveal-delay-3 { transition-delay: .3s; }
 
   /* ─── RESPONSIVE ─── */
-  @media (max-width: 900px) {
-    nav { padding: 1.5rem; }
-    .nav-links { display: none; }
-    .page-header { padding: 0 1.5rem 4rem; min-height: 50vh; }
-    .filter-bar { padding: 1.5rem; }
-    .featured { padding: 4rem 1.5rem; }
-    .featured-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .content-grid { grid-template-columns: 1fr; padding: 0 1.5rem 5rem; }
-    .section-head { padding: 3rem 1.5rem 2rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
-    .episode-list { padding: 0 1.5rem 5rem; }
-    .episode-item { grid-template-columns: 3rem 1fr; }
-    .episode-right { display: none; }
-    .coming-grid { grid-template-columns: repeat(2, 1fr); }
-    .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  @media (max-width: 1024px) {
+    .content-grid { grid-template-columns: repeat(2, 1fr); }
+    .coming-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    nav { 
+      padding: 1rem 1.5rem;
+      gap: 1rem;
+    }
+    .nav-logo { font-size: .85rem; }
+    .nav-links { 
+      display: flex;
+      gap: 0.8rem;
+    }
+    .nav-links a { font-size: .55rem; }
+
+    .page-header { 
+      padding: 0 1.5rem 3rem; 
+      min-height: 45vh;
+      margin-top: 60px;
+    }
+    .page-header-label { font-size: .6rem; margin-bottom: .8rem; }
+    .page-header h1 { font-size: clamp(2.5rem, 8vw, 5rem); }
+    .page-header-sub { font-size: .95rem; margin-top: 1.5rem; }
+
+    .hf { display: none; }
+
+    .filter-bar { 
+      padding: 1.2rem 1.5rem;
+      position: sticky;
+      top: 60px;
+      z-index: 40;
+    }
+    .filter-bar-inner { gap: 0.8rem; }
+    .filter-label { font-size: .6rem; }
+    .filter-btn { 
+      padding: .5rem 1rem;
+      font-size: .6rem;
+    }
+
+    .featured { 
+      padding: 3rem 1.5rem;
+    }
+    .featured-inner { 
+      grid-template-columns: 1fr; 
+      gap: 2rem;
+      padding-bottom: 3rem;
+    }
+    .featured-visual { aspect-ratio: 3/4; }
+    .featured-visual::before,
+    .featured-visual::after { display: none; }
+    .featured-tag { font-size: .5rem; padding: .3rem .6rem; top: 1rem; left: 1rem; }
+    .featured-duration { font-size: .6rem; bottom: 1rem; right: 1rem; }
+    .play-btn { 
+      width: 44px; 
+      height: 44px;
+      bottom: 1rem; 
+      left: 1rem;
+    }
+    .featured-name { font-size: clamp(1.8rem, 5vw, 2.5rem); }
+    .featured-title { font-size: 1.1rem; }
+    .featured-info { flex-direction: column; gap: 1.5rem; }
+    .gold-rule { width: 40px; }
+
+    .section-head { 
+      padding: 2.5rem 1.5rem 1.5rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .section-head h2 { font-size: clamp(1.8rem, 5vw, 2.5rem); }
+    .section-head-count { font-size: .6rem; }
+
+    .content-grid { 
+      grid-template-columns: 1fr; 
+      padding: 0 1.5rem 4rem;
+      gap: 1rem;
+    }
+    .card::before { display: none; }
+    .card { 
+      border: 2px solid var(--cyan);
+    }
+    .card-visual { aspect-ratio: 4/3; }
+    .card-badge { font-size: .48rem; padding: .25rem .6rem; }
+    .card-play { width: 36px; height: 36px; bottom: .8rem; right: .8rem; }
+    .card-body { padding: 1.4rem 1.4rem 1.6rem; }
+    .card-name { font-size: 1.15rem; }
+    .card-role { font-size: .6rem; }
+    .card-excerpt { font-size: .75rem; }
+
+    .episode-list { 
+      padding: 0 1.5rem 4rem;
+    }
+    .episode-item { 
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 1.5rem;
+      margin-bottom: .8rem;
+    }
+    .episode-item::before { display: none; }
+    .episode-num { 
+      display: none;
+    }
+    .episode-series { font-size: .55rem; }
+    .episode-title { font-size: 1.1rem; font-weight: 600; }
+    .episode-desc { font-size: .78rem; }
+    .episode-right { 
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+    }
+    .episode-duration { font-size: .6rem; }
+    .ep-play { width: 38px; height: 38px; }
+
+    .coming-soon { 
+      padding: 4rem 1.5rem;
+    }
+    .coming-soon::before { display: none; }
+    .coming-label { 
+      font-size: .6rem;
+      margin-bottom: 2rem;
+    }
+    .coming-grid { 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 1rem;
+    }
+    .coming-item { 
+      padding: 1.5rem 1.2rem;
+      border: 2px solid var(--cyan);
+    }
+    .coming-item::before { display: none; }
+    .coming-name { font-size: 1rem; }
+    .coming-role { font-size: .55rem; }
+    .coming-eta { font-size: .55rem; }
+    .coming-dot { width: 8px; height: 8px; }
+
+    .notify { 
+      padding: 6rem 1.5rem;
+    }
+    .notify h2 { font-size: clamp(1.8rem, 5vw, 2.8rem); }
+    .notify p { font-size: .9rem; }
+    .notify-form { max-width: 100%; }
+    .notify-input { 
+      font-size: .8rem;
+      padding: .8rem 1.2rem;
+    }
+    .notify-btn { 
+      padding: .8rem 1.5rem;
+      font-size: .6rem;
+    }
+    .notify-note { font-size: .6rem; }
+
+    footer { padding: 3rem 1.5rem 2rem; }
+    .footer-inner { 
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-logo { font-size: 1.4rem; margin-bottom: .8rem; }
+    .footer-tagline { font-size: .75rem; }
+    .footer-col h4 { font-size: .6rem; margin-bottom: 1rem; }
+    .footer-col ul a { font-size: .8rem; }
+    .footer-bottom { 
+      flex-direction: column;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      text-align: center;
+    }
+    .footer-copy { font-size: .6rem; }
+
     body { cursor: auto; }
     .cursor, .cursor-ring { display: none; }
+  }
+
+  @media (max-width: 500px) {
+    nav {
+      padding: .8rem 1rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: .8rem;
+    }
+    .nav-logo { font-size: .75rem; }
+    .nav-links { 
+      width: 100%;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .nav-links a { font-size: .5rem; }
+
+    .page-header { 
+      padding: 0 1rem 2rem;
+      min-height: 40vh;
+      margin-top: 120px;
+    }
+    .page-header h1 { font-size: clamp(2rem, 7vw, 3rem); line-height: 1; }
+    .page-header-sub { font-size: .85rem; margin-top: 1rem; }
+
+    .filter-bar { 
+      padding: 1rem;
+      top: 120px;
+      z-index: 40;
+    }
+    .filter-bar-inner { 
+      gap: 0.6rem;
+    }
+    .filter-btn { 
+      padding: .45rem .8rem;
+      font-size: .55rem;
+    }
+
+    .featured { 
+      padding: 2rem 1rem;
+    }
+    .featured-inner { gap: 1.5rem; }
+    .featured-visual { aspect-ratio: 3/4; }
+    .featured-name { font-size: 1.5rem; }
+    .featured-title { font-size: 1rem; }
+    .featured-excerpt { font-size: .85rem; }
+    .gold-rule { width: 35px; }
+    .featured-info { gap: 1rem; }
+    .info-label { font-size: .55rem; }
+    .info-val { font-size: .75rem; }
+    .read-link { font-size: .65rem; }
+
+    .section-head { 
+      padding: 2rem 1rem 1.2rem;
+    }
+    .section-head h2 { font-size: clamp(1.5rem, 6vw, 2rem); }
+
+    .content-grid { 
+      padding: 0 1rem 3rem;
+    }
+    .card { border: 1.5px solid var(--cyan); }
+    .card-visual { aspect-ratio: 1/1; }
+    .card-badge { font-size: .45rem; }
+    .card-play { width: 32px; height: 32px; }
+    .card-body { padding: 1.2rem 1rem 1.3rem; }
+    .card-name { font-size: 1rem; margin-bottom: .25rem; }
+    .card-role { font-size: .55rem; margin-bottom: .8rem; }
+    .card-excerpt { font-size: .7rem; margin-bottom: 1.2rem; }
+    .card-origin { font-size: .55rem; }
+
+    .episode-list { 
+      padding: 0 1rem 3rem;
+    }
+    .episode-item { 
+      padding: 1.2rem;
+      margin-bottom: .6rem;
+    }
+    .episode-series { font-size: .5rem; }
+    .episode-title { font-size: 1rem; margin-bottom: .2rem; }
+    .episode-desc { font-size: .7rem; line-height: 1.6; }
+    .episode-right { gap: .8rem; }
+    .episode-duration { font-size: .55rem; }
+    .ep-play { width: 34px; height: 34px; }
+
+    .coming-soon { 
+      padding: 3rem 1rem;
+    }
+    .coming-label { 
+      font-size: .55rem;
+      margin-bottom: 1.5rem;
+    }
+    .coming-grid { 
+      grid-template-columns: 1fr;
+      gap: .8rem;
+    }
+    .coming-item { 
+      padding: 1.2rem;
+      border: 1.5px solid var(--cyan);
+    }
+    .coming-name { font-size: .95rem; }
+    .coming-role { font-size: .5rem; }
+    .coming-eta { font-size: .5rem; }
+
+    .notify { 
+      padding: 4rem 1rem;
+    }
+    .notify h2 { font-size: clamp(1.4rem, 6vw, 2.2rem); }
+    .notify p { font-size: .85rem; margin-bottom: 2rem; }
+    .notify-form { max-width: 100%; }
+    .notify-input { 
+      font-size: .75rem;
+      padding: .7rem 1rem;
+    }
+    .notify-btn { 
+      padding: .7rem 1.2rem;
+      font-size: .55rem;
+    }
+
+    footer { padding: 2rem 1rem 1.5rem; }
+    .footer-inner { gap: 1.5rem; margin-bottom: 1.5rem; }
+    .footer-logo { font-size: 1.2rem; }
+    .footer-tagline { font-size: .7rem; }
+    .footer-col h4 { font-size: .55rem; }
+    .footer-col ul li { margin-bottom: .6rem; }
+    .footer-col ul a { font-size: .75rem; }
+    .footer-copy { font-size: .55rem; }
   }
 </style>
 </head>
@@ -694,18 +1014,18 @@
   <div class="page-header-bg"></div>
   <div class="page-header-grid"></div>
 
-  <!-- floating abstract shapes -->
+  <!-- floating abstract shapes with neon colors -->
   <div class="hf" style="right:12%;top:35%;--d:0s;--r:-8deg">
-    <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" stroke="#b8974a" stroke-width=".8" fill="none" opacity=".4"/></svg>
+    <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" stroke="#00f5ff" stroke-width="1.2" fill="none" opacity=".7"/></svg>
   </div>
   <div class="hf" style="right:25%;top:55%;--d:2s;--r:12deg">
-    <svg width="32" height="6" viewBox="0 0 32 6"><line x1="0" y1="3" x2="32" y2="3" stroke="#b8974a" stroke-width=".7" opacity=".3"/></svg>
+    <svg width="32" height="6" viewBox="0 0 32 6"><line x1="0" y1="3" x2="32" y2="3" stroke="#ff006e" stroke-width="1.5" opacity=".6"/></svg>
   </div>
   <div class="hf" style="right:6%;top:65%;--d:1s;--r:-4deg">
-    <svg width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" stroke="#b8974a" stroke-width=".7" fill="none" opacity=".35"/></svg>
+    <svg width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" stroke="#39ff14" stroke-width="1" fill="none" opacity=".6"/></svg>
   </div>
   <div class="hf" style="right:40%;top:20%;--d:3s;--r:5deg">
-    <svg width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="0" x2="10" y2="20" stroke="#b8974a" stroke-width=".7" opacity=".3"/><line x1="0" y1="10" x2="20" y2="10" stroke="#b8974a" stroke-width=".7" opacity=".3"/></svg>
+    <svg width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="0" x2="10" y2="20" stroke="#00f5ff" stroke-width="1.2" opacity=".5"/><line x1="0" y1="10" x2="20" y2="10" stroke="#00f5ff" stroke-width="1.2" opacity=".5"/></svg>
   </div>
 
   <div class="page-header-inner">
@@ -737,25 +1057,25 @@
         <svg viewBox="0 0 340 420" width="340" height="420" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="fg1" cx="45%" cy="40%" r="55%">
-              <stop offset="0%" stop-color="#8b3a2a" stop-opacity=".35"/>
-              <stop offset="100%" stop-color="#8b3a2a" stop-opacity="0"/>
+              <stop offset="0%" stop-color="#ff006e" stop-opacity=".25"/>
+              <stop offset="100%" stop-color="#ff006e" stop-opacity="0"/>
             </radialGradient>
           </defs>
           <ellipse cx="170" cy="210" rx="140" ry="170" fill="url(#fg1)"/>
           <!-- abstract portrait: geometric planes suggesting a face / figure -->
-          <polygon points="170,40 220,120 170,160 120,120" stroke="#b8974a" stroke-width="1" fill="rgba(184,151,74,.06)" opacity=".7"/>
-          <line x1="170" y1="40" x2="170" y2="380" stroke="#b8974a" stroke-width=".6" opacity=".2"/>
-          <ellipse cx="170" cy="95" rx="30" ry="38" stroke="#b8974a" stroke-width="1.2" fill="rgba(184,151,74,.05)" opacity=".6"/>
-          <path d="M120 160 C100 210, 95 280, 110 340" stroke="#b8974a" stroke-width="1.5" fill="none" opacity=".5"/>
-          <path d="M220 160 C240 210, 245 280, 230 340" stroke="#b8974a" stroke-width="1.5" fill="none" opacity=".5"/>
-          <path d="M110 340 Q170 380 230 340" stroke="#b8974a" stroke-width="1" fill="none" opacity=".4"/>
+          <polygon points="170,40 220,120 170,160 120,120" stroke="#00f5ff" stroke-width="1.5" fill="rgba(0,245,255,.08)" opacity=".7"/>
+          <line x1="170" y1="40" x2="170" y2="380" stroke="#ff006e" stroke-width="1" opacity=".3"/>
+          <ellipse cx="170" cy="95" rx="30" ry="38" stroke="#00f5ff" stroke-width="1.2" fill="rgba(0,245,255,.05)" opacity=".6"/>
+          <path d="M120 160 C100 210, 95 280, 110 340" stroke="#ff006e" stroke-width="1.5" fill="none" opacity=".5"/>
+          <path d="M220 160 C240 210, 245 280, 230 340" stroke="#ff006e" stroke-width="1.5" fill="none" opacity=".5"/>
+          <path d="M110 340 Q170 380 230 340" stroke="#39ff14" stroke-width="1" fill="none" opacity=".4"/>
           <!-- cross marks -->
-          <line x1="68" y1="200" x2="78" y2="210" stroke="#b8974a" stroke-width=".7" opacity=".4"/>
-          <line x1="78" y1="200" x2="68" y2="210" stroke="#b8974a" stroke-width=".7" opacity=".4"/>
-          <circle cx="272" cy="165" r="5" stroke="#b8974a" stroke-width=".7" fill="none" opacity=".35"/>
+          <line x1="68" y1="200" x2="78" y2="210" stroke="#ff006e" stroke-width="1" opacity=".5"/>
+          <line x1="78" y1="200" x2="68" y2="210" stroke="#ff006e" stroke-width="1" opacity=".5"/>
+          <circle cx="272" cy="165" r="5" stroke="#00f5ff" stroke-width="1" fill="none" opacity=".45"/>
           <!-- horizon lines -->
-          <line x1="30" y1="390" x2="310" y2="390" stroke="#f5f0e8" stroke-width=".4" opacity=".08"/>
-          <line x1="60" y1="400" x2="280" y2="400" stroke="#f5f0e8" stroke-width=".3" opacity=".05"/>
+          <line x1="30" y1="390" x2="310" y2="390" stroke="#39ff14" stroke-width=".5" opacity=".15"/>
+          <line x1="60" y1="400" x2="280" y2="400" stroke="#39ff14" stroke-width=".4" opacity=".1"/>
         </svg>
       </div>
       <div class="featured-tag">Featured · Interview</div>
@@ -804,12 +1124,12 @@
     <div class="card-visual">
       <div class="card-visual-art">
         <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg1" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#2c2c38" stop-opacity="1"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <defs><radialGradient id="cg1" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#1a1a2e" stop-opacity="1"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
           <rect width="220" height="124" fill="url(#cg1)"/>
-          <ellipse cx="110" cy="60" rx="60" ry="40" stroke="#b8974a" stroke-width=".7" fill="none" opacity=".3"/>
-          <circle cx="110" cy="38" r="18" stroke="#b8974a" stroke-width="1" fill="rgba(184,151,74,.08)" opacity=".6"/>
-          <line x1="110" y1="56" x2="110" y2="110" stroke="#b8974a" stroke-width=".8" opacity=".35"/>
-          <path d="M85 90 Q110 110 135 90" stroke="#b8974a" stroke-width=".7" fill="none" opacity=".3"/>
+          <ellipse cx="110" cy="60" rx="60" ry="40" stroke="#00f5ff" stroke-width="1" fill="none" opacity=".4"/>
+          <circle cx="110" cy="38" r="18" stroke="#ff006e" stroke-width="1.2" fill="rgba(255,0,110,.08)" opacity=".6"/>
+          <line x1="110" y1="56" x2="110" y2="110" stroke="#39ff14" stroke-width="1" opacity=".35"/>
+          <path d="M85 90 Q110 110 135 90" stroke="#00f5ff" stroke-width="1" fill="none" opacity=".3"/>
         </svg>
       </div>
       <div class="card-badge badge-interview">Interview</div>
@@ -834,21 +1154,21 @@
     <div class="card-visual">
       <div class="card-visual-art">
         <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg2" cx="30%" cy="60%" r="60%"><stop offset="0%" stop-color="#3a1a10" stop-opacity=".8"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <defs><radialGradient id="cg2" cx="30%" cy="60%" r="60%"><stop offset="0%" stop-color="#1a0a15" stop-opacity=".8"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
           <rect width="220" height="124" fill="url(#cg2)"/>
-          <!-- waveform suggestion -->
-          <rect x="40" y="52" width="5" height="20" fill="#b8974a" opacity=".3" rx="2"/>
-          <rect x="52" y="44" width="5" height="36" fill="#b8974a" opacity=".4" rx="2"/>
-          <rect x="64" y="38" width="5" height="48" fill="#b8974a" opacity=".5" rx="2"/>
-          <rect x="76" y="48" width="5" height="28" fill="#b8974a" opacity=".35" rx="2"/>
-          <rect x="88" y="42" width="5" height="40" fill="#b8974a" opacity=".45" rx="2"/>
-          <rect x="100" y="50" width="5" height="24" fill="#b8974a" opacity=".3" rx="2"/>
-          <rect x="112" y="36" width="5" height="52" fill="#b8974a" opacity=".55" rx="2"/>
-          <rect x="124" y="46" width="5" height="32" fill="#b8974a" opacity=".4" rx="2"/>
-          <rect x="136" y="40" width="5" height="44" fill="#b8974a" opacity=".45" rx="2"/>
-          <rect x="148" y="54" width="5" height="16" fill="#b8974a" opacity=".25" rx="2"/>
-          <rect x="160" y="44" width="5" height="36" fill="#b8974a" opacity=".35" rx="2"/>
-          <rect x="172" y="50" width="5" height="24" fill="#b8974a" opacity=".3" rx="2"/>
+          <!-- waveform suggestion with neon -->
+          <rect x="40" y="52" width="5" height="20" fill="#ff006e" opacity=".5" rx="2"/>
+          <rect x="52" y="44" width="5" height="36" fill="#00f5ff" opacity=".6" rx="2"/>
+          <rect x="64" y="38" width="5" height="48" fill="#39ff14" opacity=".5" rx="2"/>
+          <rect x="76" y="48" width="5" height="28" fill="#ff006e" opacity=".5" rx="2"/>
+          <rect x="88" y="42" width="5" height="40" fill="#00f5ff" opacity=".55" rx="2"/>
+          <rect x="100" y="50" width="5" height="24" fill="#39ff14" opacity=".45" rx="2"/>
+          <rect x="112" y="36" width="5" height="52" fill="#ff006e" opacity=".6" rx="2"/>
+          <rect x="124" y="46" width="5" height="32" fill="#00f5ff" opacity=".5" rx="2"/>
+          <rect x="136" y="40" width="5" height="44" fill="#39ff14" opacity=".55" rx="2"/>
+          <rect x="148" y="54" width="5" height="16" fill="#ff006e" opacity=".4" rx="2"/>
+          <rect x="160" y="44" width="5" height="36" fill="#00f5ff" opacity=".5" rx="2"/>
+          <rect x="172" y="50" width="5" height="24" fill="#39ff14" opacity=".45" rx="2"/>
         </svg>
       </div>
       <div class="card-badge badge-podcast">Podcast</div>
@@ -873,16 +1193,16 @@
     <div class="card-visual">
       <div class="card-visual-art">
         <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg3" cx="70%" cy="30%" r="55%"><stop offset="0%" stop-color="#1e2030" stop-opacity="1"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <defs><radialGradient id="cg3" cx="70%" cy="30%" r="55%"><stop offset="0%" stop-color="#0a1010" stop-opacity="1"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
           <rect width="220" height="124" fill="url(#cg3)"/>
           <!-- text lines suggestion -->
-          <line x1="35" y1="35" x2="185" y2="35" stroke="#b8974a" stroke-width=".5" opacity=".25"/>
-          <line x1="35" y1="46" x2="160" y2="46" stroke="#b8974a" stroke-width=".5" opacity=".2"/>
-          <line x1="35" y1="57" x2="175" y2="57" stroke="#b8974a" stroke-width=".5" opacity=".22"/>
-          <line x1="35" y1="68" x2="145" y2="68" stroke="#b8974a" stroke-width=".5" opacity=".18"/>
-          <line x1="35" y1="79" x2="170" y2="79" stroke="#b8974a" stroke-width=".5" opacity=".2"/>
-          <line x1="35" y1="90" x2="155" y2="90" stroke="#b8974a" stroke-width=".5" opacity=".15"/>
-          <circle cx="185" cy="46" r="3" fill="#b8974a" opacity=".4"/>
+          <line x1="35" y1="35" x2="185" y2="35" stroke="#00f5ff" stroke-width=".7" opacity=".35"/>
+          <line x1="35" y1="46" x2="160" y2="46" stroke="#ff006e" stroke-width=".7" opacity=".3"/>
+          <line x1="35" y1="57" x2="175" y2="57" stroke="#39ff14" stroke-width=".7" opacity=".32"/>
+          <line x1="35" y1="68" x2="145" y2="68" stroke="#00f5ff" stroke-width=".7" opacity=".28"/>
+          <line x1="35" y1="79" x2="170" y2="79" stroke="#ff006e" stroke-width=".7" opacity=".3"/>
+          <line x1="35" y1="90" x2="155" y2="90" stroke="#39ff14" stroke-width=".7" opacity=".25"/>
+          <circle cx="185" cy="46" r="3" fill="#ff006e" opacity=".5"/>
         </svg>
       </div>
       <div class="card-badge badge-written">Written</div>
@@ -904,12 +1224,12 @@
     <div class="card-visual">
       <div class="card-visual-art">
         <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg4" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#2a1840" stop-opacity=".7"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <defs><radialGradient id="cg4" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#1a0a2e" stop-opacity=".7"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
           <rect width="220" height="124" fill="url(#cg4)"/>
-          <polygon points="110,30 160,62 110,94 60,62" stroke="#b896d4" stroke-width=".8" fill="rgba(140,80,180,.08)" opacity=".5"/>
-          <circle cx="110" cy="62" r="20" stroke="#b896d4" stroke-width="1" fill="none" opacity=".4"/>
-          <line x1="110" y1="42" x2="110" y2="82" stroke="#b896d4" stroke-width=".6" opacity=".3"/>
-          <line x1="90" y1="62" x2="130" y2="62" stroke="#b896d4" stroke-width=".6" opacity=".3"/>
+          <polygon points="110,30 160,62 110,94 60,62" stroke="#b537f2" stroke-width="1" fill="rgba(181,55,242,.08)" opacity=".6"/>
+          <circle cx="110" cy="62" r="20" stroke="#b537f2" stroke-width="1.2" fill="none" opacity=".5"/>
+          <line x1="110" y1="42" x2="110" y2="82" stroke="#b537f2" stroke-width=".8" opacity=".4"/>
+          <line x1="90" y1="62" x2="130" y2="62" stroke="#b537f2" stroke-width=".8" opacity=".4"/>
         </svg>
       </div>
       <div class="card-badge badge-video">Video</div>
@@ -934,21 +1254,21 @@
     <div class="card-visual">
       <div class="card-visual-art">
         <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg5" cx="60%" cy="40%" r="55%"><stop offset="0%" stop-color="#1a2418" stop-opacity="1"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <defs><radialGradient id="cg5" cx="60%" cy="40%" r="55%"><stop offset="0%" stop-color="#0a1a0a" stop-opacity="1"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
           <rect width="220" height="124" fill="url(#cg5)"/>
-          <rect x="38" y="48" width="4" height="28" fill="#b8974a" opacity=".28" rx="2"/>
-          <rect x="49" y="40" width="4" height="44" fill="#b8974a" opacity=".38" rx="2"/>
-          <rect x="60" y="44" width="4" height="36" fill="#b8974a" opacity=".42" rx="2"/>
-          <rect x="71" y="34" width="4" height="56" fill="#b8974a" opacity=".5" rx="2"/>
-          <rect x="82" y="46" width="4" height="32" fill="#b8974a" opacity=".32" rx="2"/>
-          <rect x="93" y="38" width="4" height="48" fill="#b8974a" opacity=".44" rx="2"/>
-          <rect x="104" y="52" width="4" height="20" fill="#b8974a" opacity=".26" rx="2"/>
-          <rect x="115" y="30" width="4" height="64" fill="#b8974a" opacity=".52" rx="2"/>
-          <rect x="126" y="44" width="4" height="36" fill="#b8974a" opacity=".38" rx="2"/>
-          <rect x="137" y="50" width="4" height="24" fill="#b8974a" opacity=".3" rx="2"/>
-          <rect x="148" y="40" width="4" height="44" fill="#b8974a" opacity=".4" rx="2"/>
-          <rect x="159" y="46" width="4" height="32" fill="#b8974a" opacity=".34" rx="2"/>
-          <rect x="170" y="54" width="4" height="16" fill="#b8974a" opacity=".24" rx="2"/>
+          <rect x="38" y="48" width="4" height="28" fill="#39ff14" opacity=".4" rx="2"/>
+          <rect x="49" y="40" width="4" height="44" fill="#ff006e" opacity=".5" rx="2"/>
+          <rect x="60" y="44" width="4" height="36" fill="#00f5ff" opacity=".52" rx="2"/>
+          <rect x="71" y="34" width="4" height="56" fill="#39ff14" opacity=".6" rx="2"/>
+          <rect x="82" y="46" width="4" height="32" fill="#ff006e" opacity=".45" rx="2"/>
+          <rect x="93" y="38" width="4" height="48" fill="#00f5ff" opacity=".54" rx="2"/>
+          <rect x="104" y="52" width="4" height="20" fill="#39ff14" opacity=".35" rx="2"/>
+          <rect x="115" y="30" width="4" height="64" fill="#ff006e" opacity=".6" rx="2"/>
+          <rect x="126" y="44" width="4" height="36" fill="#00f5ff" opacity=".48" rx="2"/>
+          <rect x="137" y="50" width="4" height="24" fill="#39ff14" opacity=".4" rx="2"/>
+          <rect x="148" y="40" width="4" height="44" fill="#ff006e" opacity=".5" rx="2"/>
+          <rect x="159" y="46" width="4" height="32" fill="#00f5ff" opacity=".44" rx="2"/>
+          <rect x="170" y="54" width="4" height="16" fill="#39ff14" opacity=".33" rx="2"/>
         </svg>
       </div>
       <div class="card-badge badge-podcast">Podcast</div>
@@ -973,13 +1293,13 @@
     <div class="card-visual">
       <div class="card-visual-art">
         <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg6" cx="40%" cy="65%" r="55%"><stop offset="0%" stop-color="#251810" stop-opacity=".9"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <defs><radialGradient id="cg6" cx="40%" cy="65%" r="55%"><stop offset="0%" stop-color="#1a0a0a" stop-opacity=".9"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
           <rect width="220" height="124" fill="url(#cg6)"/>
-          <path d="M40 80 Q80 40 110 62 Q140 84 180 44" stroke="#b8974a" stroke-width="1.2" fill="none" opacity=".5"/>
-          <circle cx="110" cy="62" r="6" fill="#b8974a" opacity=".35"/>
-          <line x1="30" y1="100" x2="190" y2="100" stroke="#b8974a" stroke-width=".4" opacity=".2"/>
-          <circle cx="40" cy="80" r="3" stroke="#b8974a" stroke-width=".7" fill="none" opacity=".4"/>
-          <circle cx="180" cy="44" r="3" stroke="#b8974a" stroke-width=".7" fill="none" opacity=".4"/>
+          <path d="M40 80 Q80 40 110 62 Q140 84 180 44" stroke="#ff006e" stroke-width="1.2" fill="none" opacity=".6"/>
+          <circle cx="110" cy="62" r="6" fill="#00f5ff" opacity=".5"/>
+          <line x1="30" y1="100" x2="190" y2="100" stroke="#39ff14" stroke-width=".5" opacity=".3"/>
+          <circle cx="40" cy="80" r="3" stroke="#ff006e" stroke-width=".8" fill="none" opacity=".5"/>
+          <circle cx="180" cy="44" r="3" stroke="#00f5ff" stroke-width=".8" fill="none" opacity=".5"/>
         </svg>
       </div>
       <div class="card-badge badge-interview">Interview</div>
@@ -1004,16 +1324,16 @@
     <div class="card-visual">
       <div class="card-visual-art">
         <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg7" cx="55%" cy="45%" r="50%"><stop offset="0%" stop-color="#1c2030" stop-opacity="1"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <defs><radialGradient id="cg7" cx="55%" cy="45%" r="50%"><stop offset="0%" stop-color="#0a1010" stop-opacity="1"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
           <rect width="220" height="124" fill="url(#cg7)"/>
-          <line x1="40" y1="30" x2="180" y2="30" stroke="#f5f0e8" stroke-width=".4" opacity=".15"/>
-          <line x1="40" y1="42" x2="155" y2="42" stroke="#f5f0e8" stroke-width=".4" opacity=".12"/>
-          <line x1="40" y1="54" x2="165" y2="54" stroke="#f5f0e8" stroke-width=".4" opacity=".13"/>
-          <line x1="40" y1="66" x2="140" y2="66" stroke="#f5f0e8" stroke-width=".4" opacity=".1"/>
-          <line x1="40" y1="78" x2="170" y2="78" stroke="#f5f0e8" stroke-width=".4" opacity=".12"/>
-          <line x1="40" y1="90" x2="150" y2="90" stroke="#f5f0e8" stroke-width=".4" opacity=".1"/>
-          <line x1="40" y1="102" x2="160" y2="102" stroke="#f5f0e8" stroke-width=".4" opacity=".08"/>
-          <rect x="175" y="26" width="10" height="10" stroke="#b8974a" stroke-width=".6" fill="none" opacity=".3"/>
+          <line x1="40" y1="30" x2="180" y2="30" stroke="#00f5ff" stroke-width=".5" opacity=".25"/>
+          <line x1="40" y1="42" x2="155" y2="42" stroke="#ff006e" stroke-width=".5" opacity=".22"/>
+          <line x1="40" y1="54" x2="165" y2="54" stroke="#39ff14" stroke-width=".5" opacity=".23"/>
+          <line x1="40" y1="66" x2="140" y2="66" stroke="#00f5ff" stroke-width=".5" opacity=".2"/>
+          <line x1="40" y1="78" x2="170" y2="78" stroke="#ff006e" stroke-width=".5" opacity=".22"/>
+          <line x1="40" y1="90" x2="150" y2="90" stroke="#39ff14" stroke-width=".5" opacity=".2"/>
+          <line x1="40" y1="102" x2="160" y2="102" stroke="#00f5ff" stroke-width=".5" opacity=".18"/>
+          <rect x="175" y="26" width="10" height="10" stroke="#ff006e" stroke-width=".8" fill="none" opacity=".4"/>
         </svg>
       </div>
       <div class="card-badge badge-written">Written</div>
@@ -1035,11 +1355,11 @@
     <div class="card-visual">
       <div class="card-visual-art">
         <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg8" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#1e1a28" stop-opacity="1"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <defs><radialGradient id="cg8" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#0a0a1a" stop-opacity="1"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
           <rect width="220" height="124" fill="url(#cg8)"/>
-          <path d="M60 90 C80 50, 100 30, 110 62 C120 94, 140 50, 160 35" stroke="#b8974a" stroke-width="1.2" fill="none" opacity=".5"/>
-          <path d="M60 90 C80 70, 100 55, 110 75 C120 95, 140 75, 160 60" stroke="#b8974a" stroke-width=".6" fill="none" opacity=".25"/>
-          <line x1="32" y1="100" x2="188" y2="100" stroke="#b8974a" stroke-width=".4" opacity=".18"/>
+          <path d="M60 90 C80 50, 100 30, 110 62 C120 94, 140 50, 160 35" stroke="#ff006e" stroke-width="1.2" fill="none" opacity=".6"/>
+          <path d="M60 90 C80 70, 100 55, 110 75 C120 95, 140 75, 160 60" stroke="#00f5ff" stroke-width=".8" fill="none" opacity=".35"/>
+          <line x1="32" y1="100" x2="188" y2="100" stroke="#39ff14" stroke-width=".5" opacity=".28"/>
         </svg>
       </div>
       <div class="card-badge badge-interview">Interview</div>
@@ -1064,21 +1384,21 @@
     <div class="card-visual">
       <div class="card-visual-art">
         <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg9" cx="35%" cy="55%" r="55%"><stop offset="0%" stop-color="#1a1f18" stop-opacity="1"/><stop offset="100%" stop-color="#1a1a22" stop-opacity="1"/></radialGradient></defs>
+          <defs><radialGradient id="cg9" cx="35%" cy="55%" r="55%"><stop offset="0%" stop-color="#0a1510" stop-opacity="1"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
           <rect width="220" height="124" fill="url(#cg9)"/>
-          <rect x="42" y="46" width="4" height="32" fill="#b8974a" opacity=".3" rx="2"/>
-          <rect x="53" y="38" width="4" height="48" fill="#b8974a" opacity=".4" rx="2"/>
-          <rect x="64" y="50" width="4" height="24" fill="#b8974a" opacity=".28" rx="2"/>
-          <rect x="75" y="32" width="4" height="60" fill="#b8974a" opacity=".52" rx="2"/>
-          <rect x="86" y="44" width="4" height="36" fill="#b8974a" opacity=".36" rx="2"/>
-          <rect x="97" y="40" width="4" height="44" fill="#b8974a" opacity=".42" rx="2"/>
-          <rect x="108" y="54" width="4" height="16" fill="#b8974a" opacity=".24" rx="2"/>
-          <rect x="119" y="36" width="4" height="52" fill="#b8974a" opacity=".48" rx="2"/>
-          <rect x="130" y="48" width="4" height="28" fill="#b8974a" opacity=".34" rx="2"/>
-          <rect x="141" y="42" width="4" height="40" fill="#b8974a" opacity=".4" rx="2"/>
-          <rect x="152" y="50" width="4" height="24" fill="#b8974a" opacity=".28" rx="2"/>
-          <rect x="163" y="44" width="4" height="36" fill="#b8974a" opacity=".35" rx="2"/>
-          <rect x="174" y="56" width="4" height="12" fill="#b8974a" opacity=".22" rx="2"/>
+          <rect x="42" y="46" width="4" height="32" fill="#39ff14" opacity=".4" rx="2"/>
+          <rect x="53" y="38" width="4" height="48" fill="#ff006e" opacity=".5" rx="2"/>
+          <rect x="64" y="50" width="4" height="24" fill="#00f5ff" opacity=".42" rx="2"/>
+          <rect x="75" y="32" width="4" height="60" fill="#39ff14" opacity=".6" rx="2"/>
+          <rect x="86" y="44" width="4" height="36" fill="#ff006e" opacity=".48" rx="2"/>
+          <rect x="97" y="40" width="4" height="44" fill="#00f5ff" opacity=".52" rx="2"/>
+          <rect x="108" y="54" width="4" height="16" fill="#39ff14" opacity=".34" rx="2"/>
+          <rect x="119" y="36" width="4" height="52" fill="#ff006e" opacity=".58" rx="2"/>
+          <rect x="130" y="48" width="4" height="28" fill="#00f5ff" opacity=".44" rx="2"/>
+          <rect x="141" y="42" width="4" height="40" fill="#39ff14" opacity=".5" rx="2"/>
+          <rect x="152" y="50" width="4" height="24" fill="#ff006e" opacity=".38" rx="2"/>
+          <rect x="163" y="44" width="4" height="36" fill="#00f5ff" opacity=".45" rx="2"/>
+          <rect x="174" y="56" width="4" height="12" fill="#39ff14" opacity=".32" rx="2"/>
         </svg>
       </div>
       <div class="card-badge badge-podcast">Podcast</div>
