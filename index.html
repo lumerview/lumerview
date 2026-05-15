@@ -1053,28 +1053,28 @@
 <section class="featured">
   <div class="featured-inner reveal">
     <div class="featured-visual">
-      <!-- Centering Container with fixed dimensions -->
-      <div class="featured-visual-art" style="position: relative; width: 340px; height: 420px; display: flex; justify-content: center; align-items: center; background: #000; overflow: hidden;">
+      <!-- UPDATED: Added max-width and aspect-ratio to prevent "smallness" on zoom -->
+      <div class="featured-visual-art" style="position: relative; width: 100%; max-width: 400px; aspect-ratio: 340 / 420; display: flex; justify-content: center; align-items: center; background: #000; overflow: hidden; margin: 0 auto;">
         
-        <!-- The Image: Fixed height to touch the outlines, width auto to stay centered -->
+        <!-- THE IMAGE: Set to fill 100% of the scaling container -->
         <img src="https://i.ibb.co/9kThrtCv/indiefferential-magazine-9-xl-xxxl.jpg" 
              alt="indiefferential magazine 9 xl xxxl" 
-             style="height: 100%; width: auto; display: block; z-index: 1;">
+             style="height: 100%; width: 100%; object-fit: cover; object-position: center; display: block; z-index: 1;">
 
-        <!-- SVG Overlay: Keeps the glow layer on top -->
-        <svg viewBox="0 0 340 420" width="340" height="420" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2;">
+        <!-- SVG Overlay: Now uses 100% width/height to scale with the box -->
+        <svg viewBox="0 0 340 420" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2;">
           <defs>
             <radialGradient id="fg1" cx="45%" cy="40%" r="55%">
               <stop offset="0%" stop-color="#ff006e" stop-opacity=".25"/>
               <stop offset="100%" stop-color="#ff006e" stop-opacity="0"/>
             </radialGradient>
           </defs>
-          <rect width="340" height="420" fill="url(#fg1)" />
+          <rect width="100%" height="100%" fill="url(#fg1)" />
         </svg>
       </div>
 
       <div class="featured-tag">Featured · Interview</div>
-      <div class="featured-duration">62 min</div>
+      <div class="featured-duration">1 min</div>
       <div class="play-btn">
         <svg class="play-icon" width="14" height="14" viewBox="0 0 14 14">
           <polygon points="3,1 13,7 3,13"/>
