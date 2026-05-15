@@ -1052,16 +1052,16 @@
 <!-- FEATURED INTERVIEW -->
 <section class="featured">
   <div class="featured-inner reveal">
-    <div class="featured-visual">
-      <!-- UPDATED: Added max-width and aspect-ratio to prevent "smallness" on zoom -->
-      <div class="featured-visual-art" style="position: relative; width: 100%; max-width: 400px; aspect-ratio: 340 / 420; display: flex; justify-content: center; align-items: center; background: #000; overflow: hidden; margin: 0 auto;">
+    <div class="featured-visual" style="display: flex; justify-content: center;">
+      <!-- UPDATED: Increased max-width and set height relative to screen (vh) -->
+      <div class="featured-visual-art" style="position: relative; width: 100%; max-width: 500px; height: 60vh; max-height: 600px; aspect-ratio: 340 / 420; display: flex; justify-content: center; align-items: center; background: #000; overflow: hidden; margin: 0 auto; border-radius: 8px;">
         
-        <!-- THE IMAGE: Set to fill 100% of the scaling container -->
+        <!-- THE IMAGE: Forced to cover the entire larger area -->
         <img src="https://i.ibb.co/9kThrtCv/indiefferential-magazine-9-xl-xxxl.jpg" 
              alt="indiefferential magazine 9 xl xxxl" 
              style="height: 100%; width: 100%; object-fit: cover; object-position: center; display: block; z-index: 1;">
 
-        <!-- SVG Overlay: Now uses 100% width/height to scale with the box -->
+        <!-- SVG Overlay: Scales automatically with the new container size -->
         <svg viewBox="0 0 340 420" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2;">
           <defs>
             <radialGradient id="fg1" cx="45%" cy="40%" r="55%">
