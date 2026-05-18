@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radio — Between the Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Archivo:wght@100;200;300;400;600;700;900&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0a0a0a;
+    --bone: #f5f0e8;
+    --neon: #ff006e;
+    --cyan: #00f5ff;
+    --lime: #39ff14;
+    --gold: #ffd60a;
+    --purple: #b537f2;
+    --slate: #2c2c38;
+    --charcoal: #1a1a22;
+    --crt-green: #00ff41;
+    --crt-amber: #ffb000;
+    --vhs-panel: #111118;
+    --vhs-chrome: #1e1e2e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--bone);
+    font-family: 'Archivo', sans-serif;
+    font-weight: 200;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── SCANLINES ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.13) 2px, rgba(0,0,0,0.13) 4px);
+    pointer-events: none; z-index: 9998;
+  }
+
+  /* ── GRAIN ── */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9000; opacity: .5;
+  }
+
+  /* ── CURSOR ── */
+  .cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .3s, height .3s, background .3s; }
+  .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(255,0,110,.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .3s, height .3s; }
+
+  /* ── ROLLING SCANLINE ── */
+  .rolling-line { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: rgba(0,255,65,.1); animation: scanline-roll 10s linear infinite; pointer-events: none; z-index: 9997; }
+  @keyframes scanline-roll { 0%{transform:translateY(-100%)} 100%{transform:translateY(100vh)} }
+
+  @keyframes flicker { 0%,100%{opacity:1} 92%{opacity:1} 93%{opacity:.7} 94%{opacity:1} 97%{opacity:.9} }
+  @keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+  @keyframes tape-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  @keyframes reel-ccw { from{transform:rotate(0deg)} to{transform:rotate(-360deg)} }
+  @keyframes glow-pulse { 0%,100%{text-shadow:0 0 8px currentColor,0 0 20px currentColor} 50%{text-shadow:0 0 4px currentColor,0 0 10px currentColor} }
+  @keyframes led-blink { 0%,40%,60%,100%{opacity:1} 50%{opacity:.15} }
+  @keyframes insert-drop { 0%{transform:translate(-50%,calc(-50% - 110px));opacity:0} 60%{transform:translate(-50%,calc(-50% + 6px))} 80%{transform:translate(-50%,calc(-50% - 3px))} 100%{transform:translate(-50%,-50%);opacity:1} }
+  @keyframes eject-rise { 0%{transform:translate(-50%,-50%)} 100%{transform:translate(-50%,calc(-50% - 115px));opacity:0} }
+  @keyframes tracking-glitch { 0%,100%{transform:translateX(0) skewX(0deg)} 2%{transform:translateX(-3px) skewX(-.8deg)} 4%{transform:translateX(3px) skewX(.8deg)} 6%{transform:translateX(0) skewX(0deg)} }
+  @keyframes fade-up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes hfloat { 0%{opacity:0;transform:translateY(0) rotate(var(--r,0deg))} 20%{opacity:1} 80%{opacity:.4} 100%{opacity:0;transform:translateY(-60px) rotate(calc(var(--r,0deg) + 6deg))} }
+  @keyframes marquee { 0%{transform:translateX(100%)} 100%{transform:translateX(-100%)} }
+  @keyframes progress-glow { 0%,100%{box-shadow:0 0 6px var(--neon)} 50%{box-shadow:0 0 14px var(--neon),0 0 24px rgba(255,0,110,.3)} }
+  @keyframes static-noise { 0%,100%{transform:translateX(0)} 33%{transform:translateX(-2px)} 66%{transform:translateX(2px)} }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.5rem 2.5rem;
+    background:rgba(10,10,10,.95); backdrop-filter:blur(8px);
+    border-bottom:2px solid var(--neon);
+  }
+  .nav-logo { font-family:'Archivo',sans-serif; font-weight:700; font-size:1rem; letter-spacing:.15em; text-transform:uppercase; text-decoration:none; background:linear-gradient(90deg,var(--bone) 0%,var(--cyan) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { font-size:.65rem; letter-spacing:.3em; text-transform:uppercase; color:rgba(245,240,232,.6); text-decoration:none; transition:all .2s; font-weight:500; }
+  .nav-links a:hover, .nav-links a.active { color:var(--neon); text-shadow:0 0 8px var(--neon); }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    min-height: 55vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 2.5rem 5rem;
+    position: relative; overflow: hidden;
+    margin-top: 72px;
+    background: linear-gradient(135deg, rgba(255,0,110,.06) 0%, rgba(0,245,255,.04) 100%);
+  }
+  .page-header-bg { position:absolute;inset:0; background:radial-gradient(ellipse 120% 80% at 15% 70%,rgba(255,0,110,.12) 0%,transparent 50%),radial-gradient(ellipse 80% 100% at 85% 15%,rgba(0,245,255,.08) 0%,transparent 55%); }
+  .page-header-grid { position:absolute;inset:0; background-image:repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,0,110,.07) 40px),repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(0,245,255,.05) 40px); opacity:.6; }
+  .page-header-inner { position:relative; max-width:1200px; }
+  .page-header-label { font-size:.7rem;letter-spacing:.4em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem;opacity:0;animation:fade-up .8s ease .3s forwards;font-weight:600;text-shadow:0 0 10px rgba(0,245,255,.4); }
+  .page-header h1 { font-family:'Archivo',sans-serif;font-size:clamp(4rem,10vw,9rem);font-weight:900;line-height:.95;letter-spacing:-.03em;opacity:0;animation:fade-up 1s ease .5s forwards;background:linear-gradient(90deg,var(--bone) 0%,var(--neon) 50%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  .page-header h1 em { font-style:italic; }
+  .page-header-sub { margin-top:2rem;font-size:1.05rem;line-height:1.7;font-weight:500;color:rgba(245,240,232,.7);max-width:600px;opacity:0;animation:fade-up 1s ease .75s forwards; }
+  .hf { position:absolute;opacity:0;animation:hfloat 12s ease-in-out infinite;animation-delay:var(--d);pointer-events:none; }
+
+  /* ══════════════════════════════════════
+      VHS RADIO UNIT
+   ══════════════════════════════════════ */
+  .radio-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2.5rem 8rem;
+  }
+
+  .radio-label-row {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 2.5rem;
+    opacity: 0; animation: fade-up .8s ease 1s forwards;
+  }
+  .radio-label-text { font-size:.7rem;letter-spacing:.4em;text-transform:uppercase;color:var(--cyan);font-weight:700;text-shadow:0 0 8px rgba(0,245,255,.3); }
+  .radio-label-line { flex:1; height:2px; background:linear-gradient(90deg,var(--neon),rgba(0,245,255,.3),transparent); }
+
+  /* ── THE VCR UNIT ── */
+  .vcr-unit {
+    background: linear-gradient(180deg, #1c1c2a 0%, #131320 100%);
+    border: 2px solid #2a2a40;
+    border-radius: 6px 6px 4px 4px;
+    box-shadow: 0 0 0 1px #0a0a18, 0 6px 0 #0a0a18, 0 0 40px rgba(255,0,110,.08), inset 0 1px 0 rgba(255,255,255,.04);
+    animation: flicker 12s infinite;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* top chrome strip */
+  .vcr-unit::before {
+    content: '';
+    position: absolute; top:0; left:0; right:0; height:3px;
+    background: linear-gradient(90deg, var(--neon), var(--cyan), var(--lime), var(--neon));
+    opacity: .5;
+  }
+
+  /* ── DISPLAY BAR ── */
+  .display-bar {
+    background: #070710;
+    border-bottom: 2px solid #1a1a2a;
+    padding: 10px 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+
+  .brand { font-family:'Archivo',sans-serif;font-weight:900;font-size:10px;letter-spacing:5px;color:#222244;text-transform:uppercase; }
+
+  .vcr-display {
+    background: #020208;
+    border: 1px solid #1a1a30;
+    border-radius: 2px;
+    padding: 5px 14px;
+    flex: 1; max-width: 420px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,.9), 0 0 10px rgba(0,207,255,.1);
+    overflow: hidden;
+  }
+
+  .display-top { display:flex;align-items:center;justify-content:space-between; }
+  .display-clock { font-family:'VT323',monospace;font-size:28px;color:var(--cyan);text-shadow:0 0 10px var(--cyan),0 0 20px rgba(0,207,255,.3);letter-spacing:4px; }
+  .colon-blink { animation:blink 1s step-end infinite; }
+  .display-mode { font-family:'VT323',monospace;font-size:13px;color:var(--crt-amber);text-shadow:0 0 8px var(--crt-amber);letter-spacing:2px;animation:glow-pulse 2s ease-in-out infinite; }
+
+  /* scrolling song title */
+  .display-ticker { overflow:hidden; height:18px; margin-top:2px; position: relative; }
+  .display-ticker-inner { font-family:'VT323',monospace;font-size:16px;color:var(--lime);letter-spacing:2px;white-space:nowrap;display:inline-block; }
+  .display-ticker-inner.running { animation:marquee 14s linear infinite; }
+
+  .led-strip { display:flex;gap:8px;align-items:center; }
+  .led { width:8px;height:8px;border-radius:50%; }
+  .led.red { background:var(--neon);box-shadow:0 0 6px var(--neon);animation:led-blink 2s ease-in-out infinite; }
+  .led.grn { background:var(--lime);box-shadow:0 0 6px var(--lime); }
+  .led.amb { background:var(--crt-amber);box-shadow:0 0 6px var(--crt-amber);animation:led-blink 3s ease-in-out infinite 1s; }
+  .led.off { background:#1a1a2a; }
+
+  /* ── CASSETTE BAY ── */
+  .cassette-bay {
+    background: #080812;
+    border-bottom: 2px solid #1a1a2a;
+    padding: 22px 28px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    min-height: 150px;
+    position: relative;
+  }
+
+  .cassette-slot {
+    flex: 1;
+    height: 108px;
+    background: #04040c;
+    border: 1px solid #1a1a2a;
+    border-radius: 3px;
+    position: relative; overflow: hidden;
+    cursor: pointer;
+    box-shadow: inset 0 3px 10px rgba(0,0,0,.9);
+    transition: border-color .3s;
+  }
+  .cassette-slot:hover { border-color: #2a2a50; }
+
+  .slot-label { position:absolute;top:7px;left:10px;font-family:'VT323',monospace;font-size:11px;color:#1e1e44;letter-spacing:3px; }
+  .slot-hint  { position:absolute;bottom:7px;right:10px;font-family:'VT323',monospace;font-size:11px;color:#1a1a3a;letter-spacing:2px; }
+
+  /* ── THE CASSETTE SVG ── */
+  .cassette {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px; height: 78px;
+    cursor: pointer;
+    user-select: none;
+    transition: transform .4s cubic-bezier(.34,1.56,.64,1), opacity .4s ease;
+  }
+  .cassette.ejected { transform: translate(-50%, calc(-50% - 115px)); opacity: 0; }
+
+  /* reel spin groups — transform-origin set inline on the g */
+  #rl { transform-origin: 62px 59px; }
+  #rr { transform-origin: 138px 59px; }
+  .spinning-cw  { animation: tape-spin 1.6s linear infinite; }
+  .spinning-ccw { animation: reel-ccw 1.6s linear infinite; }
+
+  /* static overlay on slot */
+  .slot-static { position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;background:repeating-linear-gradient(0deg,rgba(0,255,65,.04),rgba(0,255,65,.02) 1px,transparent 1px,transparent 4px);animation:static-noise .08s infinite; }
+  .slot-static.on { opacity:1; }
+
+  /* ── CONTROLS ── */
+  .controls { display:flex;flex-direction:column;gap:12px;min-width:200px; }
+
+  .tape-counter { background:#020208;border:1px solid #1a1a30;border-radius:2px;padding:5px 12px;font-family:'VT323',monospace;font-size:26px;color:var(--crt-amber);letter-spacing:3px;text-shadow:0 0 8px var(--crt-amber);text-align:center; }
+
+  .transport { display:flex;gap:5px;align-items:center; }
+
+  .vbtn {
+    background:linear-gradient(180deg,#252535 0%,#1a1a28 100%);
+    border:1px solid #333355;border-bottom:2px solid #0a0a18;
+    border-radius:3px;color:var(--lime);
+    font-family:'VT323',monospace;font-size:20px;
+    padding:5px 9px;cursor:pointer;
+    transition:all .1s;letter-spacing:1px;
+    user-select:none;min-width:34px;text-align:center;
+    text-shadow:0 0 6px currentColor;
+  }
+  .vbtn:hover { background:linear-gradient(180deg,#2e2e45 0%,#222235 100%);color:var(--crt-amber);border-color:#4444aa; }
+  .vbtn:active,.vbtn.on { transform:translateY(1px);border-bottom-width:1px;color:var(--cyan); }
+  .vbtn.play-btn { color:var(--lime);font-size:22px; }
+  .vbtn.shuf-btn { font-size:13px;letter-spacing:2px;padding:5px 10px;font-family:'Share Tech Mono',monospace; }
+  .vbtn.eject-btn { font-size:12px;letter-spacing:2px;padding:5px 12px;font-family:'Share Tech Mono',monospace; }
+
+  /* ── KNOB + VOLUME PANEL ── */
+  .knob-panel {
+    background: #0c0c18;
+    border-bottom: 2px solid #1a1a2a;
+    padding: 18px 28px;
+    display: flex; align-items: center; gap: 28px;
+  }
+
+  .knob-group { display:flex;flex-direction:column;align-items:center;gap:6px; }
+  .knob-lbl { font-size:9px;letter-spacing:2px;color:#333366;text-transform:uppercase;font-family:'Share Tech Mono',monospace; }
+  .knob {
+    width:46px;height:46px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#3a3a5a,#111122);
+    border:2px solid #2a2a44;position:relative;cursor:pointer;
+    box-shadow:0 3px 8px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.06),0 0 0 1px #0a0a18;
+    user-select:none;
+    transition: transform 0.2s ease;
+  }
+  .knob:hover { box-shadow:0 3px 12px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.1),0 0 0 1px #2a2a44,0 0 12px rgba(255,0,110,.15); }
+  .knob::after { content:'';position:absolute;top:5px;left:50%;transform:translateX(-50%);width:3px;height:11px;background:var(--neon);border-radius:2px;box-shadow:0 0 4px var(--neon);transform-origin:bottom center; }
+  .knob-val { font-family:'VT323',monospace;font-size:17px;color:var(--cyan);letter-spacing:1px;min-width:36px;text-align:center; }
+
+  .vol-group { display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;max-width:160px; }
+  .vhs-range { -webkit-appearance:none;width:100%;height:4px;background:#1a1a2a;border-radius:2px;border:1px solid #2a2a44;outline:none;cursor:pointer; }
+  .vhs-range::-webkit-slider-thumb { -webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#3a3a5a,#111122);border:2px solid #ff006e;box-shadow:0 0 6px rgba(255,0,110,.4);cursor:pointer; }
+
+  .vent { display:flex;flex-direction:column;gap:4px;margin-left:auto; }
+  .vent-l { width:55px;height:2px;background:#161626;border-radius:1px; }
+
+  /* ── SONG INFO PANEL ── */
+  .info-panel {
+    background: #020208;
+    border-bottom: 2px solid #1a1a2a;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    animation: tracking-glitch 18s infinite;
+  }
+
+  .info-header {
+    background: #080810;
+    border-bottom: 1px solid #1a1a2a;
+    padding: 9px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .info-title { font-family:'VT323',monospace;font-size:16px;color:var(--lime);letter-spacing:3px;text-shadow:0 0 8px var(--lime); }
+  .rec-ind { display:none;align-items:center;gap:6px;font-family:'VT323',monospace;font-size:12px;color:var(--neon);letter-spacing:2px;animation:glow-pulse 1.5s ease-in-out infinite; }
+  .rec-ind.on { display: flex; }
+  .rec-dot { width:8px;height:8px;border-radius:50%;background:var(--neon);box-shadow:0 0 8px var(--neon);animation:led-blink 1s ease-in-out infinite; }
+
+  .song-body {
+    padding: 20px 24px 22px;
+  }
+
+  /* coloured bar matching site style */
+  .song-color-bar {
+    height: 3px;
+    background: linear-gradient(90deg, var(--neon), var(--cyan), var(--lime));
+    margin-bottom: 18px;
+    box-shadow: 0 0 12px rgba(255,0,110,.4);
+    transition: width .4s;
+    width: 100%;
+  }
+
+  .song-name {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    color: var(--bone);
+    letter-spacing: -.01em;
+    margin-bottom: .3rem;
+    transition: color .3s;
+  }
+  .song-name.playing { color: #fff; text-shadow: 0 0 30px rgba(255,0,110,.2); }
+
+  .song-sub {
+    font-size: .65rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--neon);
+    font-weight: 700;
+    margin-bottom: 18px;
+    text-shadow: 0 0 8px rgba(255,0,110,.3);
+  }
+
+  /* progress bar */
+  .progress-wrap {
+    position: relative;
+    height: 6px;
+    background: #1a1a2a;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon), var(--cyan));
+    border-radius: 3px;
+    width: 0%;
+    animation: progress-glow 2s ease-in-out infinite;
+    position: relative;
+  }
+  .progress-fill::after {
+    content: '';
+    position: absolute; right: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 8px var(--neon);
+  }
+
+  .time-row { display:flex;justify-content:space-between; }
+  .time-val { font-family:'VT323',monospace;font-size:15px;color:#333366;letter-spacing:2px; }
+  .time-val.lit { color:var(--cyan); }
+
+  /* playlist / track list */
+  .track-section {
+    padding: 0 24px 20px;
+    border-top: 1px solid #0e0e1e;
+  }
+  .track-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 0 10px;
+  }
+  .track-head-lbl { font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:#333366;font-weight:700;font-family:'Share Tech Mono',monospace; }
+  .track-count { font-family:'VT323',monospace;font-size:16px;color:#222244;letter-spacing:1px; }
+
+  .track-list { display:flex;flex-direction:column;gap:2px;max-height:220px;overflow-y:auto; }
+  .track-list::-webkit-scrollbar { width:3px; }
+  .track-list::-webkit-scrollbar-track { background:#0a0a14; }
+  .track-list::-webkit-scrollbar-thumb { background:#1e1e3a;border-radius:2px; }
+
+  .track-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 9px 12px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .track-item:hover { background:#0a0a14;border-color:#1a1a2a; }
+  .track-item.active { background:rgba(255,0,110,.06);border-color:rgba(255,0,110,.25); }
+
+  .track-num { font-family:'VT323',monospace;font-size:16px;color:#222244;width:24px;flex-shrink:0;letter-spacing:1px; }
+  .track-item.active .track-num { color:var(--neon); }
+  .track-info { flex:1;overflow:hidden; }
+  .track-fn { font-size:.78rem;color:#5555aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.03em; }
+  .track-item.active .track-fn { color:var(--bone); }
+  .track-dur { font-family:'VT323',monospace;font-size:15px;color:#222244;letter-spacing:1px;flex-shrink:0; }
+  .track-item.active .track-dur { color:var(--cyan); }
+
+  /* playing indicator bars */
+  .play-anim { display:none; align-items:flex-end; gap:2px; height:14px; flex-shrink:0; }
+  .track-item.active .play-anim { display:flex; }
+  .play-bar { width:3px;background:var(--neon);border-radius:1px;animation:bar-bounce .6s ease-in-out infinite; }
+  .play-bar:nth-child(1) { animation-delay:0s;height:6px; }
+  .play-bar:nth-child(2) { animation-delay:.15s;height:10px; }
+  .play-bar:nth-child(3) { animation-delay:.3s;height:7px; }
+  @keyframes bar-bounce { 0%,100%{transform:scaleY(.4)} 50%{transform:scaleY(1)} }
+
+  /* empty state */
+  .no-songs {
+    padding: 30px 0;
+    text-align: center;
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    color: #222244;
+    letter-spacing: 3px;
+    line-height: 2;
+    display: block;
+  }
+  .no-songs span { color: var(--neon); }
+
+  /* ── CHANNEL BAR ── */
+  .channel-bar {
+    display: flex;
+    border-top: 1px solid #1a1a2a;
+    background: #07070f;
+  }
+  .ch-btn { flex:1;padding:11px 8px;background:none;border:none;border-right:1px solid #1a1a2a;color:#2a2a55;font-family:'VT323',monospace;font-size:15px;letter-spacing:2px;cursor:pointer;transition:all .2s;text-transform:uppercase; }
+  .ch-btn:last-child { border-right:none; }
+  .ch-btn:hover { background:#0e0e1e;color:#5555aa; }
+  .ch-btn.active { background:#0e0e1e;color:var(--lime);text-shadow:0 0 8px var(--lime);border-bottom:2px solid var(--lime); }
+
+  /* ── STATUS BAR ── */
+  .status-bar {
+    background:#050510;border:2px solid #1a1a2a;border-top:1px solid #0d0d1e;
+    padding:7px 20px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+  }
+  .status-txt { font-family:'Share Tech Mono',monospace;font-size:10px;color:#1a1a44;letter-spacing:2px;flex:1;overflow:hidden;white-space:nowrap; }
+  .ver-tag { font-family:'VT323',monospace;font-size:15px;color:#1a1a44;letter-spacing:2px; }
+
+  /* ── HOW TO USE NOTE ── */
+  .setup-note {
+    margin-top: 2rem;
+    padding: 20px 24px;
+    border: 1px dashed #1e1e44;
+    border-radius: 3px;
+    background: rgba(0,0,0,.3);
+  }
+  .setup-head { font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;font-weight:700;font-family:'Share Tech Mono',monospace; }
+  .setup-body { font-size:.8rem;color:#3a3a6a;line-height:1.9;font-family:'Share Tech Mono',monospace; }
+  .setup-body code { color:var(--lime);letter-spacing:.05em; }
+  .setup-body strong { color:#5555aa; }
+
+  /* ── FOOTER AREA ── */
+  .section-divider { border:none;border-top:2px dashed rgba(0,245,255,.15);margin:0 2.5rem; }
+
+  footer { padding:5rem 2.5rem 3rem;background:linear-gradient(to bottom,rgba(10,10,10,.95),rgba(10,10,10,.98));border-top:3px solid var(--neon); }
+  .footer-inner { max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem;margin-bottom:4rem; }
+  .footer-logo { font-family:'Archivo',sans-serif;font-size:1.8rem;font-weight:900;letter-spacing:.1em;color:var(--bone);margin-bottom:1.2rem;background:linear-gradient(90deg,var(--bone) 0%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  .footer-tagline { font-size:.8rem;line-height:1.8;color:rgba(245,240,232,.4);max-width:280px;font-weight:500; }
+  .footer-col h4 { font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--neon);margin-bottom:1.5rem;font-weight:700; }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:.8rem; }
+  .footer-col ul a { font-size:.85rem;color:rgba(245,240,232,.4);text-decoration:none;transition:all .3s;letter-spacing:.05em;font-weight:500; }
+  .footer-col ul a:hover { color:var(--cyan);text-shadow:0 0 8px rgba(0,245,255,.3); }
+  .footer-bottom { max-width:1200px;margin:0 auto;padding-top:2rem;border-top:2px dashed var(--cyan);display:flex;justify-content:space-between;align-items:center; }
+  .footer-copy { font-size:.65rem;color:rgba(245,240,232,.3);letter-spacing:.15em;font-weight:500; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease; }
+  .reveal.visible { opacity:1;transform:translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:768px){
+    nav { padding:1rem 1.5rem; }
+    .nav-links { gap:.8rem; }
+    .nav-links a { font-size:.55rem; }
+    .page-header { padding:0 1.5rem 3rem;min-height:40vh; }
+    .page-header h1 { font-size:clamp(2.8rem,9vw,5rem); }
+    .hf { display:none; }
+    .radio-section { padding:3rem 1.5rem 5rem; }
+    .cassette-bay { flex-direction:column;min-height:auto;padding:20px 18px; }
+    .cassette-slot { width:100%;height:120px; }
+    .controls { min-width:auto;width:100%; }
+    .knob-panel { gap:16px;flex-wrap:wrap;padding:16px 18px; }
+    .footer-inner { grid-template-columns:1fr; }
+    body { cursor:auto; }
+    .cursor,.cursor-ring { display:none; }
+  }
+
+  @media(max-width:500px){
+    .transport { flex-wrap:wrap; }
+    .song-name { font-size:1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="ring"></div>
+<div class="rolling-line"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Between&nbsp;the&nbsp;Notes</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="listen.html">Conversations</a></li>
+    <li><a href="index.html#press">Press</a></li>
+    <li><a href="radio.html" class="active">Radio</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-grid"></div>
+  <div class="hf" style="right:10%;top:30%;--d:0s;--r:-8deg"><svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" stroke="#00f5ff" stroke-width="1.2" fill="none" opacity=".7"/></svg></div>
+  <div class="hf" style="right:28%;top:55%;--d:2s;--r:12deg"><svg width="32" height="6" viewBox="0 0 32 6"><line x1="0" y1="3" x2="32" y2="3" stroke="#ff006e" stroke-width="1.5" opacity=".6"/></svg></div>
+  <div class="hf" style="right:5%;top:62%;--d:1s;--r:-4deg"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" stroke="#39ff14" stroke-width="1" fill="none" opacity=".6"/></svg></div>
+  <div class="hf" style="right:42%;top:20%;--d:3s;--r:5deg"><svg width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="0" x2="10" y2="20" stroke="#00f5ff" stroke-width="1.2" opacity=".5"/><line x1="0" y1="10" x2="20" y2="10" stroke="#00f5ff" stroke-width="1.2" opacity=".5"/></svg></div>
+  <div class="page-header-inner">
+    <div class="page-header-label">Radio · Analogue Transmission</div>
+    <h1>The<br><em>Radio</em></h1>
+    <p class="page-header-sub">Insert the tape. Let it play. Songs from the archive — the music that lives between the notes of the documentary.</p>
+  </div>
+</section>
+
+<!-- RADIO SECTION -->
+<section class="radio-section">
+
+  <div class="radio-label-row">
+    <span class="radio-label-text">VHS Radio Unit · Model BTN-001</span>
+    <div class="radio-label-line"></div>
+  </div>
+
+  <!-- ══ THE VCR UNIT ══ -->
+  <div class="vcr-unit reveal">
+
+    <!-- DISPLAY BAR -->
+    <div class="display-bar">
+      <div class="brand">BTN RADIO</div>
+      <div class="vcr-display">
+        <div class="display-top">
+          <div class="display-clock"><span id="dh">00</span><span class="colon-blink">:</span><span id="dm">00</span><span class="colon-blink">:</span><span id="ds">00</span></div>
+          <div class="display-mode" id="dmode">■ STOP</div>
+        </div>
+        <div class="display-ticker"><span class="display-ticker-inner" id="ticker">BETWEEN THE NOTES · RADIO · INSERT TAPE TO BEGIN · · ·</span></div>
+      </div>
+      <div class="led-strip">
+        <div class="led red" title="POWER"></div>
+        <div class="led off" id="led-play"></div>
+        <div class="led amb"></div>
+        <div class="led off" id="led-rec"></div>
+      </div>
+    </div>
+
+    <!-- CASSETTE BAY -->
+    <div class="cassette-bay">
+      <div class="cassette-slot" id="slot" title="Click to insert tape">
+        <div class="slot-label">▸ CASSETTE</div>
+        <div class="slot-hint" id="slot-hint">CLICK TO INSERT</div>
+
+        <!-- CASSETTE SVG -->
+        <svg class="cassette ejected" id="cassette" viewBox="0 0 200 78" xmlns="http://www.w3.org/2000/svg">
+          <!-- body -->
+          <rect x="2" y="2" width="196" height="74" rx="5" fill="#1a1a2e" stroke="#2a2a4e" stroke-width="1.5"/>
+          <!-- label sticker -->
+          <rect x="8" y="7" width="184" height="36" rx="2" fill="#0d0d1e" stroke="#1e1e3a" stroke-width="1"/>
+          <!-- gradient on label -->
+          <rect x="8" y="7" width="184" height="3" rx="1" fill="url(#labelGrad)" opacity=".7"/>
+          <defs>
+            <linearGradient id="labelGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ff006e" stop-opacity=".8"/>
+              <stop offset="50%" stop-color="#00f5ff" stop-opacity=".8"/>
+              <stop offset="100%" stop-color="#39ff14" stop-opacity=".8"/>
+            </linearGradient>
+          </defs>
+          <text x="100" y="22" font-family="VT323,monospace" font-size="11" fill="#3333aa" text-anchor="middle" letter-spacing="2">BETWEEN THE NOTES</text>
+          <text x="100" y="36" font-family="VT323,monospace" font-size="8" fill="#1e1e44" text-anchor="middle" letter-spacing="3">RADIO · SIDE A</text>
+          <!-- tape window -->
+          <rect x="28" y="49" width="144" height="20" rx="2" fill="#060610" stroke="#1a1a2a" stroke-width="1"/>
+          <!-- left reel -->
+          <circle cx="62" cy="59" r="9" fill="#0a0a18" stroke="#1e1e38" stroke-width="1"/>
+          <g id="rl">
+            <circle cx="62" cy="59" r="5.5" fill="#111122" stroke="#2a2a4a" stroke-width=".8"/>
+            <line x1="62" y1="53.5" x2="62" y2="59" stroke="#2a2a4a" stroke-width="1.5"/>
+            <line x1="62" y1="59" x2="67" y2="62" stroke="#2a2a4a" stroke-width="1.5"/>
+            <line x1="62" y1="59" x2="57" y2="62" stroke="#2a2a4a" stroke-width="1.5"/>
+          </g>
+          <!-- right reel -->
+          <circle cx="138" cy="59" r="9" fill="#0a0a18" stroke="#1e1e38" stroke-width="1"/>
+          <g id="rr">
+            <circle cx="138" cy="59" r="5.5" fill="#111122" stroke="#2a2a4a" stroke-width=".8"/>
+            <line x1="138" y1="53.5" x2="138" y2="59" stroke="#2a2a4a" stroke-width="1.5"/>
+            <line x1="138" y1="59" x2="143" y2="62" stroke="#2a2a4a" stroke-width="1.5"/>
+            <line x1="138" y1="59" x2="133" y2="62" stroke="#2a2a4a" stroke-width="1.5"/>
+          </g>
+          <!-- tape strip between reels -->
+          <rect x="71" y="57" width="58" height="4" rx="1" fill="#0d0d1a"/>
+        </svg>
+
+        <div class="slot-static" id="slot-static"></div>
+      </div>
+
+      <!-- CONTROLS -->
+      <div class="controls">
+        <div class="tape-counter" id="counter">0 0 0 0</div>
+        <div class="transport">
+          <button class="vbtn" id="btn-prev" onclick="prevTrack()" title="Previous">⏮</button>
+          <button class="vbtn play-btn" id="btn-play" onclick="togglePlay()" title="Play/Pause">▶</button>
+          <button class="vbtn" id="btn-stop" onclick="stopAll()" title="Stop">■</button>
+          <button class="vbtn" id="btn-next" onclick="nextTrack()" title="Next">⏭</button>
+          <button class="vbtn shuf-btn" id="btn-shuf" onclick="toggleShuffle()" title="Shuffle">⇄</button>
+          <button class="vbtn eject-btn" onclick="ejectCassette()" title="Eject">▲ EJCT</button>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span style="font-size:9px;color:#1e1e44;letter-spacing:2px;font-family:'Share Tech Mono',monospace;">RESET</span>
+          <button class="vbtn" style="font-size:11px;font-family:'Share Tech Mono',monospace;letter-spacing:2px;" onclick="resetCounter()">CLR</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- KNOB PANEL -->
+    <div class="knob-panel">
+      <div class="knob-group">
+        <div class="knob-lbl">TRACKING</div>
+        <div class="knob" id="kn-track" onclick="rotateKnob()"></div>
+        <div class="knob-val" id="track-val">0</div>
+      </div>
+      <div class="vol-group">
+        <div class="knob-lbl">VOLUME</div>
+        <input type="range" class="vhs-range" id="volume-slider" min="0" max="1" step="0.05" value="0.7" oninput="changeVolume(this.value)">
+      </div>
+      <div class="vent">
+        <div class="vent-l"></div>
+        <div class="vent-l"></div>
+        <div class="vent-l"></div>
+      </div>
+    </div>
+
+    <!-- INFO PANEL -->
+    <div class="info-panel">
+      <div class="info-header">
+        <div class="info-title">MONITOR OUTPUT</div>
+        <div class="rec-ind" id="rec-indicator">
+          <div class="rec-dot"></div>
+          <span>LIVE TRACKING</span>
+        </div>
+      </div>
+      <div class="song-body">
+        <div class="song-color-bar" id="progress-bar-color"></div>
+        <div class="song-name" id="song-title">NO TAPE DETECTED</div>
+        <div class="song-sub" id="song-artist">INSERT MIX TAPE</div>
+        
+        <div class="progress-wrap" onclick="seekAudio(event)">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="time-row">
+          <div class="time-val lit" id="time-current">00:00</div>
+          <div class="time-val" id="time-total">00:00</div>
+        </div>
+      </div>
+
+      <!-- TRACK LIST -->
+      <div class="track-section">
+        <div class="track-head">
+          <div class="track-head-lbl">ARCHIVE DIRECTORY</div>
+          <div class="track-count" id="directory-count">0 TRACKS AVAILABLE</div>
+        </div>
+        <div class="no-songs" id="empty-state">ARCHIVE IS OFFLINE. <span>INSERT TAPE</span> TO READ STREAM.</div>
+        <div class="track-list" id="track-container" style="display:none;">
+          <!-- Dynamically inserted -->
+        </div>
+      </div>
+    </div>
+
+    <!-- CHANNEL BAR -->
+    <div class="channel-bar">
+      <button class="ch-btn active" onclick="setChannel(0)">CH 1</button>
+      <button class="ch-btn" onclick="setChannel(1)">CH 2</button>
+      <button class="ch-btn" onclick="setChannel(2)">AUX</button>
+    </div>
+
+    <!-- STATUS BAR -->
+    <div class="status-bar">
+      <div class="status-txt" id="status-console">SYSTEM INITIALIZED. READY FOR CASSETTE DATA TYPE...</div>
+      <div class="ver-tag">BTN-V.26</div>
+    </div>
+
+  </div>
+
+  <!-- INSTRUCTIONS -->
+  <div class="setup-note reveal">
+    <div class="setup-head">Tape Deck Configuration Node</div>
+    <div class="setup-body">
+      To change or add your own audio collection, update the <code>SONG_DATABASE</code> array inside the embedded script environment. Currently pulling sample retro tracking frequencies.
+    </div>
+  </div>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-logo">Between the Notes</div>
+      <p class="footer-tagline">Exploring the creative friction and silent spaces inside cinematic soundscapes.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="listen.html">Conversations</a></li>
+        <li><a href="radio.html">Radio Unit</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Archive Licensing</a></li>
+        <li><a href="#">Transmission Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 Between the Notes. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script>
+  // ─── AUDIO ARCHIVE DATA ───
+  const SONG_DATABASE = [
+    { title: "Neon Horizon Shimmer", artist: "Arcade Frequency", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duration: "06:12" },
+    { title: "Analogue Friction Patterns", artist: "Hologram Suite", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", duration: "07:05" },
+    { title: "Static Resonance Echo", artist: "Vapor Drone Collective", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", duration: "05:44" },
+    { title: "The Noise Between Us", artist: "Signal 01", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", duration: "05:02" },
+    { title: "Sub-surface Oscillations", artist: "Tape Loop Project", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", duration: "06:03" }
+  ];
+
+  // State Properties
+  let isTapeInserted = false;
+  let isPlaying = false;
+  let isShuffle = false;
+  let currentTrackIndex = 0;
+  let currentCounter = 0;
+  let counterInterval = null;
+  let knobRotation = 0;
+
+  // Audio Object Instantiation
+  const audioNode = new Audio();
+  audioNode.volume = 0.7;
+
+  // DOM Elements Selector Cache
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('ring');
+  const cassette = document.getElementById('cassette');
+  const slot = document.getElementById('slot');
+  const slotHint = document.getElementById('slot-hint');
+  const slotStatic = document.getElementById('slot-static');
+  const dMode = document.getElementById('dmode');
+  const ticker = document.getElementById('ticker');
+  const ledPlay = document.getElementById('led-play');
+  const ledRec = document.getElementById('led-rec');
+  const tapeCounter = document.getElementById('counter');
+  const songTitle = document.getElementById('song-title');
+  const songArtist = document.getElementById('song-artist');
+  const progressFill = document.getElementById('progress-fill');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const emptyState = document.getElementById('empty-state');
+  const trackContainer = document.getElementById('track-container');
+  const directoryCount = document.getElementById('directory-count');
+  const statusConsole = document.getElementById('status-console');
+  const recIndicator = document.getElementById('rec-indicator');
+
+  // Initialize Events on Slot
+  slot.addEventListener('click', () => {
+    if (!isTapeInserted) {
+      insertCassette();
+    }
+  });
+
+  // ─── CURSOR ENGINE ───
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  });
+
+  // ─── CASSETTE ACTIONS ───
+  function insertCassette() {
+    isTapeInserted = true;
+    slotHint.innerText = "TAPE LOADED";
+    cassette.classList.remove('ejected');
+    slotStatic.classList.add('on');
+    statusConsole.innerText = "MOUNTING CASSETTE SEGMENT... PARSING TRACK HEADERS.";
+
+    setTimeout(() => {
+      slotStatic.classList.remove('on');
+      dMode.innerText = "■ STOP";
+      emptyState.style.display = "none";
+      trackContainer.style.display = "flex";
+      directoryCount.innerText = `${SONG_DATABASE.length} TRACKS DETECTED`;
+      statusConsole.innerText = "TAPE DECK ACTIVE. READY TO GENERATE AUDIO CARRIER SIGNALS.";
+      
+      // Select a totally random track to queue up first upon insertion
+      currentTrackIndex = Math.floor(Math.random() * SONG_DATABASE.length);
+      buildTracklistUI();
+      loadTrack(currentTrackIndex);
+      
+      // Automatically trigger play right away
+      togglePlay();
+    }, 600);
+  }
+
+  function ejectCassette() {
+    if (!isTapeInserted) return;
+    stopAll();
+    isTapeInserted = false;
+    slotHint.innerText = "CLICK TO INSERT";
+    cassette.classList.add('ejected');
+    
+    // Clear out UI State
+    emptyState.style.display = "block";
+    trackContainer.style.display = "none";
+    directoryCount.innerText = "0 TRACKS AVAILABLE";
+    songTitle.innerText = "NO TAPE DETECTED";
+    songArtist.innerText = "INSERT MIX TAPE";
+    ticker.innerText = "BETWEEN THE NOTES · RADIO · INSERT TAPE TO BEGIN · · ·";
+    ticker.classList.remove('running');
+    dMode.innerText = "■ STOP";
+    statusConsole.innerText = "CASSETTE DISMOUNTED. ENGINE IDLE.";
+  }
+
+  // ─── CONTROLS ENGINE ───
+  function loadTrack(index) {
+    if (!isTapeInserted) return;
+    currentTrackIndex = index;
+    const currentTrack = SONG_DATABASE[currentTrackIndex];
+    audioNode.src = currentTrack.src;
+    
+    songTitle.innerText = currentTrack.title;
+    songArtist.innerText = currentTrack.artist;
+    ticker.innerText = `NOW PLAYING: ${currentTrack.title.toUpperCase()} BY ${currentTrack.artist.toUpperCase()} ─── `;
+    
+    // Update active row visual accent
+    const items = document.querySelectorAll('.track-item');
+    items.forEach((item, idx) => {
+      if (idx === index) item.classList.add('active');
+      else item.classList.remove('active');
+    });
+
+    statusConsole.innerText = `LOADED PATH: ${currentTrack.title}. EXTRACTING COMPRESSED DATA.`;
+  }
+
+  function togglePlay() {
+    if (!isTapeInserted) {
+      // Prompt lazy users to add tape first
+      insertCassette();
+      return;
+    }
+
+    if (isPlaying) {
+      audioNode.pause();
+      isPlaying = false;
+      dMode.innerText = "❚❚ PAUSE";
+      ledPlay.className = "led off";
+      recIndicator.classList.remove('on');
+      document.getElementById('rl').className = "";
+      document.getElementById('rr').className = "";
+      clearInterval(counterInterval);
+    } else {
+      audioNode.play().then(() => {
+        isPlaying = true;
+        dMode.innerText = "▶ PLAY";
+        ledPlay.className = "led grn";
+        recIndicator.classList.add('on');
+        ticker.classList.add('running');
+        document.getElementById('rl').className = "spinning-cw";
+        document.getElementById('rr').className = "spinning-cw";
+        
+        // Counter Incrementation Engine
+        counterInterval = setInterval(() => {
+          currentCounter++;
+          updateCounterDisplay();
+        }, 1000);
+      }).catch(err => {
+        statusConsole.innerText = "AUDIO TRANSMISSION ERROR. BROWSER ACCESS DENIED.";
+      });
+    }
+  }
+
+  function stopAll() {
+    audioNode.pause();
+    audioNode.currentTime = 0;
+    isPlaying = false;
+    dMode.innerText = "■ STOP";
+    ledPlay.className = "led off";
+    recIndicator.classList.remove('on');
+    ticker.classList.remove('running');
+    document.getElementById('rl').className = "";
+    document.getElementById('rr').className = "";
+    clearInterval(counterInterval);
+  }
+
+  function nextTrack() {
+    if (!isTapeInserted) return;
+    if (isShuffle) {
+      currentTrackIndex = Math.floor(Math.random() * SONG_DATABASE.length);
+    } else {
+      currentTrackIndex = (currentTrackIndex + 1) % SONG_DATABASE.length;
+    }
+    loadTrack(currentTrackIndex);
+    if (isPlaying) { audioNode.play(); } else { togglePlay(); }
+  }
+
+  function prevTrack() {
+    if (!isTapeInserted) return;
+    currentTrackIndex = (currentTrackIndex - 1 + SONG_DATABASE.length) % SONG_DATABASE.length;
+    loadTrack(currentTrackIndex);
+    if (isPlaying) { audioNode.play(); } else { togglePlay(); }
+  }
+
+  function toggleShuffle() {
+    isShuffle = !isShuffle;
+    const btn = document.getElementById('btn-shuf');
+    if (isShuffle) {
+      btn.classList.add('on');
+      statusConsole.innerText = "SHUFFLE PROTOCOL ACTIVATED. RANDOM PATH SELECTION LOADED.";
+    } else {
+      btn.classList.remove('on');
+      statusConsole.innerText = "LINEAR TRACKING SYSTEM ENGAGED.";
+    }
+  }
+
+  // ─── AUDIO UTILITIES ───
+  audioNode.addEventListener('timeupdate', () => {
+    if (!audioNode.duration) return;
+    const progress = (audioNode.currentTime / audioNode.duration) * 100;
+    progressFill.style.width = `${progress}%`;
+    timeCurrent.innerText = formatTime(audioNode.currentTime);
+    timeTotal.innerText = formatTime(audioNode.duration);
+  });
+
+  audioNode.addEventListener('ended', () => {
+    nextTrack();
+  });
+
+  function seekAudio(event) {
+    if (!isTapeInserted || !audioNode.duration) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const clickX = event.clientX - rect.left;
+    const percentage = clickX / rect.width;
+    audioNode.currentTime = percentage * audioNode.duration;
+  }
+
+  function changeVolume(val) {
+    audioNode.volume = val;
+  }
+
+  function rotateKnob() {
+    knobRotation = (knobRotation + 45) % 360;
+    document.getElementById('kn-track').style.transform = `rotate(${knobRotation}deg)`;
+    const valMapping = Math.floor(knobRotation / 45);
+    document.getElementById('track-val').innerText = valMapping;
+    
+    // Simulate audio glitch feedback on tracking change
+    if (isTapeInserted) {
+      slotStatic.classList.add('on');
+      setTimeout(() => slotStatic.classList.remove('on'), 150);
+    }
+  }
+
+  function updateCounterDisplay() {
+    let str = currentCounter.toString().padStart(4, '0');
+    tapeCounter.innerText = str.split('').join(' ');
+  }
+
+  function resetCounter() {
+    currentCounter = 0;
+    updateCounterDisplay();
+  }
+
+  function setChannel(num) {
+    const buttons = document.querySelectorAll('.ch-btn');
+    buttons.forEach((b, i) => {
+      if (i === num) b.classList.add('active');
+      else b.classList.remove('active');
+    });
+    statusConsole.innerText = `MUTATING FREQUENCY CARRIER LINE TO NODE CH-${num + 1}.`;
+  }
+
+  function formatTime(secs) {
+    const m = Math.floor(secs / 60).toString().padStart(2, '0');
+    const s = Math.floor(secs % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  function buildTracklistUI() {
+    trackContainer.innerHTML = "";
+    SONG_DATABASE.forEach((track, idx) => {
+      const row = document.createElement('div');
+      row.className = "track-item";
+      row.onclick = () => { if(isTapeInserted) { loadTrack(idx); togglePlay(); } };
+      row.innerHTML = `
+        <div class="track-num">${(idx+1).toString().padStart(2, '0')}</div>
+        <div class="track-info">
+          <div class="track-fn">${track.title} ── ${track.artist}</div>
+        </div>
+        <div class="play-anim">
+          <div class="play-bar"></div>
+          <div class="play-bar"></div>
+          <div class="play-bar"></div>
+        </div>
+        <div class="track-dur">${track.duration}</div>
+      `;
+      trackContainer.appendChild(row);
+    });
+  }
+
+  // Realtime System Clock Implementation
+  setInterval(() => {
+    const d = new Date();
+    document.getElementById('dh').innerText = d.getHours().toString().padStart(2, '0');
+    document.getElementById('dm').innerText = d.getMinutes().toString().padStart(2, '0');
+    document.getElementById('ds').innerText = d.getSeconds().toString().padStart(2, '0');
+  }, 1000);
+
+  // Scroll Reveal Intersection Observer
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+</script>
+
+</body>
+</html>
