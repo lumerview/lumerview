@@ -134,7 +134,6 @@
     color: rgba(245,240,232,.7); max-width: 600px;
     opacity: 0; animation: fade-up 1s ease .75s forwards;
   }
-  /* Floating abstract shapes in header */
   .hf { position: absolute; opacity: 0; animation: hfloat 12s ease-in-out infinite; animation-delay: var(--d); pointer-events: none; }
   @keyframes hfloat {
     0%   { opacity: 0; transform: translateY(0) rotate(var(--r,0deg)); }
@@ -1014,7 +1013,6 @@
   <div class="page-header-bg"></div>
   <div class="page-header-grid"></div>
 
-  <!-- floating abstract shapes with neon colors -->
   <div class="hf" style="right:12%;top:35%;--d:0s;--r:-8deg">
     <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" stroke="#00f5ff" stroke-width="1.2" fill="none" opacity=".7"/></svg>
   </div>
@@ -1053,15 +1051,12 @@
 <section class="featured">
   <div class="featured-inner reveal">
     <div class="featured-visual" style="display: flex; justify-content: center;">
-      <!-- UPDATED: Increased max-width and set height relative to screen (vh) -->
       <div class="featured-visual-art" style="position: relative; width: 100%; max-width: 500px; height: 60vh; max-height: 600px; aspect-ratio: 340 / 420; display: flex; justify-content: center; align-items: center; background: #000; overflow: hidden; margin: 0 auto; border-radius: 8px;">
         
-        <!-- THE IMAGE: Forced to cover the entire larger area -->
         <img src="https://i.ibb.co/9kThrtCv/indiefferential-magazine-9-xl-xxxl.jpg" 
              alt="indiefferential magazine 9 xl xxxl" 
              style="height: 100%; width: 100%; object-fit: cover; object-position: center; display: block; z-index: 1;">
 
-        <!-- SVG Overlay: Scales automatically with the new container size -->
         <svg viewBox="0 0 340 420" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2;">
           <defs>
             <radialGradient id="fg1" cx="45%" cy="40%" r="55%">
@@ -1088,7 +1083,7 @@
       <div class="featured-title">On silence as a creative act</div>
       <div class="gold-rule"></div>
       <p class="featured-excerpt">
-        Allison's Invention is a music project by singer-songwriter, multi-instrumentalist and producer Allison Tartalia. <strong>A “singer with a sultry voice” (New York Times)</strong>, 
+        Allison's Invention is a music project by singer-songwriter, multi-instrumentalist and producer Allison Tartalia. <strong>A "singer with a sultry voice" (New York Times)</strong>, 
         Tartalia writes unconventional, eclectic songs, performed on piano, ukulele and the occasional guitar or kalimba.
       </p>
       <div class="featured-info">
@@ -1113,94 +1108,92 @@
 <!-- INTERVIEW CARDS -->
 <div class="section-head reveal">
   <h2>Recent <em>Conversations</em></h2>
-  <span class="section-head-count">8 published</span>
+  <span class="section-head-count">9 published</span>
 </div>
 
 <div class="content-grid">
 
-<div class="card reveal" data-type="interview">
-  <div class="card-visual">
-    <div class="card-visual-art">
-      <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-        <defs><radialGradient id="cg1" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#1a1a2e" stop-opacity="1"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
-        <rect width="220" height="124" fill="url(#cg1)"/>
-        <ellipse cx="110" cy="60" rx="60" ry="40" stroke="#00f5ff" stroke-width="1" fill="none" opacity=".4"/>
-        <circle cx="110" cy="38" r="18" stroke="#ff006e" stroke-width="1.2" fill="rgba(255,0,110,.08)" opacity=".6"/>
-        <line x1="110" y1="56" x2="110" y2="110" stroke="#39ff14" stroke-width="1" opacity=".35"/>
-        <path d="M85 90 Q110 110 135 90" stroke="#00f5ff" stroke-width="1" fill="none" opacity=".3"/>
-      </svg>
-    </div>
-    <div class="card-badge badge-interview">Interview</div>
-    
-    <!-- Link added to Play Button -->
-    <a href="http://lumerview.com/podcast.html" style="text-decoration: none;">
-      <div class="card-play" style="cursor: pointer;">
-        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+  <!-- 1: Marr Not Meeger -->
+  <div class="card reveal" data-type="interview">
+    <div class="card-visual">
+      <div class="card-visual-art">
+        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="cg1" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#1a1a2e" stop-opacity="1"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
+          <rect width="220" height="124" fill="url(#cg1)"/>
+          <ellipse cx="110" cy="60" rx="60" ry="40" stroke="#00f5ff" stroke-width="1" fill="none" opacity=".4"/>
+          <circle cx="110" cy="38" r="18" stroke="#ff006e" stroke-width="1.2" fill="rgba(255,0,110,.08)" opacity=".6"/>
+          <line x1="110" y1="56" x2="110" y2="110" stroke="#39ff14" stroke-width="1" opacity=".35"/>
+          <path d="M85 90 Q110 110 135 90" stroke="#00f5ff" stroke-width="1" fill="none" opacity=".3"/>
+        </svg>
       </div>
-    </a>
-  </div>
-  <div class="card-body">
-    <div class="card-meta">
-      <span class="card-date">April 2026</span>
-      <span class="card-dot"></span>
-      <span class="card-duration">48 min</span>
+      <div class="card-badge badge-interview">Interview</div>
+      <a href="https://indiefferential.com/a-late-night-conversation-with-marr-not-meeger/" target="_blank" rel="noopener" style="text-decoration: none;">
+        <div class="card-play" style="cursor: pointer;">
+          <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+        </div>
+      </a>
     </div>
-    <div class="card-name">Amara Diallo</div>
-    <div class="card-role">Musician · Poet</div>
-    <p class="card-excerpt">On growing up between Dakar and Paris, and why she insists that every song she writes is also a letter — to someone, from somewhere.</p>
-    <div class="card-origin">Dakar, Senegal</div>
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="card-date">April 2026</span>
+        <span class="card-dot"></span>
+        <span class="card-duration">Read</span>
+      </div>
+      <div class="card-name">Marr Not Meeger</div>
+      <div class="card-role">Musician · Songwriter</div>
+      <p class="card-excerpt">A late-night conversation about "Nuit Blanche" — a bilingual meditation on insomnia, desire, and the protection that switching languages can offer when you feel too exposed.</p>
+      <div class="card-origin"><a href="https://indiefferential.com/a-late-night-conversation-with-marr-not-meeger/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Paris, France · via Indiefferential →</a></div>
+    </div>
   </div>
-</div>
 
+  <!-- 2: Night Convo: Raidat (Podcast) -->
   <div class="card reveal reveal-delay-1" data-type="podcast">
-  <div class="card-visual">
-    <div class="card-visual-art">
-      <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-        <defs><radialGradient id="cg2" cx="30%" cy="60%" r="60%"><stop offset="0%" stop-color="#1a0a15" stop-opacity=".8"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
-        <rect width="220" height="124" fill="url(#cg2)"/>
-        <rect x="40" y="52" width="5" height="20" fill="#ff006e" opacity=".5" rx="2"/>
-        <rect x="52" y="44" width="5" height="36" fill="#00f5ff" opacity=".6" rx="2"/>
-        <rect x="64" y="38" width="5" height="48" fill="#39ff14" opacity=".5" rx="2"/>
-        <rect x="76" y="48" width="5" height="28" fill="#ff006e" opacity=".5" rx="2"/>
-        <rect x="88" y="42" width="5" height="40" fill="#00f5ff" opacity=".55" rx="2"/>
-        <rect x="100" y="50" width="5" height="24" fill="#39ff14" opacity=".45" rx="2"/>
-        <rect x="112" y="36" width="5" height="52" fill="#ff006e" opacity=".6" rx="2"/>
-        <rect x="124" y="46" width="5" height="32" fill="#00f5ff" opacity=".5" rx="2"/>
-        <rect x="136" y="40" width="5" height="44" fill="#39ff14" opacity=".55" rx="2"/>
-        <rect x="148" y="54" width="5" height="16" fill="#ff006e" opacity=".4" rx="2"/>
-        <rect x="160" y="44" width="5" height="36" fill="#00f5ff" opacity=".5" rx="2"/>
-        <rect x="172" y="50" width="5" height="24" fill="#39ff14" opacity=".45" rx="2"/>
-      </svg>
-    </div>
-    <div class="card-badge badge-podcast">Podcast</div>
-    
-    <!-- Link added to Play Button -->
-    <a href="http://lumerview.com/podcast.html" style="text-decoration: none;">
-      <div class="card-play" style="cursor: pointer;">
-        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+    <div class="card-visual">
+      <div class="card-visual-art">
+        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="cg2" cx="30%" cy="60%" r="60%"><stop offset="0%" stop-color="#1a0a15" stop-opacity=".8"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
+          <rect width="220" height="124" fill="url(#cg2)"/>
+          <rect x="40" y="52" width="5" height="20" fill="#ff006e" opacity=".5" rx="2"/>
+          <rect x="52" y="44" width="5" height="36" fill="#00f5ff" opacity=".6" rx="2"/>
+          <rect x="64" y="38" width="5" height="48" fill="#39ff14" opacity=".5" rx="2"/>
+          <rect x="76" y="48" width="5" height="28" fill="#ff006e" opacity=".5" rx="2"/>
+          <rect x="88" y="42" width="5" height="40" fill="#00f5ff" opacity=".55" rx="2"/>
+          <rect x="100" y="50" width="5" height="24" fill="#39ff14" opacity=".45" rx="2"/>
+          <rect x="112" y="36" width="5" height="52" fill="#ff006e" opacity=".6" rx="2"/>
+          <rect x="124" y="46" width="5" height="32" fill="#00f5ff" opacity=".5" rx="2"/>
+          <rect x="136" y="40" width="5" height="44" fill="#39ff14" opacity=".55" rx="2"/>
+          <rect x="148" y="54" width="5" height="16" fill="#ff006e" opacity=".4" rx="2"/>
+          <rect x="160" y="44" width="5" height="36" fill="#00f5ff" opacity=".5" rx="2"/>
+          <rect x="172" y="50" width="5" height="24" fill="#39ff14" opacity=".45" rx="2"/>
+        </svg>
       </div>
-    </a>
-  </div>
-  <div class="card-body">
-    <div class="card-meta">
-      <span class="card-date">March 2026</span>
-      <span class="card-dot"></span>
-      <span class="card-duration">35 min</span>
+      <div class="card-badge badge-podcast">Podcast</div>
+      <a href="https://indiefferential.com/podcasts/" target="_blank" rel="noopener" style="text-decoration: none;">
+        <div class="card-play" style="cursor: pointer;">
+          <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+        </div>
+      </a>
     </div>
-    <div class="card-name">Episode 3: The Unfinished</div>
-    <div class="card-role">Between the Notes Podcast</div>
-    <p class="card-excerpt">What happens to the work that never gets shown? Nils Bergström and Sofia Reyes discuss the ethics and terror of leaving things incomplete.</p>
-    <div class="card-origin">Stockholm · Buenos Aires</div>
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="card-date">2024</span>
+        <span class="card-dot"></span>
+        <span class="card-duration">Listen</span>
+      </div>
+      <div class="card-name">The Night Convo: Raidat</div>
+      <div class="card-role">Indiefferential Podcast</div>
+      <p class="card-excerpt">George uses words and Ville feels nostalgic — a late-night episode of The Night Convo featuring guest artist Raidat, where music, memory and conversation blur into one.</p>
+      <div class="card-origin"><a href="https://indiefferential.com/podcasts/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Indiefferential · Night Convo →</a></div>
+    </div>
   </div>
-</div>
 
+  <!-- 3: cooper mae (Written/Interview) -->
   <div class="card reveal reveal-delay-2" data-type="written">
     <div class="card-visual">
       <div class="card-visual-art">
         <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
           <defs><radialGradient id="cg3" cx="70%" cy="30%" r="55%"><stop offset="0%" stop-color="#0a1010" stop-opacity="1"/><stop offset="100%" stop-color="#0a0a0a" stop-opacity="1"/></radialGradient></defs>
           <rect width="220" height="124" fill="url(#cg3)"/>
-          <!-- text lines suggestion -->
           <line x1="35" y1="35" x2="185" y2="35" stroke="#00f5ff" stroke-width=".7" opacity=".35"/>
           <line x1="35" y1="46" x2="160" y2="46" stroke="#ff006e" stroke-width=".7" opacity=".3"/>
           <line x1="35" y1="57" x2="175" y2="57" stroke="#39ff14" stroke-width=".7" opacity=".32"/>
@@ -1214,18 +1207,19 @@
     </div>
     <div class="card-body">
       <div class="card-meta">
-        <span class="card-date">February 2026</span>
+        <span class="card-date">April 2026</span>
         <span class="card-dot"></span>
-        <span class="card-duration">14 min read</span>
+        <span class="card-duration">Read</span>
       </div>
-      <div class="card-name">Fatima Al-Rashid</div>
-      <div class="card-role">Sculptor · Installation Artist</div>
-      <p class="card-excerpt">A written portrait of Fatima's practice — how she works with space as a material, and what it means to make work that can only exist once.</p>
-      <div class="card-origin">Beirut, Lebanon</div>
+      <div class="card-name">cooper mae</div>
+      <div class="card-role">Songwriter · Artist</div>
+      <p class="card-excerpt">Based in the DC area and deep in album mode — cooper mae talks about longevity over virality, writing songs before she was ready to release them, and why she finally decided to take up space.</p>
+      <div class="card-origin"><a href="https://indiefferential.com/a-conversation-with-cooper-mae/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Washington D.C., USA · via Indiefferential →</a></div>
     </div>
   </div>
 
-  <div class="card reveal" data-type="video">
+  <!-- 4: Noam Peri (Interview) -->
+  <div class="card reveal" data-type="interview">
     <div class="card-visual">
       <div class="card-visual-art">
         <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
@@ -1237,24 +1231,27 @@
           <line x1="90" y1="62" x2="130" y2="62" stroke="#b537f2" stroke-width=".8" opacity=".4"/>
         </svg>
       </div>
-      <div class="card-badge badge-video">Video</div>
-      <div class="card-play">
-        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
-      </div>
+      <div class="card-badge badge-interview">Interview</div>
+      <a href="https://indiefferential.com/from-the-studio-to-the-stage-noam-peri-following-the-dream-in-la/" target="_blank" rel="noopener" style="text-decoration: none;">
+        <div class="card-play" style="cursor: pointer;">
+          <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+        </div>
+      </a>
     </div>
     <div class="card-body">
       <div class="card-meta">
-        <span class="card-date">January 2026</span>
+        <span class="card-date">August 2024</span>
         <span class="card-dot"></span>
-        <span class="card-duration">22 min</span>
+        <span class="card-duration">Read</span>
       </div>
-      <div class="card-name">Marco Ricci</div>
-      <div class="card-role">Painter · Engraver</div>
-      <p class="card-excerpt">Filmed inside his workshop in Palermo. Marco talks about craft as resistance, and why he still uses tools his grandfather made by hand.</p>
-      <div class="card-origin">Palermo, Italy</div>
+      <div class="card-name">Noam Peri</div>
+      <div class="card-role">Singer · Songwriter</div>
+      <p class="card-excerpt">From Israel to Los Angeles, following the dream and finding it changed you. Noam talks about identity, queer visibility, and what it means to write songs that make people feel they are not alone.</p>
+      <div class="card-origin"><a href="https://indiefferential.com/from-the-studio-to-the-stage-noam-peri-following-the-dream-in-la/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Los Angeles, CA · via Indiefferential →</a></div>
     </div>
   </div>
 
+  <!-- 5: Night Convo: Danny from Big Eleanor Records (Podcast) -->
   <div class="card reveal reveal-delay-1" data-type="podcast">
     <div class="card-visual">
       <div class="card-visual-art">
@@ -1277,23 +1274,26 @@
         </svg>
       </div>
       <div class="card-badge badge-podcast">Podcast</div>
-      <div class="card-play">
-        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
-      </div>
+      <a href="https://indiefferential.com/podcasts/" target="_blank" rel="noopener" style="text-decoration: none;">
+        <div class="card-play" style="cursor: pointer;">
+          <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+        </div>
+      </a>
     </div>
     <div class="card-body">
       <div class="card-meta">
-        <span class="card-date">December 2025</span>
+        <span class="card-date">2024</span>
         <span class="card-dot"></span>
-        <span class="card-duration">41 min</span>
+        <span class="card-duration">Listen</span>
       </div>
-      <div class="card-name">Episode 2: Borders</div>
-      <div class="card-role">Between the Notes Podcast</div>
-      <p class="card-excerpt">What does it mean to make art from a place that the art world does not yet know how to see? A conversation across three time zones.</p>
-      <div class="card-origin">Lagos · Cairo · Athens</div>
+      <div class="card-name">The Night Convo: Danny</div>
+      <div class="card-role">Indiefferential Podcast · Big Eleanor Records</div>
+      <p class="card-excerpt">George talks about punches, Ville talks about teachers, and Danny from Big Eleanor Records makes dreams come true. A conversation about what it actually takes to run an independent label.</p>
+      <div class="card-origin"><a href="https://indiefferential.com/podcasts/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Indiefferential · Night Convo →</a></div>
     </div>
   </div>
 
+  <!-- 6: Markoe (Interview) -->
   <div class="card reveal reveal-delay-2" data-type="interview">
     <div class="card-visual">
       <div class="card-visual-art">
@@ -1308,23 +1308,26 @@
         </svg>
       </div>
       <div class="card-badge badge-interview">Interview</div>
-      <div class="card-play">
-        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
-      </div>
+      <a href="https://indiefferential.com/a-conversation-with-markoe/" target="_blank" rel="noopener" style="text-decoration: none;">
+        <div class="card-play" style="cursor: pointer;">
+          <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+        </div>
+      </a>
     </div>
     <div class="card-body">
       <div class="card-meta">
-        <span class="card-date">November 2025</span>
+        <span class="card-date">January 2026</span>
         <span class="card-dot"></span>
-        <span class="card-duration">55 min</span>
+        <span class="card-duration">Read</span>
       </div>
-      <div class="card-name">Camille Moreau</div>
-      <div class="card-role">Choreographer · Visual Artist</div>
-      <p class="card-excerpt">Camille moves between dance and installation without apology. Here she explains why she stopped explaining herself — and what happened next.</p>
-      <div class="card-origin">Lyon, France</div>
+      <div class="card-name">Markoe</div>
+      <div class="card-role">Singer · Songwriter</div>
+      <p class="card-excerpt">Started singing at 3, songwriting at 7, and releasing postpartum after realising you don't need a label. Markoe on motherhood, "Birthday Song," and what success actually looks like when you define it yourself.</p>
+      <div class="card-origin"><a href="https://indiefferential.com/a-conversation-with-markoe/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">via Indiefferential →</a></div>
     </div>
   </div>
 
+  <!-- 7: Andrew Levin (Written) -->
   <div class="card reveal" data-type="written">
     <div class="card-visual">
       <div class="card-visual-art">
@@ -1345,17 +1348,18 @@
     </div>
     <div class="card-body">
       <div class="card-meta">
-        <span class="card-date">October 2025</span>
+        <span class="card-date">August 2024</span>
         <span class="card-dot"></span>
-        <span class="card-duration">9 min read</span>
+        <span class="card-duration">Read</span>
       </div>
-      <div class="card-name">Chen Wei</div>
-      <div class="card-role">Photographer · Archivist</div>
-      <p class="card-excerpt">An essay on Chen Wei's ongoing project of photographing disappearing trades — and what it means to document something at the exact moment it ends.</p>
-      <div class="card-origin">Shanghai, China</div>
+      <div class="card-name">Andrew Levin</div>
+      <div class="card-role">Guitarist · Producer · Sound Designer</div>
+      <p class="card-excerpt">Bay Area session guitarist turned Ubisoft sound designer and conservatory professor — Andrew Levin on what success really means when you've played with Sting, Robert Plant, and Lauryn Hill but still show up to your studio at 8am.</p>
+      <div class="card-origin"><a href="https://indiefferential.com/andrew-levin-interview/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Oakland, CA · via Indiefferential →</a></div>
     </div>
   </div>
 
+  <!-- 8: Adik Angel (Interview) -->
   <div class="card reveal reveal-delay-1" data-type="interview">
     <div class="card-visual">
       <div class="card-visual-art">
@@ -1368,23 +1372,26 @@
         </svg>
       </div>
       <div class="card-badge badge-interview">Interview</div>
-      <div class="card-play">
-        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
-      </div>
+      <a href="https://indiefferential.com/adik-angel/" target="_blank" rel="noopener" style="text-decoration: none;">
+        <div class="card-play" style="cursor: pointer;">
+          <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+        </div>
+      </a>
     </div>
     <div class="card-body">
       <div class="card-meta">
-        <span class="card-date">September 2025</span>
+        <span class="card-date">July 2024</span>
         <span class="card-dot"></span>
-        <span class="card-duration">38 min</span>
+        <span class="card-duration">Read</span>
       </div>
-      <div class="card-name">Alejandro Voss</div>
-      <div class="card-role">Composer · Sound Artist</div>
-      <p class="card-excerpt">Born in Berlin to Argentine parents, Alejandro's work sits between continents. He talks about being too European for Latin America and too South American for Europe — and why that gave him everything.</p>
-      <div class="card-origin">Berlin, Germany</div>
+      <div class="card-name">Adik Angel</div>
+      <div class="card-role">Composer · Electronic Artist</div>
+      <p class="card-excerpt">Working from the mountains near the Swiss Alps, Adik Angel composes, produces, mixes and masters everything himself — and films the landscapes that become his videos. On solo practice, classical roots, and music with a "breath of life" that AI cannot replicate.</p>
+      <div class="card-origin"><a href="https://indiefferential.com/adik-angel/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Switzerland · via Indiefferential →</a></div>
     </div>
   </div>
 
+  <!-- 9: Night Convo: Jakko from Mantaray (Podcast) -->
   <div class="card reveal reveal-delay-2" data-type="podcast">
     <div class="card-visual">
       <div class="card-visual-art">
@@ -1407,20 +1414,22 @@
         </svg>
       </div>
       <div class="card-badge badge-podcast">Podcast</div>
-      <div class="card-play">
-        <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
-      </div>
+      <a href="https://indiefferential.com/podcasts/" target="_blank" rel="noopener" style="text-decoration: none;">
+        <div class="card-play" style="cursor: pointer;">
+          <svg class="card-play-icon" width="11" height="11" viewBox="0 0 11 11"><polygon points="2,1 10,5.5 2,10"/></svg>
+        </div>
+      </a>
     </div>
     <div class="card-body">
       <div class="card-meta">
-        <span class="card-date">August 2025</span>
+        <span class="card-date">2024</span>
         <span class="card-dot"></span>
-        <span class="card-duration">29 min</span>
+        <span class="card-duration">Listen</span>
       </div>
-      <div class="card-name">Episode 1: Why We Begin</div>
-      <div class="card-role">Between the Notes Podcast</div>
-      <p class="card-excerpt">The first episode. Three artists from three continents answer one question: why did you start? The answers are nothing we expected.</p>
-      <div class="card-origin">Tokyo · Dakar · Stockholm</div>
+      <div class="card-name">The Night Convo: Jakko</div>
+      <div class="card-role">Indiefferential Podcast · Mantaray</div>
+      <p class="card-excerpt">George pitches a reality show, Ville talks about Survivor, and Jakko from Mantaray explains why he is following his dreams — a conversation about ambition, band life, and what it costs to keep going.</p>
+      <div class="card-origin"><a href="https://indiefferential.com/podcasts/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Indiefferential · Night Convo →</a></div>
     </div>
   </div>
 
@@ -1433,50 +1442,56 @@
 </div>
 
 <div class="episode-list">
+  <a href="https://indiefferential.com/podcasts/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
   <div class="episode-item reveal">
     <div class="episode-num">03</div>
     <div class="episode-body">
-      <div class="episode-series">Between the Notes Podcast</div>
-      <div class="episode-title">The Unfinished — Nils Bergström &amp; Sofia Reyes</div>
-      <p class="episode-desc">On incompleteness, abandoned work, and the strange peace that comes from letting something go.</p>
+      <div class="episode-series">Indiefferential · Night Convo Podcast</div>
+      <div class="episode-title">A conversation with Raidat</div>
+      <p class="episode-desc">Ville uses words and George feels nostalgic — a late-night episode that drifts between music, memory and what it means to make art that outlasts the moment.</p>
     </div>
     <div class="episode-right">
-      <span class="episode-duration">35 min · March 2026</span>
+      <span class="episode-duration">Listen on Indiefferential</span>
       <div class="ep-play">
         <svg class="ep-play-icon" width="12" height="12" viewBox="0 0 12 12"><polygon points="2,1 11,6 2,11"/></svg>
       </div>
     </div>
   </div>
+  </a>
 
+  <a href="https://indiefferential.com/podcasts/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
   <div class="episode-item reveal">
     <div class="episode-num">02</div>
     <div class="episode-body">
-      <div class="episode-series">Between the Notes Podcast</div>
-      <div class="episode-title">Borders — Lagos, Cairo, Athens</div>
-      <p class="episode-desc">What does geography do to creativity? A conversation in three time zones about place, belonging, and the art world's blind spots.</p>
+      <div class="episode-series">Indiefferential · Night Convo Podcast</div>
+      <div class="episode-title">A conversation with Danny from Big Eleanor Records</div>
+      <p class="episode-desc">Punches, teachers, and dreams made real. Danny from Big Eleanor Records joins George and Ville for an honest conversation about what independent music actually looks like from the inside.</p>
     </div>
     <div class="episode-right">
-      <span class="episode-duration">41 min · December 2025</span>
+      <span class="episode-duration">Listen on Indiefferential</span>
       <div class="ep-play">
         <svg class="ep-play-icon" width="12" height="12" viewBox="0 0 12 12"><polygon points="2,1 11,6 2,11"/></svg>
       </div>
     </div>
   </div>
+  </a>
 
+  <a href="https://indiefferential.com/podcasts/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
   <div class="episode-item reveal">
     <div class="episode-num">01</div>
     <div class="episode-body">
-      <div class="episode-series">Between the Notes Podcast</div>
-      <div class="episode-title">Why We Begin — Tokyo, Dakar, Stockholm</div>
-      <p class="episode-desc">The pilot episode. Three artists from three continents, one question: why did you start? Their answers opened everything that came after.</p>
+      <div class="episode-series">Indiefferential · Night Convo Podcast</div>
+      <div class="episode-title">A conversation with Jakko from Mantaray</div>
+      <p class="episode-desc">George pitches a reality show, Ville talks about Survivor, and Jakko is following his dreams. The episode that started it all — a conversation about ambition and what it takes to keep going.</p>
     </div>
     <div class="episode-right">
-      <span class="episode-duration">29 min · August 2025</span>
+      <span class="episode-duration">Listen on Indiefferential</span>
       <div class="ep-play">
         <svg class="ep-play-icon" width="12" height="12" viewBox="0 0 12 12"><polygon points="2,1 11,6 2,11"/></svg>
       </div>
     </div>
   </div>
+  </a>
 </div>
 
 <!-- COMING SOON -->
