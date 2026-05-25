@@ -67,8 +67,6 @@
   @keyframes reel-ccw { from{transform:rotate(0deg)} to{transform:rotate(-360deg)} }
   @keyframes glow-pulse { 0%,100%{text-shadow:0 0 8px currentColor,0 0 20px currentColor} 50%{text-shadow:0 0 4px currentColor,0 0 10px currentColor} }
   @keyframes led-blink { 0%,40%,60%,100%{opacity:1} 50%{opacity:.15} }
-  @keyframes insert-drop { 0%{transform:translate(-50%,calc(-50% - 110px));opacity:0} 60%{transform:translate(-50%,calc(-50% + 6px))} 80%{transform:translate(-50%,calc(-50% - 3px))} 100%{transform:translate(-50%,-50%);opacity:1} }
-  @keyframes eject-rise { 0%{transform:translate(-50%,-50%)} 100%{transform:translate(-50%,calc(-50% - 115px));opacity:0} }
   @keyframes tracking-glitch { 0%,100%{transform:translateX(0) skewX(0deg)} 2%{transform:translateX(-3px) skewX(-.8deg)} 4%{transform:translateX(3px) skewX(.8deg)} 6%{transform:translateX(0) skewX(0deg)} }
   @keyframes fade-up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
   @keyframes hfloat { 0%{opacity:0;transform:translateY(0) rotate(var(--r,0deg))} 20%{opacity:1} 80%{opacity:.4} 100%{opacity:0;transform:translateY(-60px) rotate(calc(var(--r,0deg) + 6deg))} }
@@ -109,7 +107,7 @@
 
   /* ══════════════════════════════════════
       VHS RADIO UNIT
-   ══════════════════════════════════════ */
+     ══════════════════════════════════════ */
   .radio-section {
     max-width: 900px;
     margin: 0 auto;
@@ -197,11 +195,8 @@
     border: 1px solid #1a1a2a;
     border-radius: 3px;
     position: relative; overflow: hidden;
-    cursor: pointer;
     box-shadow: inset 0 3px 10px rgba(0,0,0,.9);
-    transition: border-color .3s;
   }
-  .cassette-slot:hover { border-color: #2a2a50; }
 
   .slot-label { position:absolute;top:7px;left:10px;font-family:'VT323',monospace;font-size:11px;color:#1e1e44;letter-spacing:3px; }
   .slot-hint  { position:absolute;bottom:7px;right:10px;font-family:'VT323',monospace;font-size:11px;color:#1a1a3a;letter-spacing:2px; }
@@ -212,13 +207,11 @@
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     width: 200px; height: 78px;
-    cursor: pointer;
     user-select: none;
     transition: transform .4s cubic-bezier(.34,1.56,.64,1), opacity .4s ease;
   }
-  .cassette.ejected { transform: translate(-50%, calc(-50% - 115px)); opacity: 0; }
 
-  /* reel spin groups — transform-origin set inline on the g */
+  /* reel spin groups */
   #rl { transform-origin: 62px 59px; }
   #rr { transform-origin: 138px 59px; }
   .spinning-cw  { animation: tape-spin 1.6s linear infinite; }
@@ -229,27 +222,25 @@
   .slot-static.on { opacity:1; }
 
   /* ── CONTROLS ── */
-  .controls { display:flex;flex-direction:column;gap:12px;min-width:200px; }
+  .controls { display:flex;flex-direction:column;gap:12px;min-width:200px; justify-content: center;}
 
   .tape-counter { background:#020208;border:1px solid #1a1a30;border-radius:2px;padding:5px 12px;font-family:'VT323',monospace;font-size:26px;color:var(--crt-amber);letter-spacing:3px;text-shadow:0 0 8px var(--crt-amber);text-align:center; }
 
-  .transport { display:flex;gap:5px;align-items:center; }
+  .transport { display:flex;gap:10px;align-items:center; justify-content: center; }
 
   .vbtn {
     background:linear-gradient(180deg,#252535 0%,#1a1a28 100%);
     border:1px solid #333355;border-bottom:2px solid #0a0a18;
     border-radius:3px;color:var(--lime);
     font-family:'VT323',monospace;font-size:20px;
-    padding:5px 9px;cursor:pointer;
+    padding:8px 16px;cursor:pointer;
     transition:all .1s;letter-spacing:1px;
-    user-select:none;min-width:34px;text-align:center;
+    user-select:none;min-width:70px;text-align:center;
     text-shadow:0 0 6px currentColor;
   }
   .vbtn:hover { background:linear-gradient(180deg,#2e2e45 0%,#222235 100%);color:var(--crt-amber);border-color:#4444aa; }
   .vbtn:active,.vbtn.on { transform:translateY(1px);border-bottom-width:1px;color:var(--cyan); }
   .vbtn.play-btn { color:var(--lime);font-size:22px; }
-  .vbtn.shuf-btn { font-size:13px;letter-spacing:2px;padding:5px 10px;font-family:'Share Tech Mono',monospace; }
-  .vbtn.eject-btn { font-size:12px;letter-spacing:2px;padding:5px 12px;font-family:'Share Tech Mono',monospace; }
 
   /* ── KNOB + VOLUME PANEL ── */
   .knob-panel {
@@ -305,14 +296,13 @@
     padding: 20px 24px 22px;
   }
 
-  /* coloured bar matching site style */
   .song-color-bar {
     height: 3px;
     background: linear-gradient(90deg, var(--neon), var(--cyan), var(--lime));
     margin-bottom: 18px;
     box-shadow: 0 0 12px rgba(255,0,110,.4);
     transition: width .4s;
-    width: 100%;
+    width: 0%;
   }
 
   .song-name {
@@ -343,7 +333,6 @@
     background: #1a1a2a;
     border-radius: 3px;
     margin-bottom: 8px;
-    cursor: pointer;
     overflow: hidden;
   }
   .progress-fill {
@@ -367,76 +356,7 @@
   .time-val { font-family:'VT323',monospace;font-size:15px;color:#333366;letter-spacing:2px; }
   .time-val.lit { color:var(--cyan); }
 
-  /* playlist / track list */
-  .track-section {
-    padding: 0 24px 20px;
-    border-top: 1px solid #0e0e1e;
-  }
-  .track-head {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 0 10px;
-  }
-  .track-head-lbl { font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:#333366;font-weight:700;font-family:'Share Tech Mono',monospace; }
-  .track-count { font-family:'VT323',monospace;font-size:16px;color:#222244;letter-spacing:1px; }
-
-  .track-list { display:flex;flex-direction:column;gap:2px;max-height:220px;overflow-y:auto; }
-  .track-list::-webkit-scrollbar { width:3px; }
-  .track-list::-webkit-scrollbar-track { background:#0a0a14; }
-  .track-list::-webkit-scrollbar-thumb { background:#1e1e3a;border-radius:2px; }
-
-  .track-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 9px 12px;
-    border: 1px solid transparent;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: all .2s;
-  }
-  .track-item:hover { background:#0a0a14;border-color:#1a1a2a; }
-  .track-item.active { background:rgba(255,0,110,.06);border-color:rgba(255,0,110,.25); }
-
-  .track-num { font-family:'VT323',monospace;font-size:16px;color:#222244;width:24px;flex-shrink:0;letter-spacing:1px; }
-  .track-item.active .track-num { color:var(--neon); }
-  .track-info { flex:1;overflow:hidden; }
-  .track-fn { font-size:.78rem;color:#5555aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.03em; }
-  .track-item.active .track-fn { color:var(--bone); }
-  .track-dur { font-family:'VT323',monospace;font-size:15px;color:#222244;letter-spacing:1px;flex-shrink:0; }
-  .track-item.active .track-dur { color:var(--cyan); }
-
-  /* playing indicator bars */
-  .play-anim { display:none; align-items:flex-end; gap:2px; height:14px; flex-shrink:0; }
-  .track-item.active .play-anim { display:flex; }
-  .play-bar { width:3px;background:var(--neon);border-radius:1px;animation:bar-bounce .6s ease-in-out infinite; }
-  .play-bar:nth-child(1) { animation-delay:0s;height:6px; }
-  .play-bar:nth-child(2) { animation-delay:.15s;height:10px; }
-  .play-bar:nth-child(3) { animation-delay:.3s;height:7px; }
-  @keyframes bar-bounce { 0%,100%{transform:scaleY(.4)} 50%{transform:scaleY(1)} }
-
-  /* empty state */
-  .no-songs {
-    padding: 30px 0;
-    text-align: center;
-    font-family: 'VT323', monospace;
-    font-size: 18px;
-    color: #222244;
-    letter-spacing: 3px;
-    line-height: 2;
-    display: block;
-  }
-  .no-songs span { color: var(--neon); }
-
-  /* ── CHANNEL BAR ── */
-  .channel-bar {
-    display: flex;
-    border-top: 1px solid #1a1a2a;
-    background: #07070f;
-  }
-  .ch-btn { flex:1;padding:11px 8px;background:none;border:none;border-right:1px solid #1a1a2a;color:#2a2a55;font-family:'VT323',monospace;font-size:15px;letter-spacing:2px;cursor:pointer;transition:all .2s;text-transform:uppercase; }
-  .ch-btn:last-child { border-right:none; }
-  .ch-btn:hover { background:#0e0e1e;color:#5555aa; }
-  .ch-btn.active { background:#0e0e1e;color:var(--lime);text-shadow:0 0 8px var(--lime);border-bottom:2px solid var(--lime); }
-
-  /* ── STATUS BAR ── */
+  /* STATUS BAR */
   .status-bar {
     background:#050510;border:2px solid #1a1a2a;border-top:1px solid #0d0d1e;
     padding:7px 20px;
@@ -445,20 +365,7 @@
   .status-txt { font-family:'Share Tech Mono',monospace;font-size:10px;color:#1a1a44;letter-spacing:2px;flex:1;overflow:hidden;white-space:nowrap; }
   .ver-tag { font-family:'VT323',monospace;font-size:15px;color:#1a1a44;letter-spacing:2px; }
 
-  /* ── HOW TO USE NOTE ── */
-  .setup-note {
-    margin-top: 2rem;
-    padding: 20px 24px;
-    border: 1px dashed #1e1e44;
-    border-radius: 3px;
-    background: rgba(0,0,0,.3);
-  }
-  .setup-head { font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;font-weight:700;font-family:'Share Tech Mono',monospace; }
-  .setup-body { font-size:.8rem;color:#3a3a6a;line-height:1.9;font-family:'Share Tech Mono',monospace; }
-  .setup-body code { color:var(--lime);letter-spacing:.05em; }
-  .setup-body strong { color:#5555aa; }
-
-  /* ── FOOTER AREA ── */
+  /* FOOTER AREA */
   .section-divider { border:none;border-top:2px dashed rgba(0,245,255,.15);margin:0 2.5rem; }
 
   footer { padding:5rem 2.5rem 3rem;background:linear-gradient(to bottom,rgba(10,10,10,.95),rgba(10,10,10,.98));border-top:3px solid var(--neon); }
@@ -473,11 +380,9 @@
   .footer-bottom { max-width:1200px;margin:0 auto;padding-top:2rem;border-top:2px dashed var(--cyan);display:flex;justify-content:space-between;align-items:center; }
   .footer-copy { font-size:.65rem;color:rgba(245,240,232,.3);letter-spacing:.15em;font-weight:500; }
 
-  /* ── SCROLL REVEAL ── */
   .reveal { opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease; }
   .reveal.visible { opacity:1;transform:translateY(0); }
 
-  /* ── RESPONSIVE ── */
   @media(max-width:768px){
     nav { padding:1rem 1.5rem; }
     .nav-links { gap:.8rem; }
@@ -494,11 +399,6 @@
     body { cursor:auto; }
     .cursor,.cursor-ring { display:none; }
   }
-
-  @media(max-width:500px){
-    .transport { flex-wrap:wrap; }
-    .song-name { font-size:1.3rem; }
-  }
 </style>
 </head>
 <body>
@@ -507,7 +407,6 @@
 <div class="cursor-ring" id="ring"></div>
 <div class="rolling-line"></div>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">Between&nbsp;the&nbsp;Notes</a>
   <ul class="nav-links">
@@ -519,7 +418,6 @@
   </ul>
 </nav>
 
-<!-- PAGE HEADER -->
 <section class="page-header">
   <div class="page-header-bg"></div>
   <div class="page-header-grid"></div>
@@ -530,11 +428,10 @@
   <div class="page-header-inner">
     <div class="page-header-label">Radio · Analogue Transmission</div>
     <h1>The<br><em>Radio</em></h1>
-    <p class="page-header-sub">Insert the tape. Let it play. Songs from the archive — the music that lives between the notes of the documentary.</p>
+    <p class="page-header-sub">Tune in. Songs from the archive play sequentially back-to-back. The music that lives between the notes of the documentary.</p>
   </div>
 </section>
 
-<!-- RADIO SECTION -->
 <section class="radio-section">
 
   <div class="radio-label-row">
@@ -542,10 +439,8 @@
     <div class="radio-label-line"></div>
   </div>
 
-  <!-- ══ THE VCR UNIT ══ -->
   <div class="vcr-unit reveal">
 
-    <!-- DISPLAY BAR -->
     <div class="display-bar">
       <div class="brand">BTN RADIO</div>
       <div class="vcr-display">
@@ -553,7 +448,7 @@
           <div class="display-clock"><span id="dh">00</span><span class="colon-blink">:</span><span id="dm">00</span><span class="colon-blink">:</span><span id="ds">00</span></div>
           <div class="display-mode" id="dmode">■ STOP</div>
         </div>
-        <div class="display-ticker"><span class="display-ticker-inner" id="ticker">BETWEEN THE NOTES · RADIO · INSERT TAPE TO BEGIN · · ·</span></div>
+        <div class="display-ticker"><span class="display-ticker-inner" id="ticker">TUNING TRANSMISSION · CONNECTING TO GITHUB STREAM · · ·</span></div>
       </div>
       <div class="led-strip">
         <div class="led red" title="POWER"></div>
@@ -563,19 +458,14 @@
       </div>
     </div>
 
-    <!-- CASSETTE BAY -->
     <div class="cassette-bay">
-      <div class="cassette-slot" id="slot" title="Click to insert tape">
-        <div class="slot-label">▸ CASSETTE</div>
-        <div class="slot-hint" id="slot-hint">CLICK TO INSERT</div>
+      <div class="cassette-slot" id="slot">
+        <div class="slot-label">▸ LIVE FEED</div>
+        <div class="slot-hint" id="slot-hint">AUTOMATED PLAYBACK ONLY</div>
 
-        <!-- CASSETTE SVG -->
-        <svg class="cassette ejected" id="cassette" viewBox="0 0 200 78" xmlns="http://www.w3.org/2000/svg">
-          <!-- body -->
+        <svg class="cassette" id="cassette" viewBox="0 0 200 78" xmlns="http://www.w3.org/2000/svg">
           <rect x="2" y="2" width="196" height="74" rx="5" fill="#1a1a2e" stroke="#2a2a4e" stroke-width="1.5"/>
-          <!-- label sticker -->
           <rect x="8" y="7" width="184" height="36" rx="2" fill="#0d0d1e" stroke="#1e1e3a" stroke-width="1"/>
-          <!-- gradient on label -->
           <rect x="8" y="7" width="184" height="3" rx="1" fill="url(#labelGrad)" opacity=".7"/>
           <defs>
             <linearGradient id="labelGrad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -585,10 +475,8 @@
             </linearGradient>
           </defs>
           <text x="100" y="22" font-family="VT323,monospace" font-size="11" fill="#3333aa" text-anchor="middle" letter-spacing="2">BETWEEN THE NOTES</text>
-          <text x="100" y="36" font-family="VT323,monospace" font-size="8" fill="#1e1e44" text-anchor="middle" letter-spacing="3">RADIO · SIDE A</text>
-          <!-- tape window -->
+          <text x="100" y="36" font-family="VT323,monospace" font-size="8" fill="#1e1e44" text-anchor="middle" letter-spacing="3">RADIO STREAM</text>
           <rect x="28" y="49" width="144" height="20" rx="2" fill="#060610" stroke="#1a1a2a" stroke-width="1"/>
-          <!-- left reel -->
           <circle cx="62" cy="59" r="9" fill="#0a0a18" stroke="#1e1e38" stroke-width="1"/>
           <g id="rl">
             <circle cx="62" cy="59" r="5.5" fill="#111122" stroke="#2a2a4a" stroke-width=".8"/>
@@ -596,7 +484,6 @@
             <line x1="62" y1="59" x2="67" y2="62" stroke="#2a2a4a" stroke-width="1.5"/>
             <line x1="62" y1="59" x2="57" y2="62" stroke="#2a2a4a" stroke-width="1.5"/>
           </g>
-          <!-- right reel -->
           <circle cx="138" cy="59" r="9" fill="#0a0a18" stroke="#1e1e38" stroke-width="1"/>
           <g id="rr">
             <circle cx="138" cy="59" r="5.5" fill="#111122" stroke="#2a2a4a" stroke-width=".8"/>
@@ -604,194 +491,144 @@
             <line x1="138" y1="59" x2="143" y2="62" stroke="#2a2a4a" stroke-width="1.5"/>
             <line x1="138" y1="59" x2="133" y2="62" stroke="#2a2a4a" stroke-width="1.5"/>
           </g>
-          <!-- tape strip between reels -->
           <rect x="71" y="57" width="58" height="4" rx="1" fill="#0d0d1a"/>
         </svg>
 
         <div class="slot-static" id="slot-static"></div>
       </div>
 
-      <!-- CONTROLS -->
       <div class="controls">
         <div class="tape-counter" id="counter">0 0 0 0</div>
         <div class="transport">
-          <button class="vbtn" id="btn-prev" onclick="prevTrack()" title="Previous">⏮</button>
-          <button class="vbtn play-btn" id="btn-play" onclick="togglePlay()" title="Play/Pause">▶</button>
-          <button class="vbtn" id="btn-stop" onclick="stopAll()" title="Stop">■</button>
-          <button class="vbtn" id="btn-next" onclick="nextTrack()" title="Next">⏭</button>
-          <button class="vbtn shuf-btn" id="btn-shuf" onclick="toggleShuffle()" title="Shuffle">⇄</button>
-          <button class="vbtn eject-btn" onclick="ejectCassette()" title="Eject">▲ EJCT</button>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <span style="font-size:9px;color:#1e1e44;letter-spacing:2px;font-family:'Share Tech Mono',monospace;">RESET</span>
-          <button class="vbtn" style="font-size:11px;font-family:'Share Tech Mono',monospace;letter-spacing:2px;" onclick="resetCounter()">CLR</button>
+          <button class="vbtn play-btn" id="btn-play" onclick="togglePlay()" title="Play/Pause">▶ PLAY</button>
+          <button class="vbtn" id="btn-stop" onclick="stopAll()" title="Stop">■ STOP</button>
         </div>
       </div>
     </div>
 
-    <!-- KNOB PANEL -->
     <div class="knob-panel">
       <div class="knob-group">
         <div class="knob-lbl">TRACKING</div>
-        <div class="knob" id="kn-track" onclick="rotateKnob()"></div>
-        <div class="knob-val" id="track-val">0</div>
+        <div class="knob" id="tracking-knob"></div>
+        <div class="knob-val" id="tracking-val">0</div>
       </div>
       <div class="vol-group">
-        <div class="knob-lbl">VOLUME</div>
-        <input type="range" class="vhs-range" id="volume-slider" min="0" max="1" step="0.05" value="0.7" oninput="changeVolume(this.value)">
+        <div class="knob-lbl" style="margin-bottom:2px;">VOLUME</div>
+        <input type="range" class="vhs-range" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
       </div>
       <div class="vent">
         <div class="vent-l"></div>
         <div class="vent-l"></div>
         <div class="vent-l"></div>
+        <div class="vent-l"></div>
       </div>
     </div>
 
-    <!-- INFO PANEL -->
     <div class="info-panel">
       <div class="info-header">
-        <div class="info-title">MONITOR OUTPUT</div>
+        <div class="info-title">// NOW RECEIVING Transmission</div>
         <div class="rec-ind" id="rec-indicator">
-          <div class="rec-dot"></div>
-          <span>LIVE TRACKING</span>
+          <div class="rec-dot"></div><span>LIVE</span>
         </div>
       </div>
+
       <div class="song-body">
-        <div class="song-color-bar" id="progress-bar-color"></div>
-        <div class="song-name" id="song-title">NO TAPE DETECTED</div>
-        <div class="song-sub" id="song-artist">INSERT MIX TAPE</div>
-        
-        <div class="progress-wrap" onclick="seekAudio(event)">
-          <div class="progress-fill" id="progress-fill"></div>
+        <div class="song-color-bar" id="color-bar"></div>
+        <div class="song-name" id="song-title">RADIO OFFLINE</div>
+        <div class="song-sub" id="song-index">PRESS PLAY TO TUNING IN</div>
+
+        <div class="progress-wrap">
+          <div class="progress-fill" id="progress-bar"></div>
         </div>
+
         <div class="time-row">
-          <div class="time-val lit" id="time-current">00:00</div>
-          <div class="time-val" id="time-total">00:00</div>
-        </div>
-      </div>
-
-      <!-- TRACK LIST -->
-      <div class="track-section">
-        <div class="track-head">
-          <div class="track-head-lbl">ARCHIVE DIRECTORY</div>
-          <div class="track-count" id="directory-count">0 TRACKS AVAILABLE</div>
-        </div>
-        <div class="no-songs" id="empty-state">ARCHIVE IS OFFLINE. <span>INSERT TAPE</span> TO READ STREAM.</div>
-        <div class="track-list" id="track-container" style="display:none;">
-          <!-- Dynamically inserted -->
+          <span class="time-val lit" id="time-current">00:00</span>
+          <span class="time-val" id="time-total">00:00</span>
         </div>
       </div>
     </div>
 
-    <!-- CHANNEL BAR -->
-    <div class="channel-bar">
-      <button class="ch-btn active" onclick="setChannel(0)">CH 1</button>
-      <button class="ch-btn" onclick="setChannel(1)">CH 2</button>
-      <button class="ch-btn" onclick="setChannel(2)">AUX</button>
-    </div>
-
-    <!-- STATUS BAR -->
     <div class="status-bar">
-      <div class="status-txt" id="status-console">SYSTEM INITIALIZED. READY FOR CASSETTE DATA TYPE...</div>
-      <div class="ver-tag">BTN-V.26</div>
+      <div class="status-txt" id="status-line">SYSTEM READY. LINK ESTABLISHED WITH GITHUB RADIO FOLDER.</div>
+      <div class="ver-tag">REV-2026</div>
     </div>
 
   </div>
-
-  <!-- INSTRUCTIONS -->
-  <div class="setup-note reveal">
-    <div class="setup-head">Tape Deck Configuration Node</div>
-    <div class="setup-body">
-      To change or add your own audio collection, update the <code>SONG_DATABASE</code> array inside the embedded script environment. Currently pulling sample retro tracking frequencies.
-    </div>
-  </div>
-
 </section>
 
 <hr class="section-divider">
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-col">
       <div class="footer-logo">Between the Notes</div>
-      <p class="footer-tagline">Exploring the creative friction and silent spaces inside cinematic soundscapes.</p>
+      <p class="footer-tagline">An automated archive stream playing historical notes, soundscapes and audio content seamlessly.</p>
     </div>
     <div class="footer-col">
       <h4>Navigation</h4>
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="listen.html">Conversations</a></li>
         <li><a href="radio.html">Radio Unit</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Legal</h4>
+      <h4>Broadcast</h4>
       <ul>
-        <li><a href="#">Archive Licensing</a></li>
-        <li><a href="#">Transmission Terms</a></li>
+        <li><a href="#0">Live Feed</a></li>
+        <li><a href="#0">GitHub Asset Stream</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">&copy; 2026 Between the Notes. All Rights Reserved.</div>
+    <div class="footer-copy">&copy; 2026 BETWEEN THE NOTES. ALL TRANSMISSIONS LOGGED.</div>
   </div>
 </footer>
 
 <script>
-  // ─── AUDIO ARCHIVE DATA ───
-  const SONG_DATABASE = [
-    { title: "Neon Horizon Shimmer", artist: "Arcade Frequency", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duration: "06:12" },
-    { title: "Analogue Friction Patterns", artist: "Hologram Suite", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", duration: "07:05" },
-    { title: "Static Resonance Echo", artist: "Vapor Drone Collective", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", duration: "05:44" },
-    { title: "The Noise Between Us", artist: "Signal 01", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", duration: "05:02" },
-    { title: "Sub-surface Oscillations", artist: "Tape Loop Project", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", duration: "06:03" }
-  ];
+  // ─── GITHUB RADIOTAPE USER CONFIGURATION ───
+  const GITHUB_USERNAME = "lumerview"; // Replace with your username
+  const REPO_NAME = "lumerview";             // Replace with your repository name
+  const FOLDER_PATH = "songs";                    // Folder containing the .mp3 files
 
-  // State Properties
-  let isTapeInserted = false;
-  let isPlaying = false;
-  let isShuffle = false;
+  // State Management
+  let playlist = [];
   let currentTrackIndex = 0;
-  let currentCounter = 0;
-  let counterInterval = null;
-  let knobRotation = 0;
+  let isPlaying = false;
+  const audio = new Audio();
 
-  // Audio Object Instantiation
-  const audioNode = new Audio();
-  audioNode.volume = 0.7;
-
-  // DOM Elements Selector Cache
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('ring');
-  const cassette = document.getElementById('cassette');
-  const slot = document.getElementById('slot');
-  const slotHint = document.getElementById('slot-hint');
-  const slotStatic = document.getElementById('slot-static');
+  // Elements
+  const btnPlay = document.getElementById('btn-play');
   const dMode = document.getElementById('dmode');
   const ticker = document.getElementById('ticker');
   const ledPlay = document.getElementById('led-play');
   const ledRec = document.getElementById('led-rec');
-  const tapeCounter = document.getElementById('counter');
-  const songTitle = document.getElementById('song-title');
-  const songArtist = document.getElementById('song-artist');
-  const progressFill = document.getElementById('progress-fill');
-  const timeCurrent = document.getElementById('time-current');
-  const timeTotal = document.getElementById('time-total');
-  const emptyState = document.getElementById('empty-state');
-  const trackContainer = document.getElementById('track-container');
-  const directoryCount = document.getElementById('directory-count');
-  const statusConsole = document.getElementById('status-console');
   const recIndicator = document.getElementById('rec-indicator');
+  const reelL = document.getElementById('rl');
+  const reelR = document.getElementById('rr');
+  const slotStatic = document.getElementById('slot-static');
+  const counterEl = document.getElementById('counter');
+  const volSlider = document.getElementById('volume-slider');
+  const trackingKnob = document.getElementById('tracking-knob');
+  const trackingVal = document.getElementById('tracking-val');
+  const songTitle = document.getElementById('song-title');
+  const songIndexLabel = document.getElementById('song-index');
+  const colorBar = document.getElementById('color-bar');
+  const progressBar = document.getElementById('progress-bar');
+  const timeCur = document.getElementById('time-current');
+  const timeTot = document.getElementById('time-total');
+  const statusLine = document.getElementById('status-line');
 
-  // Initialize Events on Slot
-  slot.addEventListener('click', () => {
-    if (!isTapeInserted) {
-      insertCassette();
-    }
-  });
+  // Clock Display Logic
+  setInterval(() => {
+    const d = new Date();
+    document.getElementById('dh').textContent = String(d.getHours()).padStart(2, '0');
+    document.getElementById('dm').textContent = String(d.getMinutes()).padStart(2, '0');
+    document.getElementById('ds').textContent = String(d.getSeconds()).padStart(2, '0');
+  }, 1000);
 
-  // ─── CURSOR ENGINE ───
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('ring');
   document.addEventListener('mousemove', (e) => {
     cursor.style.left = e.clientX + 'px';
     cursor.style.top = e.clientY + 'px';
@@ -799,251 +636,178 @@
     ring.style.top = e.clientY + 'px';
   });
 
-  // ─── CASSETTE ACTIONS ───
-  function insertCassette() {
-    isTapeInserted = true;
-    slotHint.innerText = "TAPE LOADED";
-    cassette.classList.remove('ejected');
-    slotStatic.classList.add('on');
-    statusConsole.innerText = "MOUNTING CASSETTE SEGMENT... PARSING TRACK HEADERS.";
-
-    setTimeout(() => {
-      slotStatic.classList.remove('on');
-      dMode.innerText = "■ STOP";
-      emptyState.style.display = "none";
-      trackContainer.style.display = "flex";
-      directoryCount.innerText = `${SONG_DATABASE.length} TRACKS DETECTED`;
-      statusConsole.innerText = "TAPE DECK ACTIVE. READY TO GENERATE AUDIO CARRIER SIGNALS.";
-      
-      // Select a totally random track to queue up first upon insertion
-      currentTrackIndex = Math.floor(Math.random() * SONG_DATABASE.length);
-      buildTracklistUI();
-      loadTrack(currentTrackIndex);
-      
-      // Automatically trigger play right away
-      togglePlay();
-    }, 600);
-  }
-
-  function ejectCassette() {
-    if (!isTapeInserted) return;
-    stopAll();
-    isTapeInserted = false;
-    slotHint.innerText = "CLICK TO INSERT";
-    cassette.classList.add('ejected');
-    
-    // Clear out UI State
-    emptyState.style.display = "block";
-    trackContainer.style.display = "none";
-    directoryCount.innerText = "0 TRACKS AVAILABLE";
-    songTitle.innerText = "NO TAPE DETECTED";
-    songArtist.innerText = "INSERT MIX TAPE";
-    ticker.innerText = "BETWEEN THE NOTES · RADIO · INSERT TAPE TO BEGIN · · ·";
-    ticker.classList.remove('running');
-    dMode.innerText = "■ STOP";
-    statusConsole.innerText = "CASSETTE DISMOUNTED. ENGINE IDLE.";
-  }
-
-  // ─── CONTROLS ENGINE ───
-  function loadTrack(index) {
-    if (!isTapeInserted) return;
-    currentTrackIndex = index;
-    const currentTrack = SONG_DATABASE[currentTrackIndex];
-    audioNode.src = currentTrack.src;
-    
-    songTitle.innerText = currentTrack.title;
-    songArtist.innerText = currentTrack.artist;
-    ticker.innerText = `NOW PLAYING: ${currentTrack.title.toUpperCase()} BY ${currentTrack.artist.toUpperCase()} ─── `;
-    
-    // Update active row visual accent
-    const items = document.querySelectorAll('.track-item');
-    items.forEach((item, idx) => {
-      if (idx === index) item.classList.add('active');
-      else item.classList.remove('active');
+  // Scroll Animations
+  const reveals = document.querySelectorAll('.reveal');
+  const checkReveal = () => {
+    reveals.forEach(r => {
+      const top = r.getBoundingClientRect().top;
+      if(top < window.innerHeight * 0.85) r.classList.add('visible');
     });
+  };
+  window.addEventListener('scroll', checkReveal);
+  window.addEventListener('load', checkReveal);
 
-    statusConsole.innerText = `LOADED PATH: ${currentTrack.title}. EXTRACTING COMPRESSED DATA.`;
+  // Vol / Tracking Knob aesthetics
+  volSlider.addEventListener('input', (e) => {
+    audio.volume = e.target.value;
+  });
+  trackingKnob.addEventListener('click', () => {
+    let val = Math.floor(Math.random() * 21) - 10;
+    trackingKnob.style.transform = `rotate(${val * 15}deg)`;
+    trackingVal.textContent = val > 0 ? `+${val}` : val;
+  });
+
+  // Fetch Tracks from Github API on Initial Load
+  async function fetchSongsFromGithub() {
+    const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FOLDER_PATH}`;
+    try {
+      statusLine.textContent = "FETCHING TRANSMISSION ARCHIVE FROM GITHUB...";
+      const res = await fetch(apiUrl);
+      if (!res.ok) throw new Error("Could not index directory files");
+      const files = await res.json();
+      
+      // Filter for audio extensions only
+      playlist = files
+        .filter(file => file.name.endsWith('.mp3') || file.name.endsWith('.wav') || file.name.endsWith('.ogg'))
+        .map(file => ({
+          name: file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "), // strip out formatting extensions
+          url: file.download_url
+        }));
+
+      if (playlist.length === 0) {
+        statusLine.textContent = "ERROR: NO AUDIO FILES DISCOVERED IN SOURCE DIR.";
+        ticker.textContent = "ARCHIVE EMPTY · COLD STATION · · ·";
+        return;
+      }
+
+      // Automatically randomize selection layout so it works like an organic real-time radio experience
+      shuffleArray(playlist);
+      statusLine.textContent = `BROADCAST READY. ${playlist.length} AUDIOS SYNCED. PRESS PLAY.`;
+      ticker.textContent = "STATION CALIBRATED · STANDBY TRANSMISSION ON AIR · · ·";
+    } catch (err) {
+      console.error(err);
+      statusLine.textContent = "CONNECTION ERROR: CHECK REPO METADATA CREDENTIALS IN THE CODE.";
+      ticker.textContent = "HARDWARE DISCONNECTED FROM LIVE SERVER · · ·";
+    }
+  }
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  // Load target structured audio file
+  function loadTrack(index) {
+    if (playlist.length === 0) return;
+    currentTrackIndex = index;
+    audio.src = playlist[currentTrackIndex].url;
+    
+    // UI Update
+    const currentSongName = playlist[currentTrackIndex].name.toUpperCase();
+    songTitle.textContent = currentSongName;
+    songIndexLabel.textContent = `RADIO STATION STREAM · SIGNAL POOL [${currentTrackIndex + 1}/${playlist.length}]`;
+    ticker.textContent = `PLAYING: ${currentSongName} · · · `;
+    ticker.classList.add('running');
   }
 
   function togglePlay() {
-    if (!isTapeInserted) {
-      // Prompt lazy users to add tape first
-      insertCassette();
-      return;
-    }
-
+    if (playlist.length === 0) return;
+    
     if (isPlaying) {
-      audioNode.pause();
+      audio.pause();
       isPlaying = false;
-      dMode.innerText = "❚❚ PAUSE";
-      ledPlay.className = "led off";
-      recIndicator.classList.remove('on');
-      document.getElementById('rl').className = "";
-      document.getElementById('rr').className = "";
-      clearInterval(counterInterval);
+      setPlayStateUI(false, "‖ PAUSE");
     } else {
-      audioNode.play().then(() => {
+      // Initialize first song if clean boot
+      if (!audio.src) {
+        loadTrack(0);
+      }
+      audio.play().then(() => {
         isPlaying = true;
-        dMode.innerText = "▶ PLAY";
-        ledPlay.className = "led grn";
-        recIndicator.classList.add('on');
-        ticker.classList.add('running');
-        document.getElementById('rl').className = "spinning-cw";
-        document.getElementById('rr').className = "spinning-cw";
-        
-        // Counter Incrementation Engine
-        counterInterval = setInterval(() => {
-          currentCounter++;
-          updateCounterDisplay();
-        }, 1000);
+        setPlayStateUI(true, "▶ PLAY");
       }).catch(err => {
-        statusConsole.innerText = "AUDIO TRANSMISSION ERROR. BROWSER ACCESS DENIED.";
+        statusLine.textContent = "INTERACTION BLOCKED BY NAVIGATOR AUDIO SECURITY POLICY.";
       });
     }
   }
 
   function stopAll() {
-    audioNode.pause();
-    audioNode.currentTime = 0;
+    audio.pause();
+    audio.currentTime = 0;
     isPlaying = false;
-    dMode.innerText = "■ STOP";
-    ledPlay.className = "led off";
-    recIndicator.classList.remove('on');
+    setPlayStateUI(false, "■ STOP");
     ticker.classList.remove('running');
-    document.getElementById('rl').className = "";
-    document.getElementById('rr').className = "";
-    clearInterval(counterInterval);
+    ticker.textContent = "STATION RECORD LIVE · TUNED STANDBY · · ·";
+    songTitle.textContent = "RADIO OFFLINE";
+    songIndexLabel.textContent = "TRANSMISSION PAUSED BY USER CONTROLS";
+    progressBar.style.width = "0%";
+    colorBar.style.width = "0%";
+    timeCur.textContent = "00:00";
   }
 
-  function nextTrack() {
-    if (!isTapeInserted) return;
-    if (isShuffle) {
-      currentTrackIndex = Math.floor(Math.random() * SONG_DATABASE.length);
-    } else {
-      currentTrackIndex = (currentTrackIndex + 1) % SONG_DATABASE.length;
-    }
-    loadTrack(currentTrackIndex);
-    if (isPlaying) { audioNode.play(); } else { togglePlay(); }
-  }
-
-  function prevTrack() {
-    if (!isTapeInserted) return;
-    currentTrackIndex = (currentTrackIndex - 1 + SONG_DATABASE.length) % SONG_DATABASE.length;
-    loadTrack(currentTrackIndex);
-    if (isPlaying) { audioNode.play(); } else { togglePlay(); }
-  }
-
-  function toggleShuffle() {
-    isShuffle = !isShuffle;
-    const btn = document.getElementById('btn-shuf');
-    if (isShuffle) {
-      btn.classList.add('on');
-      statusConsole.innerText = "SHUFFLE PROTOCOL ACTIVATED. RANDOM PATH SELECTION LOADED.";
-    } else {
-      btn.classList.remove('on');
-      statusConsole.innerText = "LINEAR TRACKING SYSTEM ENGAGED.";
-    }
-  }
-
-  // ─── AUDIO UTILITIES ───
-  audioNode.addEventListener('timeupdate', () => {
-    if (!audioNode.duration) return;
-    const progress = (audioNode.currentTime / audioNode.duration) * 100;
-    progressFill.style.width = `${progress}%`;
-    timeCurrent.innerText = formatTime(audioNode.currentTime);
-    timeTotal.innerText = formatTime(audioNode.duration);
-  });
-
-  audioNode.addEventListener('ended', () => {
-    nextTrack();
-  });
-
-  function seekAudio(event) {
-    if (!isTapeInserted || !audioNode.duration) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const clickX = event.clientX - rect.left;
-    const percentage = clickX / rect.width;
-    audioNode.currentTime = percentage * audioNode.duration;
-  }
-
-  function changeVolume(val) {
-    audioNode.volume = val;
-  }
-
-  function rotateKnob() {
-    knobRotation = (knobRotation + 45) % 360;
-    document.getElementById('kn-track').style.transform = `rotate(${knobRotation}deg)`;
-    const valMapping = Math.floor(knobRotation / 45);
-    document.getElementById('track-val').innerText = valMapping;
-    
-    // Simulate audio glitch feedback on tracking change
-    if (isTapeInserted) {
+  function setPlayStateUI(playing, modeText) {
+    dMode.textContent = modeText;
+    if (playing) {
+      btnPlay.textContent = "‖ PAUSE";
+      ledPlay.className = "led grn";
+      ledRec.className = "led red";
+      recIndicator.classList.add('on');
+      reelL.classList.add('spinning-cw');
+      reelR.classList.add('spinning-cw');
       slotStatic.classList.add('on');
-      setTimeout(() => slotStatic.classList.remove('on'), 150);
+      songTitle.classList.add('playing');
+    } else {
+      btnPlay.textContent = "▶ PLAY";
+      ledPlay.className = "led off";
+      ledRec.className = "led off";
+      recIndicator.classList.remove('on');
+      reelL.className = "";
+      reelR.className = "";
+      slotStatic.classList.remove('on');
+      songTitle.classList.remove('playing');
     }
   }
 
-  function updateCounterDisplay() {
-    let str = currentCounter.toString().padStart(4, '0');
-    tapeCounter.innerText = str.split('').join(' ');
-  }
+  // Audio Processing Listeners
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration) return;
+    
+    // Tape Counter Formula
+    const totalSeconds = Math.floor(audio.currentTime);
+    counterEl.textContent = String(totalSeconds).padStart(4, '0').split('').join(' ');
 
-  function resetCounter() {
-    currentCounter = 0;
-    updateCounterDisplay();
-  }
+    // Metrics Layout Displays
+    const currentProgress = (audio.currentTime / audio.duration) * 100;
+    progressBar.style.width = `${currentProgress}%`;
+    colorBar.style.width = `${currentProgress}%`;
 
-  function setChannel(num) {
-    const buttons = document.querySelectorAll('.ch-btn');
-    buttons.forEach((b, i) => {
-      if (i === num) b.classList.add('active');
-      else b.classList.remove('active');
-    });
-    statusConsole.innerText = `MUTATING FREQUENCY CARRIER LINE TO NODE CH-${num + 1}.`;
-  }
+    // Clock Layout Timer
+    timeCur.textContent = formatTime(audio.currentTime);
+    timeTot.textContent = formatTime(audio.duration);
+  });
+
+  // Track finished playing auto trigger sequence chain rule
+  audio.addEventListener('ended', () => {
+    let nextIndex = currentTrackIndex + 1;
+    if (nextIndex >= playlist.length) {
+      // Loop station back cleanly to randomized slot 0 when full folder finishes
+      nextIndex = 0;
+      shuffleArray(playlist);
+    }
+    loadTrack(nextIndex);
+    audio.play().catch(e => console.log(e));
+  });
 
   function formatTime(secs) {
-    const m = Math.floor(secs / 60).toString().padStart(2, '0');
-    const s = Math.floor(secs % 60).toString().padStart(2, '0');
-    return `${m}:${s}`;
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
   }
 
-  function buildTracklistUI() {
-    trackContainer.innerHTML = "";
-    SONG_DATABASE.forEach((track, idx) => {
-      const row = document.createElement('div');
-      row.className = "track-item";
-      row.onclick = () => { if(isTapeInserted) { loadTrack(idx); togglePlay(); } };
-      row.innerHTML = `
-        <div class="track-num">${(idx+1).toString().padStart(2, '0')}</div>
-        <div class="track-info">
-          <div class="track-fn">${track.title} ── ${track.artist}</div>
-        </div>
-        <div class="play-anim">
-          <div class="play-bar"></div>
-          <div class="play-bar"></div>
-          <div class="play-bar"></div>
-        </div>
-        <div class="track-dur">${track.duration}</div>
-      `;
-      trackContainer.appendChild(row);
-    });
-  }
-
-  // Realtime System Clock Implementation
-  setInterval(() => {
-    const d = new Date();
-    document.getElementById('dh').innerText = d.getHours().toString().padStart(2, '0');
-    document.getElementById('dm').innerText = d.getMinutes().toString().padStart(2, '0');
-    document.getElementById('ds').innerText = d.getSeconds().toString().padStart(2, '0');
-  }, 1000);
-
-  // Scroll Reveal Intersection Observer
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+  // Execute Async Sequence
+  fetchSongsFromGithub();
 </script>
-
 </body>
 </html>
