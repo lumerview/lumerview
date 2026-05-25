@@ -586,9 +586,9 @@
 
 <script>
   // ─── GITHUB RADIOTAPE USER CONFIGURATION ───
-  const GITHUB_USERNAME = "lumerview"; // Replace with your username
-  const REPO_NAME = "lumerview";             // Replace with your repository name
-  const FOLDER_PATH = "songs";                    // Folder containing the .mp3 files
+  const GITHUB_USERNAME = "YOUR_GITHUB_USERNAME"; // Replace with your username
+  const REPO_NAME = "YOUR_REPO_NAME";             // Replace with your repository name
+  const FOLDER_PATH = "songs";                    // Folder containing your audio files
 
   // State Management
   let playlist = [];
@@ -666,21 +666,21 @@
       if (!res.ok) throw new Error("Could not index directory files");
       const files = await res.json();
       
-      // Filter for audio extensions only
+      // Filter for audio extensions only (.mp3, .m4a, .wav, .ogg)
       playlist = files
-        .filter(file => file.name.endsWith('.mp3') || file.name.endsWith('.wav') || file.name.endsWith('.ogg'))
+        .filter(file => file.name.endsWith('.mp3') || file.name.endsWith('.m4a') || file.name.endsWith('.wav') || file.name.endsWith('.ogg'))
         .map(file => ({
           name: file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "), // strip out formatting extensions
           url: file.download_url
         }));
 
       if (playlist.length === 0) {
-        statusLine.textContent = "ERROR: NO AUDIO FILES DISCOVERED IN SOURCE DIR.";
+        statusLine.textContent = "ERROR: NO COMPATIBLE AUDIO FILES DISCOVERED IN SOURCE DIR.";
         ticker.textContent = "ARCHIVE EMPTY · COLD STATION · · ·";
         return;
       }
 
-      // Automatically randomize selection layout so it works like an organic real-time radio experience
+      // Automatically randomize layout order to play like an organic radio station experience
       shuffleArray(playlist);
       statusLine.textContent = `BROADCAST READY. ${playlist.length} AUDIOS SYNCED. PRESS PLAY.`;
       ticker.textContent = "STATION CALIBRATED · STANDBY TRANSMISSION ON AIR · · ·";
@@ -788,11 +788,11 @@
     timeTot.textContent = formatTime(audio.duration);
   });
 
-  // Track finished playing auto trigger sequence chain rule
+  // Track finished playing auto trigger sequence loop
   audio.addEventListener('ended', () => {
     let nextIndex = currentTrackIndex + 1;
     if (nextIndex >= playlist.length) {
-      // Loop station back cleanly to randomized slot 0 when full folder finishes
+      // Loop station back cleanly to a reshuffled pool when all songs end
       nextIndex = 0;
       shuffleArray(playlist);
     }
@@ -806,7 +806,7 @@
     return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
   }
 
-  // Execute Async Sequence
+  // Execute Stream Setup
   fetchSongsFromGithub();
 </script>
 </body>
