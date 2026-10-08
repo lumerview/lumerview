@@ -12,495 +12,354 @@
 <meta property="og:title" content="About — Lumerview">
 <meta property="og:description" content="A global platform dedicated to connecting creators through the stories behind their work.">
 <meta property="og:url" content="https://lumerview.com/about.html">
+<meta property="og:image" content="https://i.ibb.co/9kThrtCv/indiefferential-magazine-9-xl-xxxl.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Archivo:wght@100;200;300;400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>document.documentElement.className='js'</script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --ink: #0a0a0a;
-    --bone: #f5f0e8;
-    --neon: #ff006e;
-    --cyan: #00f5ff;
-    --lime: #39ff14;
-    --gold: #ffd60a;
-    --purple: #b537f2;
-  }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--ink);
-    color: var(--bone);
-    font-family: 'Archivo', sans-serif;
-    font-weight: 200;
-    overflow-x: hidden;
-    cursor: none;
-  }
-  .cursor {
-    position: fixed; width: 8px; height: 8px;
-    background: var(--gold); border-radius: 50%;
-    pointer-events: none; z-index: 9999;
-    transform: translate(-50%,-50%);
-    transition: width .3s, height .3s, background .3s;
-  }
-  .cursor-ring {
-    position: fixed; width: 32px; height: 32px;
-    border: 1px solid rgba(184,151,74,.5); border-radius: 50%;
-    pointer-events: none; z-index: 9998;
-    transform: translate(-50%,-50%);
-    transition: width .3s, height .3s;
-  }
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 9000; opacity: .6;
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f1220;--panel:#171b2d;--text:#ece8df;--muted:#b4b8c6;--line:rgba(236,232,223,.16);--accent:#f2a541;
+--serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+html{font-size:112.5%;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 2.5rem}
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.5rem 2.5rem;
-    background: rgba(10,10,10,.95); backdrop-filter: blur(8px);
-    border-bottom: 2px solid var(--neon);
-  }
-  .nav-logo {
-    font-family: 'Archivo', sans-serif; font-weight: 700;
-    font-size: 1rem; letter-spacing: .15em; text-transform: uppercase;
-    text-decoration: none;
-    background: linear-gradient(90deg, var(--bone) 0%, var(--cyan) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    font-size: .65rem; letter-spacing: .3em; text-transform: uppercase;
-    color: rgba(245,240,232,.6); text-decoration: none; transition: all .2s; font-weight: 500;
-  }
-  .nav-links a:hover, .nav-links a.active { color: var(--neon); text-shadow: 0 0 8px var(--neon); }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.1rem 2.5rem;background:rgba(15,18,32,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-logo{font-family:var(--serif);font-weight:600;font-size:1.25rem;text-decoration:none}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.95rem;font-weight:500;color:var(--muted);text-decoration:none;padding-bottom:3px;border-bottom:2px solid transparent;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--text);border-bottom-color:var(--accent)}
 
-  /* PAGE HEADER */
-  .page-header {
-    min-height: 65vh;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 0 2.5rem 5rem;
-    position: relative; overflow: hidden;
-  }
-  .page-header-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 120% 80% at 15% 70%, rgba(255,0,110,.12) 0%, transparent 50%),
-      radial-gradient(ellipse 80% 100% at 85% 15%, rgba(0,245,255,.08) 0%, transparent 55%);
-  }
-  .page-header-grid {
-    position: absolute; inset: 0;
-    background-image:
-      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,0,110,.08) 40px),
-      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0,245,255,.05) 40px);
-    opacity: .6;
-  }
-  .page-header-inner { position: relative; max-width: 1200px; }
-  .page-header-label {
-    font-size: .7rem; letter-spacing: .4em; text-transform: uppercase;
-    color: var(--cyan); margin-bottom: 1rem;
-    opacity: 0; animation: fade-up .8s ease .3s forwards;
-    font-weight: 600; text-shadow: 0 0 10px rgba(0,245,255,.4);
-  }
-  .page-header h1 {
-    font-family: 'Archivo', sans-serif;
-    font-size: clamp(4rem, 10vw, 9rem);
-    font-weight: 900; line-height: .95; letter-spacing: -.03em;
-    opacity: 0; animation: fade-up 1s ease .5s forwards;
-    background: linear-gradient(90deg, var(--bone) 0%, var(--neon) 50%, var(--cyan) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .page-header h1 em { font-style: italic; }
-  .page-header-sub {
-    margin-top: 2rem; font-size: 1.05rem; line-height: 1.7; font-weight: 500;
-    color: rgba(245,240,232,.7); max-width: 750px;
-    opacity: 0; animation: fade-up 1s ease .75s forwards;
-  }
-  .hf { position: absolute; opacity: 0; animation: hfloat 12s ease-in-out infinite; animation-delay: var(--d); pointer-events: none; }
-  @keyframes hfloat {
-    0%   { opacity: 0; transform: translateY(0) rotate(var(--r,0deg)); }
-    20%  { opacity: 1; }
-    80%  { opacity: .4; }
-    100% { opacity: 0; transform: translateY(-60px) rotate(calc(var(--r,0deg) + 6deg)); }
-  }
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+/* HEADER */
+.page-header{padding:11rem 0 5rem;border-bottom:1px solid var(--line)}
+.page-header .wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:4rem;align-items:end}
+.kicker{font-size:.95rem;color:var(--accent);font-weight:600;margin-bottom:1.2rem}
+h1{font-family:var(--serif);font-weight:800;font-size:clamp(3.6rem,9vw,8rem);line-height:.92;letter-spacing:-.03em}
+.page-header-sub{font-size:1.1rem;line-height:1.75;color:var(--muted);max-width:34rem}
+.page-header-sub b{color:var(--text);font-weight:600}
 
-  /* MANIFESTO */
-  .manifesto {
-    border-top: 3px solid var(--neon);
-    border-bottom: 2px dashed rgba(0,245,255,.2);
-    padding: 6rem 2.5rem;
-    background: linear-gradient(135deg, rgba(255,0,110,.025) 0%, rgba(0,245,255,.01) 100%);
-  }
-  .manifesto-inner {
-    max-width: 1200px; margin: 0 auto;
-    display: grid; grid-template-columns: 280px 1fr; gap: 7rem; align-items: start;
-  }
-  .manifesto-eyebrow {
-    font-size: .6rem; letter-spacing: .45em; text-transform: uppercase;
-    color: var(--cyan); font-weight: 700; margin-bottom: 2.5rem;
-    text-shadow: 0 0 10px rgba(0,245,255,.3);
-  }
-  .manifesto-scope { display: flex; flex-direction: column; gap: 2rem; }
-  .scope-item {
-    padding-left: 1.5rem;
-    border-left: 2px solid rgba(255,0,110,.25);
-    transition: border-color .3s;
-  }
-  .scope-item:hover { border-left-color: var(--neon); }
-  .scope-num {
-    font-family: 'Archivo', sans-serif;
-    font-size: 3rem; font-weight: 900; line-height: 1;
-    color: var(--neon); text-shadow: 0 0 20px rgba(255,0,110,.2);
-    margin-bottom: .3rem;
-  }
-  .scope-label {
-    font-size: .58rem; letter-spacing: .3em; text-transform: uppercase;
-    color: rgba(245,240,232,.5); font-weight: 600;
-  }
-  .manifesto-statement {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.7rem, 2.6vw, 2.5rem);
-    font-weight: 300; font-style: italic;
-    line-height: 1.5; color: var(--bone); margin-bottom: 2.5rem;
-  }
-  .manifesto-statement strong {
-    font-style: normal; font-weight: 600; color: var(--neon);
-    text-shadow: 0 0 12px rgba(255,0,110,.15);
-  }
-  .manifesto-rule {
-    width: 48px; height: 2px;
-    background: linear-gradient(90deg, var(--neon), var(--cyan));
-    margin-bottom: 2rem;
-    box-shadow: 0 0 12px rgba(255,0,110,.25);
-  }
-  .manifesto-body {
-    font-size: .88rem; line-height: 1.95;
-    color: rgba(245,240,232,.65); font-weight: 400; margin-bottom: 1.2rem;
-  }
+/* FILTER */
+.filter-bar{position:sticky;top:4.2rem;z-index:50;background:rgba(15,18,32,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:1rem 0}
+.filter-bar .wrap{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.filter-label{font-size:.95rem;color:var(--muted);margin-right:.6rem}
+.filter-btn{font:500 .95rem var(--sans);color:var(--text);background:none;border:1px solid var(--line);border-radius:999px;padding:.45rem 1.1rem;cursor:pointer;transition:all .2s}
+.filter-btn:hover{border-color:var(--text)}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#1a1205}
 
-  /* SECTION HEAD */
-  .section-head {
-    max-width: 1200px; margin: 0 auto;
-    padding: 6rem 2.5rem 2.5rem;
-    display: flex; align-items: flex-end; justify-content: space-between;
-    border-bottom: 2px dashed var(--cyan);
-  }
-  .section-head h2 { font-family: 'Archivo', sans-serif; font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 900; line-height: 1; color: var(--bone); }
-  .section-head h2 em { font-style: italic; color: var(--neon); text-shadow: 0 0 15px rgba(255,0,110,.3); }
-  .section-head-count { font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--cyan); font-weight: 700; }
+/* FEATURED */
+.featured{padding:6rem 0}
+.featured-inner{display:grid;grid-template-columns:5fr 6fr;gap:5rem;align-items:center}
+.featured-visual{position:relative;aspect-ratio:4/5}
+.featured-visual::before{content:'';position:absolute;inset:1.2rem -1.2rem -1.2rem 1.2rem;border:1px solid var(--accent)}
+.featured-visual img{position:relative;width:100%;height:100%;object-fit:cover}
+.featured-tag{position:absolute;top:1rem;left:1rem;z-index:2;background:var(--accent);color:#1a1205;font-size:.85rem;font-weight:600;padding:.3rem .8rem}
+.featured-type{font-size:.95rem;color:var(--accent);font-weight:600;margin-bottom:1rem}
+h2.featured-name{font-family:var(--serif);font-weight:800;font-size:clamp(2.6rem,5vw,4.4rem);line-height:1;letter-spacing:-.02em}
+.featured-title{font-family:var(--serif);font-style:italic;font-size:1.4rem;color:var(--muted);margin:.6rem 0 1.8rem}
+.featured-excerpt{font-size:1.05rem;line-height:1.8;color:var(--muted);margin-bottom:2rem}
+.featured-excerpt b{color:var(--text);font-weight:600}
+.pull-quote{border-left:3px solid var(--accent);padding:.2rem 0 .2rem 1.6rem;margin-bottom:2rem}
+.pull-quote p{font-family:var(--serif);font-size:1.4rem;line-height:1.5}
+.pull-quote cite{display:block;margin-top:.8rem;font-size:.95rem;font-style:normal;color:var(--muted)}
+.featured-info{display:flex;gap:3rem;margin-bottom:2rem}
+.info-label{display:block;font-size:.9rem;color:var(--muted)}
+.info-val{font-size:1.05rem;font-weight:500}
+.status{display:inline-flex;align-items:center;gap:.7rem;font-size:.95rem;font-weight:500;border:1px solid var(--line);padding:.6rem 1.2rem;border-radius:999px}
+.status::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent)}
 
-  /* CONTENT GRID */
-  .content-grid {
-    max-width: 1200px; margin: 0 auto;
-    padding: 0 2.5rem 8rem;
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1.5px;
-  }
+/* SECTION HEAD */
+.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:3rem 0 1.5rem;border-top:1px solid var(--line);margin-bottom:2.5rem}
+.section-head h2{font-family:var(--serif);font-weight:800;font-size:clamp(2.2rem,4vw,3.4rem);line-height:1;letter-spacing:-.02em}
+.section-head span{font-size:.95rem;color:var(--muted)}
 
-  /* PROCESS CARD */
-  .card {
-    display: flex; flex-direction: column;
-    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
-    transition: all .3s; position: relative; overflow: hidden;
-    border: 2px solid rgba(0,245,255,.3);
-  }
-  .card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 8px;
-    background: repeating-linear-gradient(90deg, transparent 0, transparent 3px, var(--neon) 3px, var(--neon) 6px);
-    z-index: 5;
-  }
-  .card:hover { background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%); border-color: var(--neon); box-shadow: 0 0 25px rgba(255,0,110,.3); }
-  .card-visual { aspect-ratio: 16/9; background: linear-gradient(45deg, #0a0a0a, #15152e); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: flex-start; padding: 2rem; }
-  .card-badge { position: absolute; top: 1rem; right: 1rem; font-size: .55rem; letter-spacing: .3em; text-transform: uppercase; padding: .35rem .8rem; font-weight: 700; z-index: 3; background: var(--cyan); color: var(--ink); box-shadow: 0 0 12px var(--cyan); }
-  .card-badge-alt { background: var(--purple); color: var(--bone); box-shadow: 0 0 12px var(--purple); }
-  .card-badge-lime { background: var(--lime); color: var(--ink); box-shadow: 0 0 12px var(--lime); }
-  .card-num { font-family: 'Archivo', sans-serif; font-size: 3.5rem; font-weight: 900; color: rgba(255,0,110,.15); line-height: 1; transition: color .3s; }
-  .card:hover .card-num { color: var(--neon); text-shadow: 0 0 15px rgba(255,0,110,.4); }
-  .card-body { padding: 1.8rem 1.8rem 2rem; flex: 1; display: flex; flex-direction: column; }
-  .card-name { font-family: 'Archivo', sans-serif; font-size: 1.4rem; font-weight: 700; line-height: 1.2; margin-bottom: .75rem; color: var(--bone); }
-  .card-excerpt { font-size: .88rem; line-height: 1.85; color: rgba(245,240,232,.65); flex: 1; font-weight: 400; }
+/* CARDS */
+.content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem 2rem;padding-bottom:6rem}
+.card{display:flex;flex-direction:column}
+.tile{position:relative;aspect-ratio:16/10;overflow:hidden;background:hsl(var(--h,220) 32% 21%);display:flex;align-items:center;justify-content:center}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile span{font-family:var(--serif);font-weight:800;font-size:6rem;line-height:1;color:hsl(var(--h,220) 45% 62%)}
+.card-body{display:flex;flex-direction:column;flex:1;padding-top:1.2rem}
+.meta{font-size:.9rem;color:var(--accent);font-weight:600;margin-bottom:.6rem}
+.meta small{font-size:inherit;font-weight:400;color:var(--muted)}
+.card h3{font-family:var(--serif);font-weight:600;font-size:1.55rem;line-height:1.2;margin-bottom:.4rem}
+.role{font-size:.95rem;color:var(--muted);margin-bottom:1rem}
+.ex{font-size:1rem;line-height:1.7;color:var(--muted);margin-bottom:1.2rem;flex:1}
+.ex b{color:var(--text);font-weight:600}
+.card blockquote{font-family:var(--serif);font-style:italic;font-size:1.1rem;line-height:1.5;border-left:2px solid var(--accent);padding-left:1rem}
+.empty{display:none;grid-column:1/-1;color:var(--muted);padding:2rem 0}
 
-  /* FOOTER */
-  footer { padding: 5rem 2.5rem 3rem; border-top: 3px solid var(--neon); margin-top: auto; }
-  .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
-  .footer-logo { font-family: 'Archivo', sans-serif; font-size: 1.8rem; font-weight: 900; letter-spacing: .1em; margin-bottom: 1.2rem; background: linear-gradient(90deg, var(--bone) 0%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .footer-tagline { font-size: .8rem; line-height: 1.8; color: rgba(245,240,232,.4); max-width: 280px; font-weight: 500; }
-  .footer-col h4 { font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--neon); margin-bottom: 1.5rem; font-weight: 700; }
-  .footer-col ul { list-style: none; }
-  .footer-col ul li { margin-bottom: .8rem; }
-  .footer-col ul a { font-size: .85rem; color: rgba(245,240,232,.4); text-decoration: none; transition: all .3s; font-weight: 500; }
-  .footer-col ul a:hover { color: var(--cyan); }
-  .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 2rem; border-top: 2px dashed var(--cyan); display: flex; justify-content: space-between; align-items: center; }
-  .footer-copy { font-size: .65rem; color: rgba(245,240,232,.3); letter-spacing: .15em; font-weight: 500; }
+/* EPISODES */
+.episode-list{padding-bottom:6rem}
+.episode{display:grid;grid-template-columns:6rem 1fr auto;gap:2rem;align-items:baseline;padding:2rem 0;border-top:1px solid var(--line)}
+.episode:last-child{border-bottom:1px solid var(--line)}
+.ep-num{font-family:var(--serif);font-weight:800;font-size:3.4rem;line-height:1;color:var(--accent)}
+.ep-series{font-size:.9rem;color:var(--muted);margin-bottom:.3rem}
+.ep-title{font-family:var(--serif);font-weight:600;font-size:1.6rem;line-height:1.25;margin-bottom:.4rem}
+.ep-desc{color:var(--muted);max-width:44rem}
+.ep-status{font-size:.95rem;font-weight:500;white-space:nowrap}
 
-  /* REVEAL */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: .1s; }
-  .reveal-delay-2 { transition-delay: .2s; }
-  .reveal-delay-3 { transition-delay: .3s; }
+/* UPCOMING */
+.upcoming{padding-bottom:6rem}
+.up-item{display:grid;grid-template-columns:14rem 1fr;gap:2rem;padding:1.4rem 0;border-top:1px solid var(--line)}
+.up-item:last-child{border-bottom:1px solid var(--line)}
+.up-type{color:var(--muted)}
+.up-name{font-family:var(--serif);font-weight:600;font-size:1.4rem}
+.up-name small{display:block;font-family:var(--sans);font-size:.95rem;font-weight:400;color:var(--muted)}
 
-  /* RESPONSIVE */
-  @media (max-width: 1024px) {
-    .content-grid { grid-template-columns: repeat(2, 1fr); }
-    .manifesto-inner { grid-template-columns: 1fr; gap: 3rem; }
-  }
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { gap: .8rem; }
-    .nav-links a { font-size: .55rem; }
-    .page-header { padding: 0 1.5rem 3rem; min-height: 45vh; margin-top: 60px; }
-    .page-header h1 { font-size: clamp(2.5rem, 8vw, 5rem); }
-    .hf { display: none; }
-    .manifesto { padding: 3rem 1.5rem; }
-    .manifesto-scope { flex-direction: row; gap: 1.5rem; flex-wrap: wrap; }
-    .manifesto-statement { font-size: clamp(1.3rem, 3.5vw, 1.8rem); }
-    .section-head { padding: 4rem 1.5rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
-    .content-grid { grid-template-columns: 1fr; padding: 0 1.5rem 4rem; gap: 1.5px; }
-    footer { padding: 3rem 1.5rem 2rem; }
-    .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
-    body { cursor: auto; }
-    .cursor, .cursor-ring { display: none; }
-  }
-  @media (max-width: 500px) {
-    nav { padding: .8rem 1rem; flex-direction: column; align-items: flex-start; gap: .8rem; }
-    .nav-links { width: 100%; gap: .6rem; flex-wrap: wrap; }
-    .page-header { padding: 0 1rem 2rem; min-height: 40vh; margin-top: 120px; }
-    .page-header h1 { font-size: clamp(2rem, 7vw, 3rem); }
-    .manifesto { padding: 2.5rem 1rem; }
-    .manifesto-scope { flex-direction: column; gap: 1.5rem; }
-    .section-head { padding: 3rem 1rem 1.2rem; }
-    .content-grid { padding: 0 1rem 3rem; }
-    footer { padding: 2rem 1rem 1.5rem; }
-    .footer-inner { gap: 1.5rem; }
-  }
+/* NOTIFY */
+.notify{background:var(--panel);padding:6rem 0;text-align:center}
+.notify .wrap{max-width:700px}
+.notify h2{font-family:var(--serif);font-weight:800;font-size:clamp(2.2rem,4vw,3.4rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:1.2rem}
+.notify p{font-size:1.05rem;color:var(--muted);margin-bottom:2rem}
+.notify-form{display:flex;max-width:500px;margin:0 auto 1rem}
+.notify-input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-right:none;padding:.9rem 1.2rem;color:var(--text);font:400 1rem var(--sans)}
+.notify-input:focus{border-color:var(--accent);outline:none}
+.notify-btn{padding:.9rem 1.8rem;background:var(--accent);color:#1a1205;border:1px solid var(--accent);font:600 1rem var(--sans);cursor:pointer}
+.notify-btn:hover{background:transparent;color:var(--accent)}
+.notify .note{font-size:.9rem;margin:0}
+
+/* FOOTER */
+footer{padding:4.5rem 0 2.5rem;border-top:1px solid var(--line)}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-logo{font-family:var(--serif);font-weight:800;font-size:1.8rem;margin-bottom:.8rem}
+.footer-tagline{color:var(--muted);max-width:22rem}
+.footer-col h4{font-size:.95rem;font-weight:600;margin-bottom:1rem}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:.6rem}
+.footer-col a{color:var(--muted);text-decoration:none}
+.footer-col a:hover{color:var(--text)}
+.footer-copy{border-top:1px solid var(--line);padding-top:1.5rem;font-size:.9rem;color:var(--muted)}
+
+/* FADE (one gentle reveal) */
+.js .rv{opacity:0;transition:opacity .7s ease}
+.js .rv.visible{opacity:1}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .rv{opacity:1;transition:none}}
+
+/* RESPONSIVE */
+@media (max-width:1024px){
+  .content-grid{grid-template-columns:repeat(2,1fr)}
+  .page-header .wrap{grid-template-columns:1fr;gap:2rem}
+  .featured-inner{gap:3rem}
+}
+@media (max-width:768px){
+  html{font-size:106.25%}
+  .wrap{padding:0 1.5rem}
+  nav{padding:.9rem 1.5rem}
+  .nav-links{gap:1rem}
+  .nav-links a{font-size:.85rem}
+  .page-header{padding:8rem 0 3rem}
+  .filter-bar{top:3.6rem}
+  .featured{padding:3.5rem 0}
+  .featured-inner{grid-template-columns:1fr;gap:3rem}
+  .featured-visual{max-width:420px}
+  .featured-info{gap:2rem}
+  .content-grid{grid-template-columns:1fr}
+  .episode{grid-template-columns:1fr;gap:.6rem}
+  .ep-num{font-size:2.4rem}
+  .up-item{grid-template-columns:1fr;gap:.3rem}
+  .footer-inner{grid-template-columns:1fr;gap:2rem}
+}
+@media (max-width:500px){
+  nav{flex-direction:column;align-items:flex-start;gap:.5rem}
+  .nav-links{flex-wrap:wrap}
+  .page-header{padding-top:9rem}
+  .filter-bar{top:6.4rem}
+}
+
+/* ===== STYLE REFRESH: bold typographic, uppercase nav, marquee hero, photo wall ===== */
+:root{--bg:#0c0c0c;--panel:#161616;--text:#f2efe9;--muted:#b9b6b0;--display:'Anton','Arial Narrow',Impact,sans-serif}
+nav{background:rgba(12,12,12,.94)}
+.nav-logo{font-family:var(--display);font-weight:400;font-size:1.35rem;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{text-transform:uppercase;letter-spacing:.1em;font-size:.8rem;font-weight:600}
+.page-header{padding:6.5rem 0 0;border-bottom:0;overflow:hidden}
+.mq{white-space:nowrap;overflow:hidden;font-family:var(--display);text-transform:uppercase;font-size:clamp(2.2rem,6vw,5rem);line-height:1.15;padding:.2rem 0}
+.mq>div{display:inline-block;animation:mq 40s linear infinite}
+.mq-rev>div{animation-direction:reverse}
+.mq span{display:inline-block}
+.mq-outline{color:transparent;-webkit-text-stroke:1.5px var(--text)}
+.mq-solid{color:var(--accent)}
+@keyframes mq{to{transform:translateX(-50%)}}
+h1{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(4.5rem,17vw,16rem);line-height:.88;letter-spacing:-.01em;padding:0 2.5rem;margin:.4rem 0}
+.intro{display:flex;justify-content:space-between;align-items:flex-end;gap:3rem;padding-top:3rem;padding-bottom:3.5rem}
+.arrow{font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:.85rem;text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:.3rem;white-space:nowrap}
+.arrow:hover{color:var(--accent)}
+.wall{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.wall figure{position:relative;height:30rem;overflow:hidden}
+.wall img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);transition:filter .5s,transform .8s}
+.wall figure:hover img{filter:none;transform:scale(1.04)}
+.wall figcaption{position:absolute;left:0;right:0;bottom:0;padding:3rem 1.2rem 1.1rem;background:linear-gradient(transparent,rgba(0,0,0,.85));font-family:var(--display);text-transform:uppercase;font-size:1.5rem;letter-spacing:.03em}
+.filter-btn{border-radius:0;text-transform:uppercase;letter-spacing:.1em;font-size:.8rem;font-weight:600;padding:.6rem 1.3rem}
+.filter-label{text-transform:uppercase;letter-spacing:.1em;font-size:.8rem}
+h2.featured-name,.section-head h2,.notify h2{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.005em}
+h2.featured-name{font-size:clamp(3rem,6vw,5.5rem);line-height:.95}
+.section-head h2,.notify h2{font-size:clamp(2.6rem,5vw,4.4rem)}
+.ep-num{font-family:var(--display);font-weight:400;font-size:4.2rem}
+.up-name{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:1.8rem;letter-spacing:.01em}
+.up-name small{text-transform:none;letter-spacing:0}
+.footer-logo{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.04em}
+.footer-col h4{text-transform:uppercase;letter-spacing:.1em;font-size:.8rem}
+.featured-tag,.status,.notify-btn{border-radius:0}
+.status{text-transform:uppercase;letter-spacing:.08em;font-size:.8rem}
+.notify-btn{text-transform:uppercase;letter-spacing:.1em;font-size:.85rem}
+.tile span{font-family:var(--display);font-weight:400}
+@media (max-width:1024px){.wall figure{height:24rem}}
+@media (max-width:768px){
+  h1{padding:0 1.5rem}
+  .intro{flex-direction:column;align-items:flex-start;gap:1.5rem;padding-top:2rem}
+  .wall{grid-template-columns:repeat(2,1fr)}
+  .wall figure{height:16rem}
+  .wall figcaption{font-size:1.15rem}
+  .page-header{padding-top:7rem}
+}
+@media (max-width:500px){.page-header{padding-top:8.5rem}}
+@media (prefers-reduced-motion:reduce){.mq>div{animation:none}}
+
+/* ABOUT-SPECIFIC */
+.manifesto{padding:6rem 0;border-top:1px solid var(--line)}
+.statement{font-family:var(--serif);font-weight:400;font-size:clamp(1.7rem,3.2vw,2.9rem);line-height:1.4;letter-spacing:-.01em;max-width:62rem;margin-bottom:3.5rem}
+.statement strong{font-weight:600;color:var(--accent)}
+.manifesto-cols{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:start}
+.manifesto-body{font-size:1.1rem;line-height:1.8;color:var(--muted);max-width:36rem;border-left:3px solid var(--accent);padding-left:1.6rem}
+.facts{display:grid;gap:1.5rem}
+.fact{border-top:1px solid var(--line);padding-top:1rem;font-family:var(--display);text-transform:uppercase;font-size:2rem;letter-spacing:.01em}
+.steps{padding-bottom:6rem}
+@media (min-width:769px){.steps .episode{grid-template-columns:6rem 1fr}}
+@media (max-width:768px){.manifesto{padding:4rem 0}.manifesto-cols{grid-template-columns:1fr;gap:2.5rem}}
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
 <nav aria-label="Main navigation">
-  <a href="index.html" class="nav-logo">Between&nbsp;the&nbsp;Notes</a>
-  <ul class="nav-links" role="list">
+  <a href="index.html" class="nav-logo">Between the Notes</a>
+  <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
-    <li><a href="https://lumerview.com/about">About</a></li>
-    <li><a href="index.html">Conversations</a></li>
-    <li><a href="http://lumerview.com/radio.html">Radio</a></li>
+    <li><a href="about.html" class="active" aria-current="page">About</a></li>
+    <li><a href="listen.html">Conversations</a></li>
+    <li><a href="https://lumerview.com/radio.html">Radio</a></li>
     <li><a href="index.html#participate">Participate</a></li>
   </ul>
 </nav>
 
-<header class="page-header" role="banner">
-  <div class="page-header-bg" aria-hidden="true"></div>
-  <div class="page-header-grid" aria-hidden="true"></div>
-  <div class="hf" style="right:12%;top:35%;--d:0s;--r:-8deg" aria-hidden="true">
-    <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" stroke="#00f5ff" stroke-width="1.2" fill="none" opacity=".7"/></svg>
-  </div>
-  <div class="hf" style="right:25%;top:55%;--d:2s;--r:12deg" aria-hidden="true">
-    <svg width="32" height="6" viewBox="0 0 32 6"><line x1="0" y1="3" x2="32" y2="3" stroke="#ff006e" stroke-width="1.5" opacity=".6"/></svg>
-  </div>
-  <div class="hf" style="right:6%;top:65%;--d:1s;--r:-4deg" aria-hidden="true">
-    <svg width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" stroke="#39ff14" stroke-width="1" fill="none" opacity=".6"/></svg>
-  </div>
-  <div class="hf" style="right:40%;top:20%;--d:3s;--r:5deg" aria-hidden="true">
-    <svg width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="0" x2="10" y2="20" stroke="#00f5ff" stroke-width="1.2" opacity=".5"/><line x1="0" y1="10" x2="20" y2="10" stroke="#00f5ff" stroke-width="1.2" opacity=".5"/></svg>
-  </div>
-  <div class="page-header-inner">
-    <div class="page-header-label">Where stories live</div>
-    <h1>Before the<br><em>Screen</em></h1>
-    <p class="page-header-sub">
-      Lumerview is a global platform dedicated to connecting creators through the stories behind their work. We bring together musicians, writers, journalists, and artists from around the world — and give their creative process the space, depth, and attention it deserves.
-    </p>
+<header class="page-header">
+  <div class="mq mq-outline" aria-hidden="true"><div><span>Lumerview &nbsp;·&nbsp; Lumerview &nbsp;·&nbsp; Lumerview &nbsp;·&nbsp; Lumerview &nbsp;·&nbsp; </span><span>Lumerview &nbsp;·&nbsp; Lumerview &nbsp;·&nbsp; Lumerview &nbsp;·&nbsp; Lumerview &nbsp;·&nbsp; </span></div></div>
+  <h1>Before the Screen</h1>
+  <div class="mq mq-solid mq-rev" aria-hidden="true"><div><span>Where stories live &nbsp;·&nbsp; Where stories live &nbsp;·&nbsp; Where stories live &nbsp;·&nbsp; </span><span>Where stories live &nbsp;·&nbsp; Where stories live &nbsp;·&nbsp; Where stories live &nbsp;·&nbsp; </span></div></div>
+  <div class="wrap intro">
+    <p class="page-header-sub">Lumerview is a global platform dedicated to connecting creators through the stories behind their work. We bring together musicians, writers, journalists, and artists from around the world, and give their creative process the space, depth, and attention it deserves.</p>
+    <a class="arrow" href="listen.html">Read the interviews →</a>
   </div>
 </header>
 
 <main>
-  <!-- MANIFESTO -->
-  <section class="manifesto" aria-label="Our Manifesto">
-    <div class="manifesto-inner">
-      <div class="manifesto-scope">
-        <span class="manifesto-eyebrow">The Philosophy</span>
-        <div class="scope-item">
-          <div class="scope-num">01</div>
-          <div class="scope-label">Global Platform</div>
+  <section class="manifesto" aria-label="Our manifesto">
+    <div class="wrap">
+      <p class="statement rv">“We believe the conversation around a work is part of the work itself. The uncertainty before a first note is played. The decision to tear something apart and begin again. The specific silence a city teaches you. <strong>These are the materials of creation</strong>, and they rarely appear in reviews, credits, or press releases.”</p>
+      <div class="manifesto-cols rv">
+        <p class="manifesto-body">Selected stories featured on the platform will become part of a full-length documentary film and a published book, a permanent record of what it means to make something in this particular moment in time.</p>
+        <div class="facts">
+          <div class="fact">Global platform</div>
+          <div class="fact">Permanent record</div>
         </div>
-        <div class="scope-item">
-          <div class="scope-num">02</div>
-          <div class="scope-label">Permanent Record</div>
-        </div>
-      </div>
-      <div>
-        <p class="manifesto-statement">
-          "We believe the conversation around a work is part of the work itself. The uncertainty before a first note is played. The decision to tear something apart and begin again. The specific silence a city teaches you. <strong>These are the materials of creation</strong> — and they rarely appear in reviews, credits, or press releases."
-        </p>
-        <div class="manifesto-rule"></div>
-        <p class="manifesto-body">
-          Selected stories featured on the platform will become part of a full-length documentary film and a published book — a permanent record of what it means to make something in this particular moment in time.
-        </p>
       </div>
     </div>
   </section>
 
-  <!-- PROCESS / ECOSYSTEM -->
-  <div class="section-head reveal">
-    <h2>The <em>Ecosystem</em></h2>
-    <span class="section-head-count">6 Core Steps</span>
-  </div>
+  <div class="wrap">
+    <div class="section-head rv">
+      <h2>The ecosystem</h2>
+      <span>6 steps</span>
+    </div>
 
-  <div class="content-grid" role="list">
-    <!-- STEP 1 -->
-    <article class="card reveal" role="listitem">
-      <div class="card-visual">
-        <span class="card-num">01</span>
-        <div class="card-badge">Curation</div>
+    <div class="steps">
+      <div class="episode rv">
+        <div class="ep-num">01</div>
+        <div>
+          <p class="ep-series">Curation</p>
+          <h3 class="ep-title">We find the artist</h3>
+          <p class="ep-desc">We seek out creators whose work operates at the edge of a discipline: people making something that doesn't have a category yet, or who bring a perspective the broader conversation is missing. We come to them; we don't wait for submissions.</p>
+        </div>
       </div>
-      <div class="card-body">
-        <h3 class="card-name">We Find the Artist</h3>
-        <p class="card-excerpt">We seek out creators whose work operates at the edge of a discipline — people making something that doesn't have a category yet, or who bring a perspective the broader conversation is missing. We come to them; we don't wait for submissions.</p>
+      <div class="episode rv">
+        <div class="ep-num">02</div>
+        <div>
+          <p class="ep-series">Dialogue</p>
+          <h3 class="ep-title">The conversation</h3>
+          <p class="ep-desc">Each exchange is recorded, transcribed, and shaped into its native form: a long-form interview, an audio conversation, a written portrait, or an intimate video piece filmed inside the studio or space where the work happens.</p>
+        </div>
       </div>
-    </article>
-
-    <!-- STEP 2 -->
-    <article class="card reveal reveal-delay-1" role="listitem">
-      <div class="card-visual">
-        <span class="card-num">02</span>
-        <div class="card-badge">Dialogue</div>
+      <div class="episode rv">
+        <div class="ep-num">03</div>
+        <div>
+          <p class="ep-series">Broadcast</p>
+          <h3 class="ep-title">Published on Lumerview</h3>
+          <p class="ep-desc">The finished piece goes live on the platform, free and open, reaching an audience of artists, listeners, and readers who came looking for something more than a press release. No paywalls. No noise around the work.</p>
+        </div>
       </div>
-      <div class="card-body">
-        <h3 class="card-name">The Conversation</h3>
-        <p class="card-excerpt">Each exchange is recorded, transcribed, and shaped into its native form — a long-form interview, an audio conversation, a written portrait, or an intimate video piece filmed inside the studio or space where the work happens.</p>
+      <div class="episode rv">
+        <div class="ep-num">04</div>
+        <div>
+          <p class="ep-series">Cinema</p>
+          <h3 class="ep-title">The documentary</h3>
+          <p class="ep-desc">The richest threads from across the platform (the recurring themes, the unexpected resonances, the images and voices that don't leave you) are woven into a feature-length documentary currently in production.</p>
+        </div>
       </div>
-    </article>
-
-    <!-- STEP 3 -->
-    <article class="card reveal reveal-delay-2" role="listitem">
-      <div class="card-visual">
-        <span class="card-num">03</span>
-        <div class="card-badge">Broadcast</div>
+      <div class="episode rv">
+        <div class="ep-num">05</div>
+        <div>
+          <p class="ep-series">Print</p>
+          <h3 class="ep-title">The book</h3>
+          <p class="ep-desc">A companion publication collects the written portraits, extended transcripts, and photographs that the film cannot hold. A physical object built to last. Something you can return to, mark up, carry somewhere.</p>
+        </div>
       </div>
-      <div class="card-body">
-        <h3 class="card-name">Published on Lumerview</h3>
-        <p class="card-excerpt">The finished piece goes live on the platform, free and open, reaching an audience of artists, listeners, and readers who came looking for something more than a press release. No paywalls. No noise around the work.</p>
+      <div class="episode rv">
+        <div class="ep-num">06</div>
+        <div>
+          <p class="ep-series">History</p>
+          <h3 class="ep-title">The archive</h3>
+          <p class="ep-desc">Every conversation becomes part of a living archive, a record of what artists were thinking, worrying about, and reaching toward at this specific moment in the world. Searchable, linkable, permanent.</p>
+        </div>
       </div>
-    </article>
-
-    <!-- STEP 4 -->
-    <article class="card reveal" role="listitem">
-      <div class="card-visual">
-        <span class="card-num">04</span>
-        <div class="card-badge card-badge-alt">Cinema</div>
-      </div>
-      <div class="card-body">
-        <h3 class="card-name">The Documentary</h3>
-        <p class="card-excerpt">The richest threads from across the platform — the recurring themes, the unexpected resonances, the images and voices that don't leave you — are woven into a feature-length documentary currently in production.</p>
-      </div>
-    </article>
-
-    <!-- STEP 5 -->
-    <article class="card reveal reveal-delay-1" role="listitem">
-      <div class="card-visual">
-        <span class="card-num">05</span>
-        <div class="card-badge card-badge-alt">Print</div>
-      </div>
-      <div class="card-body">
-        <h3 class="card-name">The Book</h3>
-        <p class="card-excerpt">A companion publication collects the written portraits, extended transcripts, and photographs that the film cannot hold. A physical object built to last. Something you can return to, mark up, carry somewhere.</p>
-      </div>
-    </article>
-
-    <!-- STEP 6 -->
-    <article class="card reveal reveal-delay-2" role="listitem">
-      <div class="card-visual">
-        <span class="card-num">06</span>
-        <div class="card-badge card-badge-lime">History</div>
-      </div>
-      <div class="card-body">
-        <h3 class="card-name">The Archive</h3>
-        <p class="card-excerpt">Every conversation becomes part of a living archive — a record of what artists were thinking, worrying about, and reaching toward at this specific moment in the world. Searchable, linkable, permanent.</p>
-      </div>
-    </article>
+    </div>
   </div>
 </main>
 
 <footer>
-  <div class="footer-inner">
-    <div class="footer-col">
-      <div class="footer-logo">Lumerview</div>
-      <p class="footer-tagline">Connecting creators through the deep architectural stories behind their lifelong craft.</p>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">Lumerview</div>
+        <p class="footer-tagline">Connecting creators through the deep architectural stories behind their lifelong craft.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="listen.html">Conversations</a></li>
+          <li><a href="https://lumerview.com/radio">Radio</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Inquiries</h4>
+        <ul>
+          <li><a href="index.html#participate">Participate</a></li>
+          <li><a href="mailto:contact@lumerview.com">Contact press</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-col">
-      <h4>Platform</h4>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="https://lumerview.com/about">About</a></li>
-        <li><a href="index.html">Conversations</a></li>
-        <li><a href="https://lumerview.com/radio">Radio</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Inquiries</h4>
-      <ul>
-        <li><a href="index.html#participate">Participate</a></li>
-        <li><a href="mailto:contact@lumerview.com">Contact Press</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span class="footer-copy">&copy; 2026 Lumerview. All Rights Reserved.</span>
+    <p class="footer-copy">&copy; 2026 Lumerview. All rights reserved.</p>
   </div>
 </footer>
 
 <script>
-  // Custom Cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  
-  document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    
-    ring.style.left = e.clientX + 'px';
-    ring.style.top = e.clientY + 'px';
-  });
-
-  // Grow cursor on interactive elements
-  const interactives = document.querySelectorAll('a, button, .card');
-  interactives.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.width = '20px';
-      cursor.style.height = '20px';
-      cursor.style.background = 'var(--neon)';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.width = '8px';
-      cursor.style.height = '8px';
-      cursor.style.background = 'var(--gold)';
-    });
-  });
-
-  // Reveal animations on scroll
-  const reveals = document.querySelectorAll('.reveal');
-  const revealOnScroll = () => {
-    reveals.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.88) {
-        el.classList.add('visible');
-      }
-    });
-  };
-  window.addEventListener('scroll', revealOnScroll);
-  window.addEventListener('load', revealOnScroll);
+  const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 </script>
-
 </body>
 </html>
