@@ -220,6 +220,13 @@ h2.featured-name{font-size:clamp(3rem,6vw,5.5rem);line-height:.95}
 }
 @media (max-width:500px){.page-header{padding-top:8.5rem}}
 @media (prefers-reduced-motion:reduce){.mq>div{animation:none}}
+
+/* PHOTO CROP: less zoom so portraits stay sharper, keep faces in frame */
+.tile{aspect-ratio:4/3}
+.tile img,.wall img{object-position:center 20%}
+.wall figure{height:26rem}
+@media (max-width:1024px){.wall figure{height:22rem}}
+@media (max-width:768px){.wall figure{height:15rem}}
 </style>
 </head>
 <body>
@@ -248,7 +255,7 @@ h2.featured-name{font-size:clamp(3rem,6vw,5.5rem);line-height:.95}
   <figure class="rv"><img src="https://i.ibb.co/0MNSDGF/Simone-Benyacar-BIO-PIC.jpg" alt="Simone Benyacar" loading="lazy"><figcaption>Simone Benyacar</figcaption></figure>
   <figure class="rv"><img src="https://i.ibb.co/VWLwsyjK/2-A9-A0209-2.jpg" alt="Anna Mészöly" loading="lazy"><figcaption>Anna Mészöly</figcaption></figure>
   <figure class="rv"><img src="https://i.ibb.co/DD9Rqq7h/Photo-Feb-12-2025-9-20-37-PM.jpg" alt="Lauren Ash" loading="lazy"><figcaption>Lauren Ash</figcaption></figure>
-  <figure class="rv"><img src="https://i.ibb.co/FQ9xqBM/whats-new-26-xxxl.jpg" alt="Andrew Levin" loading="lazy"><figcaption>Andrew Levin</figcaption></figure>
+  <figure class="rv"><img src="https://i.ibb.co/FQ9xqBM/whats-new-26-xxxl.jpg" alt="Andrew Levin" loading="lazy" style="object-position:85% 25%"><figcaption>Andrew Levin</figcaption></figure>
 </section>
 
 <div class="filter-bar" role="navigation" aria-label="Filter conversations">
@@ -323,7 +330,7 @@ h2.featured-name{font-size:clamp(3rem,6vw,5.5rem);line-height:.95}
     </article>
 
     <article class="card rv" data-type="written">
-      <div class="tile" style="--h:160"><img src="https://i.ibb.co/FQ9xqBM/whats-new-26-xxxl.jpg" alt="Andrew Levin" loading="lazy"></div>
+      <div class="tile" style="--h:160"><img src="https://i.ibb.co/FQ9xqBM/whats-new-26-xxxl.jpg" alt="Andrew Levin" loading="lazy" style="object-position:85% 25%"></div>
       <div class="card-body">
         <p class="meta">Written portrait <small>· Coming soon</small></p>
         <h3>Andrew Levin</h3>
