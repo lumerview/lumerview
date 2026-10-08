@@ -15,492 +15,245 @@
 <meta property="og:image" content="https://i.ibb.co/9kThrtCv/indiefferential-magazine-9-xl-xxxl.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Archivo:wght@100;200;300;400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>document.documentElement.className='js'</script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --ink: #0a0a0a;
-    --bone: #f5f0e8;
-    --neon: #ff006e;
-    --cyan: #00f5ff;
-    --lime: #39ff14;
-    --gold: #ffd60a;
-    --purple: #b537f2;
-  }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--ink);
-    color: var(--bone);
-    font-family: 'Archivo', sans-serif;
-    font-weight: 200;
-    overflow-x: hidden;
-    cursor: none;
-  }
-  .cursor {
-    position: fixed; width: 8px; height: 8px;
-    background: var(--gold); border-radius: 50%;
-    pointer-events: none; z-index: 9999;
-    transform: translate(-50%,-50%);
-    transition: width .3s, height .3s, background .3s;
-  }
-  .cursor-ring {
-    position: fixed; width: 32px; height: 32px;
-    border: 1px solid rgba(184,151,74,.5); border-radius: 50%;
-    pointer-events: none; z-index: 9998;
-    transform: translate(-50%,-50%);
-    transition: width .3s, height .3s;
-  }
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 9000; opacity: .6;
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f1220;--panel:#171b2d;--text:#ece8df;--muted:#b4b8c6;--line:rgba(236,232,223,.16);--accent:#f2a541;
+--serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+html{font-size:112.5%;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 2.5rem}
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.5rem 2.5rem;
-    background: rgba(10,10,10,.95); backdrop-filter: blur(8px);
-    border-bottom: 2px solid var(--neon);
-  }
-  .nav-logo {
-    font-family: 'Archivo', sans-serif; font-weight: 700;
-    font-size: 1rem; letter-spacing: .15em; text-transform: uppercase;
-    text-decoration: none;
-    background: linear-gradient(90deg, var(--bone) 0%, var(--cyan) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    font-size: .65rem; letter-spacing: .3em; text-transform: uppercase;
-    color: rgba(245,240,232,.6); text-decoration: none; transition: all .2s; font-weight: 500;
-  }
-  .nav-links a:hover, .nav-links a.active { color: var(--neon); text-shadow: 0 0 8px var(--neon); }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.1rem 2.5rem;background:rgba(15,18,32,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-logo{font-family:var(--serif);font-weight:600;font-size:1.25rem;text-decoration:none}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.95rem;font-weight:500;color:var(--muted);text-decoration:none;padding-bottom:3px;border-bottom:2px solid transparent;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--text);border-bottom-color:var(--accent)}
 
-  /* PAGE HEADER */
-  .page-header {
-    min-height: 65vh;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 0 2.5rem 5rem;
-    position: relative; overflow: hidden;
-  }
-  .page-header-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 120% 80% at 15% 70%, rgba(255,0,110,.12) 0%, transparent 50%),
-      radial-gradient(ellipse 80% 100% at 85% 15%, rgba(0,245,255,.08) 0%, transparent 55%);
-  }
-  .page-header-grid {
-    position: absolute; inset: 0;
-    background-image:
-      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,0,110,.08) 40px),
-      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0,245,255,.05) 40px);
-    opacity: .6;
-  }
-  .page-header-inner { position: relative; max-width: 1200px; }
-  .page-header-label {
-    font-size: .7rem; letter-spacing: .4em; text-transform: uppercase;
-    color: var(--cyan); margin-bottom: 1rem;
-    opacity: 0; animation: fade-up .8s ease .3s forwards;
-    font-weight: 600; text-shadow: 0 0 10px rgba(0,245,255,.4);
-  }
-  .page-header h1 {
-    font-family: 'Archivo', sans-serif;
-    font-size: clamp(4rem, 10vw, 9rem);
-    font-weight: 900; line-height: .95; letter-spacing: -.03em;
-    opacity: 0; animation: fade-up 1s ease .5s forwards;
-    background: linear-gradient(90deg, var(--bone) 0%, var(--neon) 50%, var(--cyan) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .page-header h1 em { font-style: italic; }
-  .page-header-sub {
-    margin-top: 2rem; font-size: 1.05rem; line-height: 1.7; font-weight: 500;
-    color: rgba(245,240,232,.7); max-width: 600px;
-    opacity: 0; animation: fade-up 1s ease .75s forwards;
-  }
-  .hf { position: absolute; opacity: 0; animation: hfloat 12s ease-in-out infinite; animation-delay: var(--d); pointer-events: none; }
-  @keyframes hfloat {
-    0%   { opacity: 0; transform: translateY(0) rotate(var(--r,0deg)); }
-    20%  { opacity: 1; }
-    80%  { opacity: .4; }
-    100% { opacity: 0; transform: translateY(-60px) rotate(calc(var(--r,0deg) + 6deg)); }
-  }
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+/* HEADER */
+.page-header{padding:11rem 0 5rem;border-bottom:1px solid var(--line)}
+.page-header .wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:4rem;align-items:end}
+.kicker{font-size:.95rem;color:var(--accent);font-weight:600;margin-bottom:1.2rem}
+h1{font-family:var(--serif);font-weight:800;font-size:clamp(3.6rem,9vw,8rem);line-height:.92;letter-spacing:-.03em}
+.page-header-sub{font-size:1.1rem;line-height:1.75;color:var(--muted);max-width:34rem}
+.page-header-sub b{color:var(--text);font-weight:600}
 
-  /* MANIFESTO */
-  .manifesto {
-    border-top: 3px solid var(--neon);
-    border-bottom: 2px dashed rgba(0,245,255,.2);
-    padding: 6rem 2.5rem;
-    background: linear-gradient(135deg, rgba(255,0,110,.025) 0%, rgba(0,245,255,.01) 100%);
-  }
-  .manifesto-inner {
-    max-width: 1200px; margin: 0 auto;
-    display: grid; grid-template-columns: 280px 1fr; gap: 7rem; align-items: start;
-  }
-  .manifesto-eyebrow {
-    font-size: .6rem; letter-spacing: .45em; text-transform: uppercase;
-    color: var(--cyan); font-weight: 700; margin-bottom: 2.5rem;
-    text-shadow: 0 0 10px rgba(0,245,255,.3);
-  }
-  .manifesto-scope { display: flex; flex-direction: column; gap: 2rem; }
-  .scope-item {
-    padding-left: 1.5rem;
-    border-left: 2px solid rgba(255,0,110,.25);
-    transition: border-color .3s;
-  }
-  .scope-item:hover { border-left-color: var(--neon); }
-  .scope-num {
-    font-family: 'Archivo', sans-serif;
-    font-size: 3rem; font-weight: 900; line-height: 1;
-    color: var(--neon); text-shadow: 0 0 20px rgba(255,0,110,.2);
-    margin-bottom: .3rem;
-  }
-  .scope-label {
-    font-size: .58rem; letter-spacing: .3em; text-transform: uppercase;
-    color: rgba(245,240,232,.5); font-weight: 600;
-  }
-  .manifesto-statement {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.7rem, 2.6vw, 2.5rem);
-    font-weight: 300; font-style: italic;
-    line-height: 1.5; color: var(--bone); margin-bottom: 2.5rem;
-  }
-  .manifesto-statement strong {
-    font-style: normal; font-weight: 600; color: var(--neon);
-    text-shadow: 0 0 12px rgba(255,0,110,.15);
-  }
-  .manifesto-rule {
-    width: 48px; height: 2px;
-    background: linear-gradient(90deg, var(--neon), var(--cyan));
-    margin-bottom: 2rem;
-    box-shadow: 0 0 12px rgba(255,0,110,.25);
-  }
-  .manifesto-body {
-    font-size: .88rem; line-height: 1.95;
-    color: rgba(245,240,232,.5); font-weight: 400; margin-bottom: 1.2rem;
-  }
+/* FILTER */
+.filter-bar{position:sticky;top:4.2rem;z-index:50;background:rgba(15,18,32,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:1rem 0}
+.filter-bar .wrap{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.filter-label{font-size:.95rem;color:var(--muted);margin-right:.6rem}
+.filter-btn{font:500 .95rem var(--sans);color:var(--text);background:none;border:1px solid var(--line);border-radius:999px;padding:.45rem 1.1rem;cursor:pointer;transition:all .2s}
+.filter-btn:hover{border-color:var(--text)}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#1a1205}
 
-  /* FILTER BAR */
-  .filter-bar {
-    padding: 2rem 2.5rem;
-    border-bottom: 2px dashed var(--cyan);
-    background-color: rgba(10,10,10,.97);
-    backdrop-filter: blur(8px);
-    position: sticky; top: 0; z-index: 50;
-  }
-  .filter-bar-inner {
-    max-width: 1200px; margin: 0 auto;
-    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-  }
-  .filter-label { font-size: .7rem; letter-spacing: .4em; text-transform: uppercase; color: var(--cyan); font-weight: 700; }
-  .filter-btn {
-    padding: .6rem 1.3rem; border: 2px solid var(--cyan);
-    background: rgba(0,245,255,.05); color: var(--bone);
-    font-family: 'Archivo', sans-serif; font-size: .65rem;
-    letter-spacing: .2em; text-transform: uppercase;
-    cursor: none; transition: all .25s; font-weight: 600;
-  }
-  .filter-btn:hover { background: rgba(0,245,255,.15); box-shadow: 0 0 12px rgba(0,245,255,.4); }
-  .filter-btn.active { background: var(--neon); border-color: var(--neon); color: var(--ink); box-shadow: 0 0 20px var(--neon); }
+/* FEATURED */
+.featured{padding:6rem 0}
+.featured-inner{display:grid;grid-template-columns:5fr 6fr;gap:5rem;align-items:center}
+.featured-visual{position:relative;aspect-ratio:4/5}
+.featured-visual::before{content:'';position:absolute;inset:1.2rem -1.2rem -1.2rem 1.2rem;border:1px solid var(--accent)}
+.featured-visual img{position:relative;width:100%;height:100%;object-fit:cover}
+.featured-tag{position:absolute;top:1rem;left:1rem;z-index:2;background:var(--accent);color:#1a1205;font-size:.85rem;font-weight:600;padding:.3rem .8rem}
+.featured-type{font-size:.95rem;color:var(--accent);font-weight:600;margin-bottom:1rem}
+h2.featured-name{font-family:var(--serif);font-weight:800;font-size:clamp(2.6rem,5vw,4.4rem);line-height:1;letter-spacing:-.02em}
+.featured-title{font-family:var(--serif);font-style:italic;font-size:1.4rem;color:var(--muted);margin:.6rem 0 1.8rem}
+.featured-excerpt{font-size:1.05rem;line-height:1.8;color:var(--muted);margin-bottom:2rem}
+.featured-excerpt b{color:var(--text);font-weight:600}
+.pull-quote{border-left:3px solid var(--accent);padding:.2rem 0 .2rem 1.6rem;margin-bottom:2rem}
+.pull-quote p{font-family:var(--serif);font-size:1.4rem;line-height:1.5}
+.pull-quote cite{display:block;margin-top:.8rem;font-size:.95rem;font-style:normal;color:var(--muted)}
+.featured-info{display:flex;gap:3rem;margin-bottom:2rem}
+.info-label{display:block;font-size:.9rem;color:var(--muted)}
+.info-val{font-size:1.05rem;font-weight:500}
+.status{display:inline-flex;align-items:center;gap:.7rem;font-size:.95rem;font-weight:500;border:1px solid var(--line);padding:.6rem 1.2rem;border-radius:999px}
+.status::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent)}
 
-  /* FEATURED */
-  .featured { padding: 6rem 2.5rem; max-width: 1200px; margin: 0 auto; }
-  .featured-inner {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
-    padding-bottom: 6rem; border-bottom: 2px dashed var(--neon);
-  }
-  .featured-visual {
-    aspect-ratio: 4/5;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
-    border: 3px solid var(--neon);
-    position: relative; overflow: hidden;
-    box-shadow: 0 0 30px rgba(255,0,110,.3), inset 0 0 30px rgba(255,0,110,.05);
-  }
-  .featured-visual::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 20px;
-    background: repeating-linear-gradient(90deg, #1a1a1a 0, #1a1a1a 4px, #2a2a2a 4px, #2a2a2a 8px);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,.8); z-index: 2;
-  }
-  .featured-visual::after {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 20px;
-    background: repeating-linear-gradient(90deg, #1a1a1a 0, #1a1a1a 4px, #2a2a2a 4px, #2a2a2a 8px);
-    box-shadow: inset 0 -2px 4px rgba(0,0,0,.8); z-index: 2;
-  }
-  .featured-tag {
-    position: absolute; top: 1.5rem; left: 1.5rem;
-    font-size: .55rem; letter-spacing: .3em; text-transform: uppercase;
-    color: var(--ink); background: var(--neon);
-    padding: .4rem .9rem; font-weight: 700; z-index: 3; box-shadow: 0 0 12px var(--neon);
-  }
-  .featured-duration { position: absolute; bottom: 1.5rem; right: 1.5rem; font-size: .65rem; letter-spacing: .2em; color: var(--cyan); font-weight: 600; z-index: 3; }
-  .featured-meta { display: flex; flex-direction: column; }
-  .featured-type { font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.5rem; font-weight: 700; }
-  .featured-name { font-family: 'Archivo', sans-serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 900; line-height: 1.05; margin-bottom: .6rem; color: var(--bone); }
-  .featured-title { font-family: 'Archivo', sans-serif; font-size: 1.25rem; font-weight: 600; color: var(--neon); margin-bottom: 2rem; }
-  .gold-rule { width: 60px; height: 3px; background: linear-gradient(90deg, var(--neon) 0%, var(--cyan) 100%); margin-bottom: 2rem; box-shadow: 0 0 15px rgba(255,0,110,.4); }
-  .featured-excerpt { font-size: .95rem; line-height: 1.9; color: rgba(245,240,232,.7); margin-bottom: 2.5rem; font-weight: 500; }
-  .featured-excerpt strong { color: var(--neon); font-weight: 700; }
-  .pull-quote { border-left: 3px solid var(--neon); padding: 1rem 1.5rem; margin: 1.5rem 0 2rem; background: rgba(255,0,110,.04); }
-  .pull-quote p { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-style: italic; color: var(--bone); line-height: 1.6; }
-  .pull-quote cite { display: block; margin-top: .75rem; font-size: .62rem; letter-spacing: .25em; text-transform: uppercase; color: var(--cyan); font-style: normal; font-weight: 700; }
-  .featured-info { display: flex; gap: 2.5rem; margin-bottom: 2.5rem; }
-  .info-item { display: flex; flex-direction: column; gap: .3rem; }
-  .info-label { font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--cyan); font-weight: 700; }
-  .info-val { font-size: .85rem; color: rgba(245,240,232,.8); font-weight: 500; }
-  .coming-badge {
-    display: inline-flex; align-items: center; gap: .7rem;
-    font-size: .65rem; letter-spacing: .25em; text-transform: uppercase;
-    color: var(--lime); font-weight: 700;
-    border: 2px solid rgba(57,255,20,.35); padding: .8rem 1.4rem;
-  }
-  .coming-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); animation: pulse-dot 2s ease-in-out infinite; box-shadow: 0 0 8px var(--lime); }
-  @keyframes pulse-dot { 0%,100%{opacity:.4;} 50%{opacity:1;} }
+/* SECTION HEAD */
+.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:3rem 0 1.5rem;border-top:1px solid var(--line);margin-bottom:2.5rem}
+.section-head h2{font-family:var(--serif);font-weight:800;font-size:clamp(2.2rem,4vw,3.4rem);line-height:1;letter-spacing:-.02em}
+.section-head span{font-size:.95rem;color:var(--muted)}
 
-  /* SECTION HEAD */
-  .section-head {
-    max-width: 1200px; margin: 0 auto;
-    padding: 4rem 2.5rem 2.5rem;
-    display: flex; align-items: flex-end; justify-content: space-between;
-    border-bottom: 2px dashed var(--cyan);
-  }
-  .section-head h2 { font-family: 'Archivo', sans-serif; font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 900; line-height: 1; color: var(--bone); }
-  .section-head h2 em { font-style: italic; color: var(--neon); text-shadow: 0 0 15px rgba(255,0,110,.3); }
-  .section-head-count { font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--cyan); font-weight: 700; }
+/* CARDS */
+.content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem 2rem;padding-bottom:6rem}
+.card{display:flex;flex-direction:column}
+.tile{position:relative;aspect-ratio:16/10;overflow:hidden;background:hsl(var(--h,220) 32% 21%);display:flex;align-items:center;justify-content:center}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile span{font-family:var(--serif);font-weight:800;font-size:6rem;line-height:1;color:hsl(var(--h,220) 45% 62%)}
+.card-body{display:flex;flex-direction:column;flex:1;padding-top:1.2rem}
+.meta{font-size:.9rem;color:var(--accent);font-weight:600;margin-bottom:.6rem}
+.meta small{font-size:inherit;font-weight:400;color:var(--muted)}
+.card h3{font-family:var(--serif);font-weight:600;font-size:1.55rem;line-height:1.2;margin-bottom:.4rem}
+.role{font-size:.95rem;color:var(--muted);margin-bottom:1rem}
+.ex{font-size:1rem;line-height:1.7;color:var(--muted);margin-bottom:1.2rem;flex:1}
+.ex b{color:var(--text);font-weight:600}
+.card blockquote{font-family:var(--serif);font-style:italic;font-size:1.1rem;line-height:1.5;border-left:2px solid var(--accent);padding-left:1rem}
+.empty{display:none;grid-column:1/-1;color:var(--muted);padding:2rem 0}
 
-  /* CONTENT GRID */
-  .content-grid {
-    max-width: 1200px; margin: 0 auto;
-    padding: 0 2.5rem 8rem;
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1.5px;
-  }
+/* EPISODES */
+.episode-list{padding-bottom:6rem}
+.episode{display:grid;grid-template-columns:6rem 1fr auto;gap:2rem;align-items:baseline;padding:2rem 0;border-top:1px solid var(--line)}
+.episode:last-child{border-bottom:1px solid var(--line)}
+.ep-num{font-family:var(--serif);font-weight:800;font-size:3.4rem;line-height:1;color:var(--accent)}
+.ep-series{font-size:.9rem;color:var(--muted);margin-bottom:.3rem}
+.ep-title{font-family:var(--serif);font-weight:600;font-size:1.6rem;line-height:1.25;margin-bottom:.4rem}
+.ep-desc{color:var(--muted);max-width:44rem}
+.ep-status{font-size:.95rem;font-weight:500;white-space:nowrap}
 
-  /* CARD */
-  .card {
-    display: flex; flex-direction: column;
-    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
-    transition: all .3s; position: relative; overflow: hidden;
-    border: 2px solid rgba(0,245,255,.3);
-  }
-  .card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 8px;
-    background: repeating-linear-gradient(90deg, transparent 0, transparent 3px, var(--neon) 3px, var(--neon) 6px);
-    z-index: 5;
-  }
-  .card:hover { background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%); border-color: var(--neon); box-shadow: 0 0 25px rgba(255,0,110,.3); }
-  .card-visual { aspect-ratio: 16/9; background: linear-gradient(45deg, #0a0a0a, #15152e); position: relative; overflow: hidden; }
-  .card-visual-art { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-  .card-badge { position: absolute; top: 1rem; left: 1rem; font-size: .5rem; letter-spacing: .3em; text-transform: uppercase; padding: .35rem .8rem; font-weight: 700; z-index: 3; }
-  .badge-interview { background: var(--cyan); color: var(--ink); box-shadow: 0 0 12px var(--cyan); }
-  .badge-podcast   { background: var(--neon); color: var(--ink); box-shadow: 0 0 12px var(--neon); }
-  .badge-written   { background: var(--lime); color: var(--ink); box-shadow: 0 0 12px var(--lime); }
-  .badge-video     { background: var(--purple); color: var(--bone); box-shadow: 0 0 12px var(--purple); }
-  .card-body { padding: 1.8rem 1.8rem 2rem; flex: 1; display: flex; flex-direction: column; }
-  .card-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
-  .card-date { font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--cyan); font-weight: 600; }
-  .card-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--neon); }
-  .card-duration { font-size: .58rem; color: rgba(245,240,232,.5); letter-spacing: .1em; }
-  .card-name { font-family: 'Archivo', sans-serif; font-size: 1.35rem; font-weight: 700; line-height: 1.15; margin-bottom: .35rem; color: var(--bone); }
-  .card-role { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: var(--neon); margin-bottom: 1rem; font-weight: 700; }
-  .card-excerpt { font-size: .82rem; line-height: 1.85; color: rgba(245,240,232,.6); flex: 1; margin-bottom: 1.5rem; font-weight: 500; }
-  .card-pull { border-left: 2px solid var(--neon); padding: .75rem 1rem; margin: 0 0 1.2rem; background: rgba(255,0,110,.04); }
-  .card-pull p { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: rgba(245,240,232,.8); line-height: 1.5; }
-  .card-origin { font-size: .6rem; letter-spacing: .15em; color: rgba(0,245,255,.6); text-transform: uppercase; border-top: 1px solid rgba(0,245,255,.15); padding-top: 1rem; font-weight: 600; }
+/* UPCOMING */
+.upcoming{padding-bottom:6rem}
+.up-item{display:grid;grid-template-columns:14rem 1fr;gap:2rem;padding:1.4rem 0;border-top:1px solid var(--line)}
+.up-item:last-child{border-bottom:1px solid var(--line)}
+.up-type{color:var(--muted)}
+.up-name{font-family:var(--serif);font-weight:600;font-size:1.4rem}
+.up-name small{display:block;font-family:var(--sans);font-size:.95rem;font-weight:400;color:var(--muted)}
 
-  /* EPISODE LIST */
-  .episode-list { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem 8rem; }
-  .episode-item {
-    display: grid; grid-template-columns: 5rem 1fr auto;
-    gap: 2rem; align-items: center;
-    padding: 2rem; margin-bottom: 1rem;
-    background: linear-gradient(135deg, rgba(255,0,110,.04) 0%, rgba(0,245,255,.02) 100%);
-    border: 2px solid var(--cyan); transition: all .3s; position: relative;
-  }
-  .episode-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: repeating-linear-gradient(90deg, var(--neon) 0, var(--neon) 4px, transparent 4px, transparent 8px); opacity: 0; transition: opacity .3s; }
-  .episode-item:hover::before { opacity: 1; }
-  .episode-item:hover { border-color: var(--neon); box-shadow: 0 0 20px rgba(255,0,110,.25); }
-  .episode-num { font-family: 'Archivo', sans-serif; font-size: 2.5rem; font-weight: 900; color: var(--neon); line-height: 1; text-align: right; text-shadow: 0 0 15px rgba(255,0,110,.3); }
-  .episode-series { font-size: .6rem; letter-spacing: .35em; text-transform: uppercase; color: var(--cyan); margin-bottom: .5rem; font-weight: 700; }
-  .episode-title { font-family: 'Archivo', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: .3rem; color: var(--bone); }
-  .episode-desc { font-size: .85rem; color: rgba(245,240,232,.6); line-height: 1.7; font-weight: 500; }
-  .episode-right { display: flex; flex-direction: column; align-items: flex-end; gap: .8rem; flex-shrink: 0; }
-  .episode-status {
-    display: flex; align-items: center; gap: .6rem;
-    font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
-    color: var(--lime); font-weight: 700;
-  }
-  .episode-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); animation: pulse-dot 2s ease-in-out infinite; box-shadow: 0 0 8px var(--lime); }
+/* NOTIFY */
+.notify{background:var(--panel);padding:6rem 0;text-align:center}
+.notify .wrap{max-width:700px}
+.notify h2{font-family:var(--serif);font-weight:800;font-size:clamp(2.2rem,4vw,3.4rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:1.2rem}
+.notify p{font-size:1.05rem;color:var(--muted);margin-bottom:2rem}
+.notify-form{display:flex;max-width:500px;margin:0 auto 1rem}
+.notify-input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-right:none;padding:.9rem 1.2rem;color:var(--text);font:400 1rem var(--sans)}
+.notify-input:focus{border-color:var(--accent);outline:none}
+.notify-btn{padding:.9rem 1.8rem;background:var(--accent);color:#1a1205;border:1px solid var(--accent);font:600 1rem var(--sans);cursor:pointer}
+.notify-btn:hover{background:transparent;color:var(--accent)}
+.notify .note{font-size:.9rem;margin:0}
 
-  /* COMING SOON */
-  .coming-soon {
-    border-top: 3px solid var(--neon); border-bottom: 2px dashed var(--cyan);
-    padding: 6rem 2.5rem; position: relative; overflow: hidden;
-    background: linear-gradient(to right, rgba(255,0,110,.04), rgba(0,245,255,.02));
-  }
-  .coming-soon::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 12px;
-    background: repeating-linear-gradient(90deg, var(--neon) 0, var(--neon) 3px, transparent 3px, transparent 6px);
-    opacity: .6;
-  }
-  .coming-inner { max-width: 1200px; margin: 0 auto; }
-  .coming-label {
-    font-size: .7rem; letter-spacing: .4em; text-transform: uppercase;
-    color: var(--lime); margin-bottom: 3rem;
-    display: flex; align-items: center; gap: 1rem; font-weight: 700;
-  }
-  .coming-label::after { content: ''; flex: 1; height: 2px; background: linear-gradient(90deg, var(--lime) 0%, transparent 100%); }
-  .coming-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5px; }
-  .coming-item {
-    padding: 2.5rem 2rem;
-    background: linear-gradient(135deg, rgba(0,245,255,.06) 0%, rgba(255,0,110,.04) 100%);
-    border: 2px solid var(--cyan);
-    display: flex; flex-direction: column; gap: 1rem; transition: all .3s;
-  }
-  .coming-item:hover { border-color: var(--neon); background: linear-gradient(135deg, rgba(255,0,110,.1) 0%, rgba(0,245,255,.06) 100%); box-shadow: 0 0 20px rgba(255,0,110,.2); }
-  .coming-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--neon); animation: pulse-dot 3s ease-in-out infinite; animation-delay: var(--dd); box-shadow: 0 0 12px var(--neon); }
-  .coming-name { font-family: 'Archivo', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--bone); }
-  .coming-role { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--cyan); font-weight: 600; }
-  .coming-eta { font-size: .6rem; letter-spacing: .15em; color: var(--lime); margin-top: auto; text-transform: uppercase; font-weight: 700; }
+/* FOOTER */
+footer{padding:4.5rem 0 2.5rem;border-top:1px solid var(--line)}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-logo{font-family:var(--serif);font-weight:800;font-size:1.8rem;margin-bottom:.8rem}
+.footer-tagline{color:var(--muted);max-width:22rem}
+.footer-col h4{font-size:.95rem;font-weight:600;margin-bottom:1rem}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:.6rem}
+.footer-col a{color:var(--muted);text-decoration:none}
+.footer-col a:hover{color:var(--text)}
+.footer-copy{border-top:1px solid var(--line);padding-top:1.5rem;font-size:.9rem;color:var(--muted)}
 
-  /* NOTIFY */
-  .notify { padding: 10rem 2.5rem; max-width: 700px; margin: 0 auto; text-align: center; }
-  .notify h2 { font-family: 'Archivo', sans-serif; font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; color: var(--bone); }
-  .notify h2 em { font-style: italic; color: var(--neon); }
-  .notify p { font-size: .95rem; line-height: 1.9; color: rgba(245,240,232,.65); margin-bottom: 3rem; font-weight: 500; }
-  .notify-form { display: flex; max-width: 480px; margin: 0 auto 1.5rem; }
-  .notify-input { flex: 1; background: rgba(10,10,10,.8); border: 2px solid var(--cyan); border-right: none; padding: 1rem 1.5rem; color: var(--bone); font-family: 'Archivo', sans-serif; font-size: .85rem; font-weight: 500; outline: none; transition: all .3s; }
-  .notify-input::placeholder { color: rgba(245,240,232,.3); }
-  .notify-input:focus { border-color: var(--neon); }
-  .notify-btn { padding: 1rem 2.5rem; background: var(--neon); color: var(--ink); border: 2px solid var(--neon); cursor: none; font-family: 'Archivo', sans-serif; font-size: .7rem; font-weight: 700; letter-spacing: .25em; text-transform: uppercase; transition: all .3s; }
-  .notify-btn:hover { background: transparent; color: var(--neon); }
-  .notify-note { font-size: .65rem; color: rgba(245,240,232,.3); letter-spacing: .1em; font-weight: 500; }
+/* FADE (one gentle reveal) */
+.js .rv{opacity:0;transition:opacity .7s ease}
+.js .rv.visible{opacity:1}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .rv{opacity:1;transition:none}}
 
-  /* FOOTER */
-  footer { padding: 5rem 2.5rem 3rem; border-top: 3px solid var(--neon); }
-  .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
-  .footer-logo { font-family: 'Archivo', sans-serif; font-size: 1.8rem; font-weight: 900; letter-spacing: .1em; margin-bottom: 1.2rem; background: linear-gradient(90deg, var(--bone) 0%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .footer-tagline { font-size: .8rem; line-height: 1.8; color: rgba(245,240,232,.4); max-width: 280px; font-weight: 500; }
-  .footer-col h4 { font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--neon); margin-bottom: 1.5rem; font-weight: 700; }
-  .footer-col ul { list-style: none; }
-  .footer-col ul li { margin-bottom: .8rem; }
-  .footer-col ul a { font-size: .85rem; color: rgba(245,240,232,.4); text-decoration: none; transition: all .3s; font-weight: 500; }
-  .footer-col ul a:hover { color: var(--cyan); }
-  .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 2rem; border-top: 2px dashed var(--cyan); display: flex; justify-content: space-between; align-items: center; }
-  .footer-copy { font-size: .65rem; color: rgba(245,240,232,.3); letter-spacing: .15em; font-weight: 500; }
+/* RESPONSIVE */
+@media (max-width:1024px){
+  .content-grid{grid-template-columns:repeat(2,1fr)}
+  .page-header .wrap{grid-template-columns:1fr;gap:2rem}
+  .featured-inner{gap:3rem}
+}
+@media (max-width:768px){
+  html{font-size:106.25%}
+  .wrap{padding:0 1.5rem}
+  nav{padding:.9rem 1.5rem}
+  .nav-links{gap:1rem}
+  .nav-links a{font-size:.85rem}
+  .page-header{padding:8rem 0 3rem}
+  .filter-bar{top:3.6rem}
+  .featured{padding:3.5rem 0}
+  .featured-inner{grid-template-columns:1fr;gap:3rem}
+  .featured-visual{max-width:420px}
+  .featured-info{gap:2rem}
+  .content-grid{grid-template-columns:1fr}
+  .episode{grid-template-columns:1fr;gap:.6rem}
+  .ep-num{font-size:2.4rem}
+  .up-item{grid-template-columns:1fr;gap:.3rem}
+  .footer-inner{grid-template-columns:1fr;gap:2rem}
+}
+@media (max-width:500px){
+  nav{flex-direction:column;align-items:flex-start;gap:.5rem}
+  .nav-links{flex-wrap:wrap}
+  .page-header{padding-top:9rem}
+  .filter-bar{top:6.4rem}
+}
 
-  /* REVEAL */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: .1s; }
-  .reveal-delay-2 { transition-delay: .2s; }
-  .reveal-delay-3 { transition-delay: .3s; }
-
-  /* RESPONSIVE */
-  @media (max-width: 1024px) {
-    .content-grid { grid-template-columns: repeat(2, 1fr); }
-    .coming-grid { grid-template-columns: repeat(2, 1fr); }
-    .manifesto-inner { grid-template-columns: 1fr; gap: 3rem; }
-  }
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { gap: .8rem; }
-    .nav-links a { font-size: .55rem; }
-    .page-header { padding: 0 1.5rem 3rem; min-height: 45vh; margin-top: 60px; }
-    .page-header h1 { font-size: clamp(2.5rem, 8vw, 5rem); }
-    .hf { display: none; }
-    .manifesto { padding: 3rem 1.5rem; }
-    .manifesto-scope { flex-direction: row; gap: 1.5rem; flex-wrap: wrap; }
-    .manifesto-statement { font-size: clamp(1.3rem, 3.5vw, 1.8rem); }
-    .filter-bar { padding: 1.2rem 1.5rem; top: 60px; }
-    .featured { padding: 3rem 1.5rem; }
-    .featured-inner { grid-template-columns: 1fr; gap: 2rem; padding-bottom: 3rem; }
-    .featured-visual { aspect-ratio: 3/4; }
-    .featured-info { flex-direction: column; gap: 1.5rem; }
-    .section-head { padding: 2.5rem 1.5rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
-    .content-grid { grid-template-columns: 1fr; padding: 0 1.5rem 4rem; gap: 1rem; }
-    .episode-list { padding: 0 1.5rem 4rem; }
-    .episode-item { grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem; }
-    .episode-num { display: none; }
-    .episode-right { flex-direction: row; }
-    .coming-soon { padding: 4rem 1.5rem; }
-    .coming-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-    .notify { padding: 6rem 1.5rem; }
-    footer { padding: 3rem 1.5rem 2rem; }
-    .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
-    body { cursor: auto; }
-    .cursor, .cursor-ring { display: none; }
-  }
-  @media (max-width: 500px) {
-    nav { padding: .8rem 1rem; flex-direction: column; align-items: flex-start; gap: .8rem; }
-    .nav-links { width: 100%; gap: .6rem; flex-wrap: wrap; }
-    .page-header { padding: 0 1rem 2rem; min-height: 40vh; margin-top: 120px; }
-    .page-header h1 { font-size: clamp(2rem, 7vw, 3rem); }
-    .manifesto { padding: 2.5rem 1rem; }
-    .manifesto-scope { flex-direction: column; gap: 1.5rem; }
-    .filter-bar { padding: 1rem; top: 120px; }
-    .featured { padding: 2rem 1rem; }
-    .section-head { padding: 2rem 1rem 1.2rem; }
-    .content-grid { padding: 0 1rem 3rem; }
-    .episode-list { padding: 0 1rem 3rem; }
-    .coming-soon { padding: 3rem 1rem; }
-    .coming-grid { grid-template-columns: 1fr; gap: .8rem; }
-    .notify { padding: 4rem 1rem; }
-    footer { padding: 2rem 1rem 1.5rem; }
-    .footer-inner { gap: 1.5rem; }
-  }
+/* ===== STYLE REFRESH: bold typographic, uppercase nav, marquee hero, photo wall ===== */
+:root{--bg:#0c0c0c;--panel:#161616;--text:#f2efe9;--muted:#b9b6b0;--display:'Anton','Arial Narrow',Impact,sans-serif}
+nav{background:rgba(12,12,12,.94)}
+.nav-logo{font-family:var(--display);font-weight:400;font-size:1.35rem;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{text-transform:uppercase;letter-spacing:.1em;font-size:.8rem;font-weight:600}
+.page-header{padding:6.5rem 0 0;border-bottom:0;overflow:hidden}
+.mq{white-space:nowrap;overflow:hidden;font-family:var(--display);text-transform:uppercase;font-size:clamp(2.2rem,6vw,5rem);line-height:1.15;padding:.2rem 0}
+.mq>div{display:inline-block;animation:mq 40s linear infinite}
+.mq-rev>div{animation-direction:reverse}
+.mq span{display:inline-block}
+.mq-outline{color:transparent;-webkit-text-stroke:1.5px var(--text)}
+.mq-solid{color:var(--accent)}
+@keyframes mq{to{transform:translateX(-50%)}}
+h1{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(4.5rem,17vw,16rem);line-height:.88;letter-spacing:-.01em;padding:0 2.5rem;margin:.4rem 0}
+.intro{display:flex;justify-content:space-between;align-items:flex-end;gap:3rem;padding-top:3rem;padding-bottom:3.5rem}
+.arrow{font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:.85rem;text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:.3rem;white-space:nowrap}
+.arrow:hover{color:var(--accent)}
+.wall{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.wall figure{position:relative;height:30rem;overflow:hidden}
+.wall img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);transition:filter .5s,transform .8s}
+.wall figure:hover img{filter:none;transform:scale(1.04)}
+.wall figcaption{position:absolute;left:0;right:0;bottom:0;padding:3rem 1.2rem 1.1rem;background:linear-gradient(transparent,rgba(0,0,0,.85));font-family:var(--display);text-transform:uppercase;font-size:1.5rem;letter-spacing:.03em}
+.filter-btn{border-radius:0;text-transform:uppercase;letter-spacing:.1em;font-size:.8rem;font-weight:600;padding:.6rem 1.3rem}
+.filter-label{text-transform:uppercase;letter-spacing:.1em;font-size:.8rem}
+h2.featured-name,.section-head h2,.notify h2{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.005em}
+h2.featured-name{font-size:clamp(3rem,6vw,5.5rem);line-height:.95}
+.section-head h2,.notify h2{font-size:clamp(2.6rem,5vw,4.4rem)}
+.ep-num{font-family:var(--display);font-weight:400;font-size:4.2rem}
+.up-name{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:1.8rem;letter-spacing:.01em}
+.up-name small{text-transform:none;letter-spacing:0}
+.footer-logo{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.04em}
+.footer-col h4{text-transform:uppercase;letter-spacing:.1em;font-size:.8rem}
+.featured-tag,.status,.notify-btn{border-radius:0}
+.status{text-transform:uppercase;letter-spacing:.08em;font-size:.8rem}
+.notify-btn{text-transform:uppercase;letter-spacing:.1em;font-size:.85rem}
+.tile span{font-family:var(--display);font-weight:400}
+@media (max-width:1024px){.wall figure{height:24rem}}
+@media (max-width:768px){
+  h1{padding:0 1.5rem}
+  .intro{flex-direction:column;align-items:flex-start;gap:1.5rem;padding-top:2rem}
+  .wall{grid-template-columns:repeat(2,1fr)}
+  .wall figure{height:16rem}
+  .wall figcaption{font-size:1.15rem}
+  .page-header{padding-top:7rem}
+}
+@media (max-width:500px){.page-header{padding-top:8.5rem}}
+@media (prefers-reduced-motion:reduce){.mq>div{animation:none}}
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
 <nav aria-label="Main navigation">
-  <a href="index.html" class="nav-logo">Between&nbsp;the&nbsp;Notes</a>
-  <ul class="nav-links" role="list">
+  <a href="index.html" class="nav-logo">Between the Notes</a>
+  <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="https://lumerview.com/about">About</a></li>
     <li><a href="listen.html" class="active" aria-current="page">Conversations</a></li>
-    <li><a href="http://lumerview.com/radio.html">Radio</a></li>
+    <li><a href="https://lumerview.com/radio.html">Radio</a></li>
     <li><a href="index.html">Participate</a></li>
   </ul>
 </nav>
 
-<header class="page-header" role="banner">
-  <div class="page-header-bg" aria-hidden="true"></div>
-  <div class="page-header-grid" aria-hidden="true"></div>
-  <div class="hf" style="right:12%;top:35%;--d:0s;--r:-8deg" aria-hidden="true">
-    <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" stroke="#00f5ff" stroke-width="1.2" fill="none" opacity=".7"/></svg>
-  </div>
-  <div class="hf" style="right:25%;top:55%;--d:2s;--r:12deg" aria-hidden="true">
-    <svg width="32" height="6" viewBox="0 0 32 6"><line x1="0" y1="3" x2="32" y2="3" stroke="#ff006e" stroke-width="1.5" opacity=".6"/></svg>
-  </div>
-  <div class="hf" style="right:6%;top:65%;--d:1s;--r:-4deg" aria-hidden="true">
-    <svg width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" stroke="#39ff14" stroke-width="1" fill="none" opacity=".6"/></svg>
-  </div>
-  <div class="hf" style="right:40%;top:20%;--d:3s;--r:5deg" aria-hidden="true">
-    <svg width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="0" x2="10" y2="20" stroke="#00f5ff" stroke-width="1.2" opacity=".5"/><line x1="0" y1="10" x2="20" y2="10" stroke="#00f5ff" stroke-width="1.2" opacity=".5"/></svg>
-  </div>
-  <div class="page-header-inner">
-    <div class="page-header-label">Conversations · Before the Film</div>
-    <h1>The<br><em>Interviews</em></h1>
-    <p class="page-header-sub">
-      Lumerview is a global platform dedicated to connecting creators through the stories behind their work — bringing together musicians, writers, journalists, and artists from around the world through exclusive interviews and in-depth features. <b><span class="card-role" style="display: inline; font: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; letter-spacing: inherit; text-transform: none; margin: 0; padding: 0;">Selected stories become part of a full-length documentary and a published book.</span></b>
-    </p>
+<header class="page-header">
+  <div class="mq mq-outline" aria-hidden="true"><div><span>Between the Notes &nbsp;·&nbsp; Between the Notes &nbsp;·&nbsp; Between the Notes &nbsp;·&nbsp; </span><span>Between the Notes &nbsp;·&nbsp; Between the Notes &nbsp;·&nbsp; Between the Notes &nbsp;·&nbsp; </span></div></div>
+  <h1>The Interviews</h1>
+  <div class="mq mq-solid mq-rev" aria-hidden="true"><div><span>Conversations before the film &nbsp;·&nbsp; Conversations before the film &nbsp;·&nbsp; </span><span>Conversations before the film &nbsp;·&nbsp; Conversations before the film &nbsp;·&nbsp; </span></div></div>
+  <div class="wrap intro">
+    <p class="page-header-sub">Lumerview is a global platform dedicated to connecting creators through the stories behind their work, bringing together musicians, writers, journalists, and artists from around the world through exclusive interviews and in-depth features. <b>Selected stories become part of a full-length documentary and a published book.</b></p>
+    <a class="arrow" href="https://lumerview.com/about">About the project →</a>
   </div>
 </header>
 
-<!-- FILTER BAR -->
+<section class="wall" aria-label="Artists in the series">
+  <figure class="rv"><img src="https://i.ibb.co/0MNSDGF/Simone-Benyacar-BIO-PIC.jpg" alt="Simone Benyacar" loading="lazy"><figcaption>Simone Benyacar</figcaption></figure>
+  <figure class="rv"><img src="https://i.ibb.co/VWLwsyjK/2-A9-A0209-2.jpg" alt="Anna Mészöly" loading="lazy"><figcaption>Anna Mészöly</figcaption></figure>
+  <figure class="rv"><img src="https://i.ibb.co/DD9Rqq7h/Photo-Feb-12-2025-9-20-37-PM.jpg" alt="Lauren Ash" loading="lazy"><figcaption>Lauren Ash</figcaption></figure>
+  <figure class="rv"><img src="https://i.ibb.co/FQ9xqBM/whats-new-26-xxxl.jpg" alt="Andrew Levin" loading="lazy"><figcaption>Andrew Levin</figcaption></figure>
+</section>
+
 <div class="filter-bar" role="navigation" aria-label="Filter conversations">
-  <div class="filter-bar-inner">
-    <span class="filter-label">Filter</span>
+  <div class="wrap">
+    <span class="filter-label">Show</span>
     <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
     <button class="filter-btn" data-filter="interview" aria-pressed="false">Interview</button>
     <button class="filter-btn" data-filter="podcast" aria-pressed="false">Podcast</button>
@@ -511,461 +264,245 @@
 
 <main>
 
-<!-- FEATURED -->
 <section class="featured" aria-labelledby="featured-name">
-  <article class="featured-inner reveal">
-    <div class="featured-visual">
-      <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 1;">
-        <img src="https://i.ibb.co/0MNSDGF/Simone-Benyacar-BIO-PIC.jpg"
-             alt="Simone Benyacar — singer-songwriter featured in Between the Notes"
-             style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
-        <svg viewBox="0 0 340 420" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;">
-          <defs><radialGradient id="fg1" cx="45%" cy="40%" r="55%"><stop offset="0%" stop-color="#ff006e" stop-opacity=".2"/><stop offset="100%" stop-color="#ff006e" stop-opacity="0"/></radialGradient></defs>
-          <rect width="100%" height="100%" fill="url(#fg1)" />
-        </svg>
+  <div class="wrap">
+    <article class="featured-inner rv">
+      <div class="featured-visual">
+        <img src="https://i.ibb.co/0MNSDGF/Simone-Benyacar-BIO-PIC.jpg" alt="Simone Benyacar, composer featured in Between the Notes">
+        <div class="featured-tag">Opening conversation</div>
       </div>
-      <div class="featured-tag">Opening Conversation</div>
-      <div class="featured-duration">Transcript</div>
-    </div>
-    <div class="featured-meta">
-      <div class="featured-type">Featured Interview</div>
-      <h2 class="featured-name" id="featured-name">Simone Benyacar</h2>
-      <div class="featured-title"> Award-winning composer </div>
-      <div class="gold-rule"></div>
-      <p class="featured-excerpt">
-         <i>Simone</i> has provided music supervision services and written original <i>compositions</i> for a wide variety of campaigns including: <b>Lord of the Rings</b>, <b>Harry Potter</b>, <b>Transformers</b>, <b>The Wolf of Wall Street</b>, <b>Mission Impossible</b>, <b>Joy</b>, <b>Call of Duty</b> and <b>Assassin’s Creed</b>, and has written custom mnemonics for companies like <b>Amazon Studios</b>, Pepsi and many others.
-      </p>
-      <div class="pull-quote">
-        <p>"One of the biggest challenges on a big film campaign was the trailer for Mission Impossible: Fallout. The task was to create a custom mash-up of Imagine Dragons’ song “Friction” to the well-known Mission Impossible theme and evolve into a hybrid intense re-orchestration of the theme."</p>
-        <cite>— Simone Benyacar, April 2026</cite>
-      </div>
-</div>
-      <div class="featured-info">
-        <div class="info-item">
-          <span class="info-label">Location</span>
-          <span class="info-val">Culver City (LA)</span>
+      <div>
+        <p class="featured-type">Featured interview</p>
+        <h2 class="featured-name" id="featured-name">Simone Benyacar</h2>
+        <p class="featured-title">Award-winning composer</p>
+        <p class="featured-excerpt">
+          Simone has provided music supervision services and written original compositions for a wide variety of campaigns including <b>Lord of the Rings</b>, <b>Harry Potter</b>, <b>Transformers</b>, <b>The Wolf of Wall Street</b>, <b>Mission Impossible</b>, <b>Joy</b>, <b>Call of Duty</b> and <b>Assassin’s Creed</b>, and has written custom mnemonics for companies like <b>Amazon Studios</b>, Pepsi and many others.
+        </p>
+        <div class="pull-quote">
+          <p>“One of the biggest challenges on a big film campaign was the trailer for Mission Impossible: Fallout. The task was to create a custom mash-up of Imagine Dragons’ song “Friction” to the well-known Mission Impossible theme and evolve into a hybrid intense re-orchestration of the theme.”</p>
+          <cite>Simone Benyacar, April 2026</cite>
         </div>
-        <div class="info-item">
-          <span class="info-label">Recorded</span>
-          <span class="info-val">Interview</span>
+        <div class="featured-info">
+          <div><span class="info-label">Location</span><span class="info-val">Culver City, Los Angeles</span></div>
+          <div><span class="info-label">Format</span><span class="info-val">Interview transcript</span></div>
         </div>
-        <div class="info-item">
-          <span class="info-label">Format</span>
-          <span class="info-val">Transcript</span>
-        </div>
+        <div class="status">Full transcript coming soon</div>
       </div>
-      <div class="coming-badge">
-        <span class="coming-badge-dot"></span>
-        Full transcript — coming soon
-      </div>
-    </div>
-  </article>
-</section>
-
-<!-- CARDS -->
-<div class="section-head reveal">
-  <h2>Recent <em>Conversations</em></h2>
-  <span class="section-head-count">9 published</span>
-</div>
-
-<div class="content-grid" role="list">
-
-  <article class="card reveal" data-type="interview" role="listitem">
-    <div class="card-visual">
-      <div class="card-visual-art">
-        <img src="https://i.ibb.co/VWLwsyjK/2-A9-A0209-2.jpg" alt="Anna Mészöly" width="220" height="124" style="object-fit: cover;">
-      </div>
-      <div class="card-badge badge-interview">Interview</div>
-    </div>
-    <div class="card-body">
-      <div class="card-meta"><span class="card-date">Coming Soon</span><span class="card-dot"></span><span class="card-duration">Photography by Alexander Bay</span></div>
-      <h3 class="card-name">A conversation with Anna Mészöly </h3>
-      <div class="card-role">Actress · Budapest, Hungary</div>
-      <p class="card-excerpt">Anna Mészöly, won the <b><span class="card-role" style="display: inline; font: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; letter-spacing: inherit; text-transform: none; margin: 0; padding: 0;">Best Performance (Best Actress) award in the Cineasti del Presente section at the 77th Locarno Film Festival</span></b> for her deeply human portrayal in Fekete pont. Anna spoke about her experience working alongside <b><span class="card-role" style="display: inline; font: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; letter-spacing: inherit; text-transform: none; margin: 0; padding: 0;">Adrien Brody in A24’s The Brutalist</span></b>, a collaboration that tested her limits and reaffirmed her belief in the precision and presence that true acting demands.</p>
-      <div class="card-pull"><p>"I was very pleased that he (Adrien Brody) took me seriously as a colleague from the very first moment."</p></div>
-      <div class="card-origin">Budapest, Hungary · Interview</div>
-    </div>
-</article>
-
-<article class="card reveal" data-type="interview" role="listitem">
-    <div class="card-visual">
-      <div class="card-visual-art">
-        <img src="https://i.ibb.co/DD9Rqq7h/Photo-Feb-12-2025-9-20-37-PM.jpg" alt="Anna Mészöly" width="220" height="124" style="object-fit: cover;">
-      </div>
-      <div class="card-badge badge-interview">Interview</div>
-    </div>
-    <div class="card-body">
-      <div class="card-meta"><span class="card-date">Coming Soon</span><span class="card-dot"></span><span class="card-duration">Read</span></div>
-      <h3 class="card-name">Rock & Role: Lauren Ash Unleashed</h3>
-      <div class="card-role">Actress · Musician · Los Angeles, California</div>
-      <p class="card-excerpt">Lauren Ash received <b><span class="card-role" style="display: inline; font: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; letter-spacing: inherit; text-transform: none; margin: 0; padding: 0;">a Hollywood Independent Music Award nomination for her standout pop-punk track "Whiplash"</span></b> from her critically acclaimed debut concept album Call Me When You Get This. Lauren spoke about pivoting from her six-season run as<b><span class="card-role" style="display: inline; font: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; letter-spacing: inherit; text-transform: none; margin: 0; padding: 0;"> Dina Fox on NBC’s hit comedy Superstore</span></b> to the raw catharsis of rock music—a creative evolution that tested her limits and reaffirmed her belief in the unfiltered authenticity, sharp timing, and sheer presence that true artistic performance demands.  </p>
-      <div class="card-pull"><p>" I’ve released 10 songs, 7 of which are originals and started playing live shows at places like The Viper Room and Whisky A Go Go in LA as well as the Phoenix in Toronto"</p></div>
-      <div class="card-origin">Los Angeles, California · Interview</div>
-    </div>
-</article>
-  
-  <article class="card reveal" data-type="interview" role="listitem">
-    <div class="card-visual">
-      <div class="card-visual-art">
-        <img src="https://i.ibb.co/FQ9xqBM/whats-new-26-xxxl.jpg" alt="Anna Mészöly" width="220" height="124" style="object-fit: cover;">
-      </div>
-      <div class="card-badge badge-written">Interview</div>
-    </div>
-    <div class="card-body">
-      <div class="card-meta"><span class="card-date">Coming Soon</span><span class="card-dot"></span><span class="card-duration">Read</span></div>
-      <h3 class="card-name">Andrew Levin</h3>
-      <div class="card-role">Songwriter · Artist · Oakland, California </div>
-      <p class="card-excerpt">Bay Area born, Oakland dwelling guitarist, songwriter, and producer Andrew Levin, after graduating from USC’s Studio/Jazz Guitar program with full scholarship, became a first-call session guitarist in the Bay Area, playing with <b><span class="card-role" style="display: inline; font: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; letter-spacing: inherit; text-transform: none; margin: 0; padding: 0;">GRAMMY® Award-winning Fantastic Negrito, the San Francisco Symphony, hip hop project Zion I, rapper Lyrics Born, and music director Rickey Minor (American Idol, The Tonight Show with Jay Leno, Alicia Keys).</span></b> Levin has opened for notable artists such as <b><span class="card-role" style="display: inline; font: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; letter-spacing: inherit; text-transform: none; margin: 0; padding: 0;">Sting, Robert Plant, Mavis Staples, Third Eye Blind, and Lauryn Hill.</span></b> Levin is also a Professor of Sound Design at the San Francisco Conservatory of Music. </p>
-      <div class="card-pull"><p>" I think a lot of people have unrealistically lofty expectations for where their music will take them, and when they don’t reach those one-in-a-million goals, they beat themselves up and aren’t able to enjoy their lives to the fullest."</p></div>
-      <div class="card-origin">Oakland, California · Written Portrait</div>
-    </div>
-  </article>
-
-  <article class="card reveal" data-type="interview" role="listitem">
-    <div class="card-visual">
-      <div class="card-visual-art">
-        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg4" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#1a0a2e" stop-opacity=".7"/><stop offset="100%" stop-color="#0a0a0a"/></radialGradient></defs>
-          <rect width="220" height="124" fill="url(#cg4)"/>
-          <polygon points="110,30 160,62 110,94 60,62" stroke="#b537f2" stroke-width="1" fill="rgba(181,55,242,.08)" opacity=".6"/>
-          <circle cx="110" cy="62" r="20" stroke="#b537f2" stroke-width="1.2" fill="none" opacity=".5"/>
-          <line x1="110" y1="42" x2="110" y2="82" stroke="#b537f2" stroke-width=".8" opacity=".4"/>
-          <line x1="90" y1="62" x2="130" y2="62" stroke="#b537f2" stroke-width=".8" opacity=".4"/>
-        </svg>
-      </div>
-      <div class="card-badge badge-interview">Interview</div>
-    </div>
-    <div class="card-body">
-      <div class="card-meta"><span class="card-date">Coming Soon</span><span class="card-dot"></span><span class="card-duration">Read</span></div>
-      <h3 class="card-name">Noam Peri</h3>
-      <div class="card-role">Singer · Songwriter · Los Angeles, CA</div>
-      <p class="card-excerpt">Noam talks about identity, queer visibility, and what it means to write songs that make people feel they are not alone.</p>
-      <div class="card-pull"><p>"I want someone to hear my music and know they don't have to pretend anymore."</p></div>
-      <div class="card-origin">Los Angeles, CA · Interview</div>
-    </div>
-  </article>
-
-  <article class="card reveal reveal-delay-1" data-type="podcast" role="listitem">
-    <div class="card-visual">
-      <div class="card-visual-art">
-        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg5" cx="60%" cy="40%" r="55%"><stop offset="0%" stop-color="#0a1a0a"/><stop offset="100%" stop-color="#0a0a0a"/></radialGradient></defs>
-          <rect width="220" height="124" fill="url(#cg5)"/>
-          <rect x="38" y="48" width="4" height="28" fill="#39ff14" opacity=".4" rx="2"/>
-          <rect x="49" y="40" width="4" height="44" fill="#ff006e" opacity=".5" rx="2"/>
-          <rect x="60" y="44" width="4" height="36" fill="#00f5ff" opacity=".52" rx="2"/>
-          <rect x="71" y="34" width="4" height="56" fill="#39ff14" opacity=".6" rx="2"/>
-          <rect x="82" y="46" width="4" height="32" fill="#ff006e" opacity=".45" rx="2"/>
-          <rect x="93" y="38" width="4" height="48" fill="#00f5ff" opacity=".54" rx="2"/>
-          <rect x="104" y="52" width="4" height="20" fill="#39ff14" opacity=".35" rx="2"/>
-          <rect x="115" y="30" width="4" height="64" fill="#ff006e" opacity=".6" rx="2"/>
-          <rect x="126" y="44" width="4" height="36" fill="#00f5ff" opacity=".48" rx="2"/>
-          <rect x="137" y="50" width="4" height="24" fill="#39ff14" opacity=".4" rx="2"/>
-          <rect x="148" y="40" width="4" height="44" fill="#ff006e" opacity=".5" rx="2"/>
-          <rect x="159" y="46" width="4" height="32" fill="#00f5ff" opacity=".44" rx="2"/>
-          <rect x="170" y="54" width="4" height="16" fill="#39ff14" opacity=".33" rx="2"/>
-        </svg>
-      </div>
-      <div class="card-badge badge-podcast">Podcast</div>
-    </div>
-    <div class="card-body">
-      <div class="card-meta"><span class="card-date">Coming Soon</span><span class="card-dot"></span><span class="card-duration">Listen</span></div>
-      <h3 class="card-name">Introducing: Danny</h3>
-      <div class="card-role">Podcast · Big Eleanor Records · Ep. 02</div>
-      <p class="card-excerpt">Danny from Big Eleanor Records on what independent music actually looks like from the inside — the struggle, the strategy, and the love of it. An honest conversation about running something real.</p>
-      <div class="card-pull"><p>"Running an indie label is equal parts faith and stubbornness."</p></div>
-      <div class="card-origin">Introducing · Ep. 02</div>
-    </div>
-  </article>
-
-  <article class="card reveal reveal-delay-2" data-type="interview" role="listitem">
-    <div class="card-visual">
-      <div class="card-visual-art">
-        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg6" cx="40%" cy="65%" r="55%"><stop offset="0%" stop-color="#1a0a0a" stop-opacity=".9"/><stop offset="100%" stop-color="#0a0a0a"/></radialGradient></defs>
-          <rect width="220" height="124" fill="url(#cg6)"/>
-          <path d="M40 80 Q80 40 110 62 Q140 84 180 44" stroke="#ff006e" stroke-width="1.2" fill="none" opacity=".6"/>
-          <circle cx="110" cy="62" r="6" fill="#00f5ff" opacity=".5"/>
-          <line x1="30" y1="100" x2="190" y2="100" stroke="#39ff14" stroke-width=".5" opacity=".3"/>
-          <circle cx="40" cy="80" r="3" stroke="#ff006e" stroke-width=".8" fill="none" opacity=".5"/>
-          <circle cx="180" cy="44" r="3" stroke="#00f5ff" stroke-width=".8" fill="none" opacity=".5"/>
-        </svg>
-      </div>
-      <div class="card-badge badge-interview">Interview</div>
-    </div>
-    <div class="card-body">
-      <div class="card-meta"><span class="card-date">January 2026</span><span class="card-dot"></span><span class="card-duration">Read</span></div>
-      <h3 class="card-name">Markoe</h3>
-      <div class="card-role">Singer · Songwriter</div>
-      <p class="card-excerpt">Started singing at 3, songwriting at 7, and releasing postpartum after realising you don't need a label. Markoe on motherhood, "Birthday Song," and what success actually looks like when you define it yourself.</p>
-      <div class="card-pull"><p>"Success for me is releasing music on my own terms and having it matter to someone."</p></div>
-      <div class="card-origin">Interview · January 2026</div>
-    </div>
-  </article>
-
-  <article class="card reveal" data-type="written" role="listitem">
-    <div class="card-visual">
-      <div class="card-visual-art">
-        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg7" cx="55%" cy="45%" r="50%"><stop offset="0%" stop-color="#0a1010"/><stop offset="100%" stop-color="#0a0a0a"/></radialGradient></defs>
-          <rect width="220" height="124" fill="url(#cg7)"/>
-          <line x1="40" y1="30" x2="180" y2="30" stroke="#00f5ff" stroke-width=".5" opacity=".25"/>
-          <line x1="40" y1="42" x2="155" y2="42" stroke="#ff006e" stroke-width=".5" opacity=".22"/>
-          <line x1="40" y1="54" x2="165" y2="54" stroke="#39ff14" stroke-width=".5" opacity=".23"/>
-          <line x1="40" y1="66" x2="140" y2="66" stroke="#00f5ff" stroke-width=".5" opacity=".2"/>
-          <line x1="40" y1="78" x2="170" y2="78" stroke="#ff006e" stroke-width=".5" opacity=".22"/>
-          <line x1="40" y1="90" x2="150" y2="90" stroke="#39ff14" stroke-width=".5" opacity=".2"/>
-          <line x1="40" y1="102" x2="160" y2="102" stroke="#00f5ff" stroke-width=".5" opacity=".18"/>
-          <rect x="175" y="26" width="10" height="10" stroke="#ff006e" stroke-width=".8" fill="none" opacity=".4"/>
-        </svg>
-      </div>
-      <div class="card-badge badge-written">Written</div>
-    </div>
-    <div class="card-body">
-      <div class="card-meta"><span class="card-date">Coming Soon</span><span class="card-dot"></span><span class="card-duration">Read</span></div>
-      <h3 class="card-name">Andrew Levin</h3>
-      <div class="card-role">Guitarist · Producer · Sound Designer · Oakland, CA</div>
-      <p class="card-excerpt">Bay Area session guitarist turned Ubisoft sound designer and conservatory professor — on playing with Sting, Robert Plant, and Lauryn Hill, and still showing up to his studio at 8am.</p>
-      <div class="card-pull"><p>"Playing with legends doesn't change your routine. The work is still the work."</p></div>
-      <div class="card-origin">Oakland, CA · Written Portrait</div>
-    </div>
-  </article>
-
-  <article class="card reveal reveal-delay-1" data-type="interview" role="listitem">
-    <div class="card-visual">
-      <div class="card-visual-art">
-        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg8" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#0a0a1a"/><stop offset="100%" stop-color="#0a0a0a"/></radialGradient></defs>
-          <rect width="220" height="124" fill="url(#cg8)"/>
-          <path d="M60 90 C80 50, 100 30, 110 62 C120 94, 140 50, 160 35" stroke="#ff006e" stroke-width="1.2" fill="none" opacity=".6"/>
-          <path d="M60 90 C80 70, 100 55, 110 75 C120 95, 140 75, 160 60" stroke="#00f5ff" stroke-width=".8" fill="none" opacity=".35"/>
-          <line x1="32" y1="100" x2="188" y2="100" stroke="#39ff14" stroke-width=".5" opacity=".28"/>
-        </svg>
-      </div>
-      <div class="card-badge badge-interview">Interview</div>
-    </div>
-    <div class="card-body">
-      <div class="card-meta"><span class="card-date">Coming Soon</span><span class="card-dot"></span><span class="card-duration">Read</span></div>
-      <h3 class="card-name">Adik Angel</h3>
-      <div class="card-role">Composer · Electronic Artist · Switzerland</div>
-      <p class="card-excerpt">Working from the mountains near the Swiss Alps, Adik Angel composes, produces, mixes and masters everything himself — and films the landscapes that become his videos. On solo practice and music with a breath of life that AI cannot replicate.</p>
-      <div class="card-pull"><p>"The landscape doesn't just inspire the music. The landscape is the music."</p></div>
-      <div class="card-origin">Switzerland · Interview</div>
-    </div>
-  </article>
-
-  <article class="card reveal reveal-delay-2" data-type="podcast" role="listitem">
-    <div class="card-visual">
-      <div class="card-visual-art">
-        <svg viewBox="0 0 220 124" width="220" height="124" xmlns="http://www.w3.org/2000/svg">
-          <defs><radialGradient id="cg9" cx="35%" cy="55%" r="55%"><stop offset="0%" stop-color="#0a1510"/><stop offset="100%" stop-color="#0a0a0a"/></radialGradient></defs>
-          <rect width="220" height="124" fill="url(#cg9)"/>
-          <rect x="42" y="46" width="4" height="32" fill="#39ff14" opacity=".4" rx="2"/>
-          <rect x="53" y="38" width="4" height="48" fill="#ff006e" opacity=".5" rx="2"/>
-          <rect x="64" y="50" width="4" height="24" fill="#00f5ff" opacity=".42" rx="2"/>
-          <rect x="75" y="32" width="4" height="60" fill="#39ff14" opacity=".6" rx="2"/>
-          <rect x="86" y="44" width="4" height="36" fill="#ff006e" opacity=".48" rx="2"/>
-          <rect x="97" y="40" width="4" height="44" fill="#00f5ff" opacity=".52" rx="2"/>
-          <rect x="108" y="54" width="4" height="16" fill="#39ff14" opacity=".34" rx="2"/>
-          <rect x="119" y="36" width="4" height="52" fill="#ff006e" opacity=".58" rx="2"/>
-          <rect x="130" y="48" width="4" height="28" fill="#00f5ff" opacity=".44" rx="2"/>
-          <rect x="141" y="42" width="4" height="40" fill="#39ff14" opacity=".5" rx="2"/>
-          <rect x="152" y="50" width="4" height="24" fill="#ff006e" opacity=".38" rx="2"/>
-          <rect x="163" y="44" width="4" height="36" fill="#00f5ff" opacity=".45" rx="2"/>
-          <rect x="174" y="56" width="4" height="12" fill="#39ff14" opacity=".32" rx="2"/>
-        </svg>
-      </div>
-      <div class="card-badge badge-podcast">Podcast</div>
-    </div>
-    <div class="card-body">
-      <div class="card-meta"><span class="card-date">Coming Soon</span><span class="card-dot"></span><span class="card-duration">Listen</span></div>
-      <h3 class="card-name">Introducing: Jakko</h3>
-      <div class="card-role">Podcast · Mantaray · Ep. 01</div>
-      <p class="card-excerpt">Jakko from Mantaray explains why he is following his dreams — a conversation about ambition, band life, and what it costs to keep going when the world hasn't noticed yet.</p>
-      <div class="card-pull"><p>"Ambition without community is just noise. You need people who believe in it too."</p></div>
-      <div class="card-origin">Introducing · Ep. 01</div>
-    </div>
-  </article>
-
-</div>
-
-<!-- EPISODE LIST -->
-<div class="section-head reveal">
-  <h2>All <em>Episodes</em></h2>
-  <span class="section-head-count">3 episodes · Series ongoing</span>
-</div>
-
-<div class="episode-list">
-
-  <div class="episode-item reveal">
-    <div class="episode-num">03</div>
-    <div class="episode-body">
-      <div class="episode-series">Between the Notes · Introducing</div>
-      <div class="episode-title">A conversation with Raidat</div>
-      <p class="episode-desc">Words drift between music and memory in one of the most intimate episodes in the series — a late-night conversation that asks what it means to make art that outlasts the moment it was made in.</p>
-    </div>
-    <div class="episode-right">
-      <div class="episode-status"><span class="episode-status-dot"></span>Available now</div>
-    </div>
-  </div>
-
-  <div class="episode-item reveal">
-    <div class="episode-num">02</div>
-    <div class="episode-body">
-      <div class="episode-series">Between the Notes ·Introducing</div>
-      <div class="episode-title">A conversation with Danny from Big Eleanor Records</div>
-      <p class="episode-desc">Danny from Big Eleanor Records on what independent music actually looks like from the inside — the struggle, the strategy, and the love of it. An honest conversation about running something real.</p>
-    </div>
-    <div class="episode-right">
-      <div class="episode-status"><span class="episode-status-dot"></span>Available now</div>
-    </div>
-  </div>
-
-  <div class="episode-item reveal">
-    <div class="episode-num">01</div>
-    <div class="episode-body">
-      <div class="episode-series">Between the Notes · Introducing</div>
-      <div class="episode-title">A conversation with Jakko from Mantaray</div>
-      <p class="episode-desc">The episode that started it all. Jakko is following his dreams — and this conversation sets the tone for everything after: honest, meandering, and quietly necessary.</p>
-    </div>
-    <div class="episode-right">
-      <div class="episode-status"><span class="episode-status-dot"></span>Available now</div>
-    </div>
-  </div>
-
-</div>
-
-<!-- COMING SOON -->
-<section class="coming-soon" aria-labelledby="coming-label">
-  <div class="coming-inner">
-    <div class="coming-label reveal" id="coming-label">Coming Before the Film</div>
-    <div class="coming-grid">
-      <div class="coming-item reveal" style="--dd:0s">
-        <div class="coming-dot" style="--dd:0s"></div>
-        <div class="coming-name">Introducing: Jakko</div>
-        <div class="coming-role">Podcast</div>
-        <div class="coming-eta">June 2026 · Interview</div>
-      </div>
-      <div class="coming-item reveal reveal-delay-1" style="--dd:.4s">
-        <div class="coming-dot" style="--dd:.5s"></div>
-        <div class="coming-name">Episode 04</div>
-        <div class="coming-role">Introducing· Theme TBA</div>
-        <div class="coming-eta">June 2026 · Podcast</div>
-      </div>
-      <div class="coming-item reveal reveal-delay-2" style="--dd:.8s">
-        <div class="coming-dot" style="--dd:1s"></div>
-        <div class="coming-name">Adik Angel</div>
-        <div class="coming-role">Singer · Songwriter</div>
-        <div class="coming-eta">July 2026 · Written Portrait</div>
-      </div>
-      <div class="coming-item reveal reveal-delay-3" style="--dd:1.2s">
-        <div class="coming-dot" style="--dd:1.5s"></div>
-        <div class="coming-name">Studio Visits</div>
-        <div class="coming-role">Video Series · 6 Artists</div>
-        <div class="coming-eta">August 2026 · Video</div>
-      </div>
-    </div>
+    </article>
   </div>
 </section>
 
-<!-- SUBSCRIBE -->
-<section class="notify reveal" aria-labelledby="notify-heading">
-  <div style="text-align:center;margin-bottom:1rem;font-size:.7rem;letter-spacing:.4em;text-transform:uppercase;color:var(--cyan);font-weight:700;">Stay Close</div>
-  <h2 id="notify-heading">Each conversation,<br><em>in your inbox</em></h2>
-  <p>New interviews, podcast episodes, and written portraits land here first — weeks before they go anywhere else. No noise. Only the work.</p>
-  <form class="notify-form" action="#" method="post">
-    <label for="email-input" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Email address</label>
-    <input id="email-input" class="notify-input" type="email" name="email" placeholder="your@email.com" autocomplete="email" required>
-    <button type="submit" class="notify-btn">Notify me</button>
-  </form>
-  <p class="notify-note">Infrequent. Unsubscribe any time. No third parties.</p>
+<div class="wrap">
+  <div class="section-head rv">
+    <h2>Recent conversations</h2>
+    <span>8 conversations</span>
+  </div>
+
+  <div class="content-grid">
+
+    <article class="card rv" data-type="interview">
+      <div class="tile" style="--h:340"><img src="https://i.ibb.co/VWLwsyjK/2-A9-A0209-2.jpg" alt="Anna Mészöly" loading="lazy"></div>
+      <div class="card-body">
+        <p class="meta">Interview <small>· Coming soon · Photography by Alexander Bay</small></p>
+        <h3>A conversation with Anna Mészöly</h3>
+        <p class="role">Actress · Budapest, Hungary</p>
+        <p class="ex">Anna Mészöly won the <b>Best Performance (Best Actress) award in the Cineasti del Presente section at the 77th Locarno Film Festival</b> for her deeply human portrayal in Fekete pont. Anna spoke about her experience working alongside <b>Adrien Brody in A24’s The Brutalist</b>, a collaboration that tested her limits and reaffirmed her belief in the precision and presence that true acting demands.</p>
+        <blockquote>“I was very pleased that he (Adrien Brody) took me seriously as a colleague from the very first moment.”</blockquote>
+      </div>
+    </article>
+
+    <article class="card rv" data-type="interview">
+      <div class="tile" style="--h:20"><img src="https://i.ibb.co/DD9Rqq7h/Photo-Feb-12-2025-9-20-37-PM.jpg" alt="Lauren Ash" loading="lazy"></div>
+      <div class="card-body">
+        <p class="meta">Interview <small>· Coming soon</small></p>
+        <h3>Rock &amp; Role: Lauren Ash Unleashed</h3>
+        <p class="role">Actress · Musician · Los Angeles, California</p>
+        <p class="ex">Lauren Ash received <b>a Hollywood Independent Music Award nomination for her standout pop-punk track “Whiplash”</b> from her critically acclaimed debut concept album Call Me When You Get This. Lauren spoke about pivoting from her six-season run as <b>Dina Fox on NBC’s hit comedy Superstore</b> to the raw catharsis of rock music, a creative evolution that tested her limits and reaffirmed her belief in the unfiltered authenticity, sharp timing, and sheer presence that true artistic performance demands.</p>
+        <blockquote>“I’ve released 10 songs, 7 of which are originals and started playing live shows at places like The Viper Room and Whisky A Go Go in LA as well as the Phoenix in Toronto.”</blockquote>
+      </div>
+    </article>
+
+    <article class="card rv" data-type="written">
+      <div class="tile" style="--h:160"><img src="https://i.ibb.co/FQ9xqBM/whats-new-26-xxxl.jpg" alt="Andrew Levin" loading="lazy"></div>
+      <div class="card-body">
+        <p class="meta">Written portrait <small>· Coming soon</small></p>
+        <h3>Andrew Levin</h3>
+        <p class="role">Songwriter · Artist · Oakland, California</p>
+        <p class="ex">Bay Area born, Oakland dwelling guitarist, songwriter, and producer Andrew Levin, after graduating from USC’s Studio/Jazz Guitar program with full scholarship, became a first-call session guitarist in the Bay Area, playing with <b>GRAMMY® Award-winning Fantastic Negrito, the San Francisco Symphony, hip hop project Zion I, rapper Lyrics Born, and music director Rickey Minor (American Idol, The Tonight Show with Jay Leno, Alicia Keys).</b> Levin has opened for notable artists such as <b>Sting, Robert Plant, Mavis Staples, Third Eye Blind, and Lauryn Hill.</b> Levin is also a Professor of Sound Design at the San Francisco Conservatory of Music.</p>
+        <blockquote>“I think a lot of people have unrealistically lofty expectations for where their music will take them, and when they don’t reach those one-in-a-million goals, they beat themselves up and aren’t able to enjoy their lives to the fullest.”</blockquote>
+      </div>
+    </article>
+
+    <article class="card rv" data-type="interview">
+      <div class="tile" style="--h:280"><span aria-hidden="true">N</span></div>
+      <div class="card-body">
+        <p class="meta">Interview <small>· Coming soon</small></p>
+        <h3>Noam Peri</h3>
+        <p class="role">Singer · Songwriter · Los Angeles, California</p>
+        <p class="ex">Noam talks about identity, queer visibility, and what it means to write songs that make people feel they are not alone.</p>
+        <blockquote>“I want someone to hear my music and know they don't have to pretend anymore.”</blockquote>
+      </div>
+    </article>
+
+    <article class="card rv" data-type="interview">
+      <div class="tile" style="--h:195"><span aria-hidden="true">M</span></div>
+      <div class="card-body">
+        <p class="meta">Interview <small>· January 2026</small></p>
+        <h3>Markoe</h3>
+        <p class="role">Singer · Songwriter</p>
+        <p class="ex">Started singing at 3, songwriting at 7, and releasing postpartum after realising you don't need a label. Markoe on motherhood, “Birthday Song,” and what success actually looks like when you define it yourself.</p>
+        <blockquote>“Success for me is releasing music on my own terms and having it matter to someone.”</blockquote>
+      </div>
+    </article>
+
+    <article class="card rv" data-type="interview">
+      <div class="tile" style="--h:240"><span aria-hidden="true">A</span></div>
+      <div class="card-body">
+        <p class="meta">Interview <small>· Coming soon</small></p>
+        <h3>Adik Angel</h3>
+        <p class="role">Composer · Electronic artist · Switzerland</p>
+        <p class="ex">Working from the mountains near the Swiss Alps, Adik Angel composes, produces, mixes and masters everything himself, and films the landscapes that become his videos. On solo practice and music with a breath of life that AI cannot replicate.</p>
+        <blockquote>“The landscape doesn't just inspire the music. The landscape is the music.”</blockquote>
+      </div>
+    </article>
+
+    <article class="card rv" data-type="podcast">
+      <div class="tile" style="--h:45"><span aria-hidden="true">D</span></div>
+      <div class="card-body">
+        <p class="meta">Podcast <small>· Episode 02</small></p>
+        <h3>Introducing: Danny</h3>
+        <p class="role">Big Eleanor Records</p>
+        <p class="ex">Danny from Big Eleanor Records on what independent music actually looks like from the inside: the struggle, the strategy, and the love of it. An honest conversation about running something real.</p>
+        <blockquote>“Running an indie label is equal parts faith and stubbornness.”</blockquote>
+      </div>
+    </article>
+
+    <article class="card rv" data-type="podcast">
+      <div class="tile" style="--h:310"><span aria-hidden="true">J</span></div>
+      <div class="card-body">
+        <p class="meta">Podcast <small>· Episode 01</small></p>
+        <h3>Introducing: Jakko</h3>
+        <p class="role">Mantaray</p>
+        <p class="ex">Jakko from Mantaray explains why he is following his dreams: a conversation about ambition, band life, and what it costs to keep going when the world hasn't noticed yet.</p>
+        <blockquote>“Ambition without community is just noise. You need people who believe in it too.”</blockquote>
+      </div>
+    </article>
+
+    <p class="empty" id="empty">Nothing in this category yet. Check back soon.</p>
+  </div>
+
+  <div class="section-head rv">
+    <h2>All episodes</h2>
+    <span>3 episodes · Series ongoing</span>
+  </div>
+
+  <div class="episode-list">
+    <div class="episode rv">
+      <div class="ep-num">03</div>
+      <div>
+        <p class="ep-series">Between the Notes · Introducing</p>
+        <h3 class="ep-title">A conversation with Raidat</h3>
+        <p class="ep-desc">Words drift between music and memory in one of the most intimate episodes in the series, a late-night conversation that asks what it means to make art that outlasts the moment it was made in.</p>
+      </div>
+      <p class="ep-status">Available now</p>
+    </div>
+    <div class="episode rv">
+      <div class="ep-num">02</div>
+      <div>
+        <p class="ep-series">Between the Notes · Introducing</p>
+        <h3 class="ep-title">A conversation with Danny from Big Eleanor Records</h3>
+        <p class="ep-desc">Danny from Big Eleanor Records on what independent music actually looks like from the inside: the struggle, the strategy, and the love of it. An honest conversation about running something real.</p>
+      </div>
+      <p class="ep-status">Available now</p>
+    </div>
+    <div class="episode rv">
+      <div class="ep-num">01</div>
+      <div>
+        <p class="ep-series">Between the Notes · Introducing</p>
+        <h3 class="ep-title">A conversation with Jakko from Mantaray</h3>
+        <p class="ep-desc">The episode that started it all. Jakko is following his dreams, and this conversation sets the tone for everything after: honest, meandering, and quietly necessary.</p>
+      </div>
+      <p class="ep-status">Available now</p>
+    </div>
+  </div>
+
+  <div class="section-head rv">
+    <h2>Coming before the film</h2>
+    <span>Dates to be announced</span>
+  </div>
+
+  <div class="upcoming">
+    <div class="up-item rv"><span class="up-type">Podcast</span><span class="up-name">Episode 04<small>Introducing · Theme to be announced</small></span></div>
+    <div class="up-item rv"><span class="up-type">Written portrait</span><span class="up-name">Adik Angel<small>Singer · Songwriter</small></span></div>
+    <div class="up-item rv"><span class="up-type">Video series</span><span class="up-name">Studio Visits<small>Six artists</small></span></div>
+  </div>
+</div>
+
+<section class="notify rv" aria-labelledby="notify-heading">
+  <div class="wrap">
+    <h2 id="notify-heading">Each conversation, in your inbox</h2>
+    <p>New interviews, podcast episodes, and written portraits land here first, weeks before they go anywhere else. No noise. Only the work.</p>
+    <form class="notify-form" action="#" method="post">
+      <label for="email-input" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">Email address</label>
+      <input id="email-input" class="notify-input" type="email" name="email" placeholder="your@email.com" autocomplete="email" required>
+      <button type="submit" class="notify-btn">Notify me</button>
+    </form>
+    <p class="note">Infrequent. Unsubscribe any time. No third parties.</p>
+  </div>
 </section>
 
 </main>
 
 <footer>
-  <div class="footer-inner">
-    <div class="footer-col">
-      <div class="footer-logo">Lumerview</div>
-      <p class="footer-tagline">Connecting creators through the deep architectural stories behind their lifelong craft.</p>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">Lumerview</div>
+        <p class="footer-tagline">Connecting creators through the deep architectural stories behind their lifelong craft.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="https://lumerview.com/about">About</a></li>
+          <li><a href="listen.html">Conversations</a></li>
+          <li><a href="https://lumerview.com/radio">Radio</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Inquiries</h4>
+        <ul>
+          <li><a href="index.html">Participate</a></li>
+          <li><a href="mailto:contact@lumerview.com">Contact press</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-col">
-      <h4>Platform</h4>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="https://lumerview.com/about">About</a></li>
-        <li><a href="index.html">Conversations</a></li>
-        <li><a href="https://lumerview.com/radio">Radio</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Inquiries</h4>
-      <ul>
-        <li><a href="index.html">Participate</a></li>
-        <li><a href="mailto:contact@lumerview.com">Contact Press</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span class="footer-copy">&copy; 2026 Lumerview. All Rights Reserved.</span>
+    <p class="footer-copy">&copy; 2026 Lumerview. All rights reserved.</p>
   </div>
 </footer>
 
 <script>
-  const cursor = document.getElementById('cursor');
-  const ring   = document.getElementById('cursorRing');
-  let mx=0, my=0, rx=0, ry=0;
-  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
-  const tick = () => {
-    if(cursor){ cursor.style.left=mx+'px'; cursor.style.top=my+'px'; }
-    rx += (mx-rx)*.12; ry += (my-ry)*.12;
-    if(ring){ ring.style.left=rx+'px'; ring.style.top=ry+'px'; }
-    requestAnimationFrame(tick);
-  };
-  tick();
-  document.querySelectorAll('a,button,.card,.episode-item,.coming-item').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      if(cursor){cursor.style.width='14px';cursor.style.height='14px';cursor.style.background='#d4b47a';}
-      if(ring){ring.style.width='48px';ring.style.height='48px';}
-    });
-    el.addEventListener('mouseleave', () => {
-      if(cursor){cursor.style.width='8px';cursor.style.height='8px';cursor.style.background='#b8974a';}
-      if(ring){ring.style.width='32px';ring.style.height='32px';}
-    });
-  });
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => obs.observe(el));
-  const btns  = document.querySelectorAll('.filter-btn');
+  const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+  const btns = document.querySelectorAll('.filter-btn');
   const cards = document.querySelectorAll('.card[data-type]');
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      btns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-      btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
-      const f = btn.dataset.filter;
-      cards.forEach(c => { c.style.display = (f === 'all' || c.dataset.type === f) ? 'flex' : 'none'; });
-    });
+  const empty = document.getElementById('empty');
+  btns.forEach(btn => btn.addEventListener('click', () => {
+    btns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+    btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true');
+    const f = btn.dataset.filter; let shown = 0;
+    cards.forEach(c => { const show = f === 'all' || c.dataset.type === f; c.style.display = show ? 'flex' : 'none'; if (show) shown++; });
+    empty.style.display = shown ? 'none' : 'block';
+  }));
+
+  const form = document.querySelector('.notify-form');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const b = form.querySelector('.notify-btn');
+    b.textContent = "You're in ✓";
+    form.querySelector('input').disabled = true;
   });
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const el = document.querySelector(a.getAttribute('href'));
-      if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); }
-    });
-  });
-  const notifyForm = document.querySelector('.notify-form');
-  if(notifyForm){
-    notifyForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const btn = notifyForm.querySelector('.notify-btn');
-      btn.textContent = "You're in ✓";
-      btn.style.background = 'var(--lime)';
-      btn.style.borderColor = 'var(--lime)';
-      btn.style.color = 'var(--ink)';
-      notifyForm.querySelector('input').disabled = true;
-    });
-  }
 </script>
 </body>
 </html>
